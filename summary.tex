@@ -54,7 +54,7 @@ q(...) &:- p_1(...),...,p_n(...). \text{(deduktive Regel, } p_{1-n} \text{ Teilz
 \end{equation}
 
 \begin{itemize}
-\item Mit IBen (+ Typ2, Typ3) ($:- p_1(...), ...,p_n(...)$)
+\item Mit IBen (Integritätsbedingungen) (+ Typ2, Typ3) ($:- p_1(...), ...,p_n(...)$)
 \item Typ5 + Typ6 $\Rightarrow$ \textbf{Disjunktive Datenbank}
 \item Definite Datenbank + negative Atome im Rumpf von Hornklauseln erlaubt $\Rightarrow$ Volles Datalog
 \end{itemize}
@@ -108,4 +108,144 @@ Eine Regel heißt sicher, wenn alle in ihr vorkommenden Variablen beschränkt si
 
 \paragraph*{Bemerkung:} Falls keine Build-in Prädikate erlaubt sind (/vorkommen):\\
 Eine Regel ist sicher genau dann wenn jede Variable im Kopf der Regel auch im Rumpf der Regel vorkommt.
+
+\subsubsection*{Definition: Datalog Programm}
+Ein Datalog-Programm P (ohne IBen(Integritätsbedingungen)) ist eine endliche Menge von Horn-Klauseln mit Jedes $d \in P$ ist entweder
+\begin{itemize}
+\item ein Fakt $q(...).$ ohne Variable
+\item eine sichere Regel $q(...) :- p_1(...),...,p_n(...).$ mit $q\in iPraedikat$
+\end{itemize}
+
+Ein $d \in P$ heißt auch \textbf{Datalog-Klausel}
+Alle Fakten zu extensionalen Prädikaten sind als in DB-Relationen gespeichert zu denken.
+
+\paragraph*{Beispiel}
+Datenbankzustand:
+
+\begin{equation}
+\begin{split}
+&ag(a1, m).\\
+&kp(c2, a0).\\
+&... \\
+&rb(a1, r1, t1) \textit{(Kurs a1 im Raum r1 zu t1)}\\
+&rb(a3,r2,t4)
+\end{split}
+\end{equation}
+
+Angebot: \\
+\begin{tabular}{|c|c|}
+\hline
+Kursnummer & Dozent\\ \hline
+a1 & m \\
+... & ... \\
+\hline
+\end{tabular}
+
+Kursplan: \\
+\begin{tabular}{|c|c|}
+\hline
+Kursnummer & Voraussetzung\\ \hline
+c2 & a0 \\
+... & ... \\
+\hline
+\end{tabular}
+
+Raumbelegung: \\
+\begin{tabular}{|c|c|c|}
+\hline
+Kursnummer & Raum & Zeit\\ \hline
+a1 & r1 & t1 \\
+... & ... \\ & ...
+\hline
+\end{tabular}
+
+Belegung: \\
+\begin{tabular}{|c|c|c|}
+\hline
+Kursnummer & Teilnehmer & Wiederholer\\ \hline
+a1 & s & j \\
+... & ... \\ & ...
+\hline
+\end{tabular}
+
+\begin{equation}
+\begin{split}
+vs(X, Y) &:- Kp(X,Y). \\
+vs(X, Y) &:- vs(X, Z), Kp(Z, Y). \\
+stdpl(W,X,Y,Z) &:- bl(X, W, V), rb(X,Y,Z). \\
+ueberschneidungen(X,Y) &:- Kp(Z, X), Kp(Z, Y), rb(X, V,T), rb(Y, W, T), X \neq Y.
+\end{split}
+\end{equation}
+
+
+\subsubsection*{Deklarative Semantik}
+Extensionale Prädikate eines Programms (ext. Rel, ext. DB): EDB\\
+Intentionale Prädikate eines Programms (int. Rel, int. DB): IDB\\
+
+\paragraph*{Bedeutung}
+Bedeutung eines Datalog-Programms P: Menge derjenigen Grundatome zu den intentionalen Prädikaten von P, die logisch aus P gefolgert werden können. (Jedes Modell von P ist auch ein Modell von $f \in F$). Mit Zielklausel g(...), $g \in Praed$: Aus P logisch folgerbare Grundatome zu g, die von g(..) subsummiert (überdeckt) werden.
+\begin{tabular}{c}
+g(a,X) \\ \hline
+g(a,b) \\
+g(a,c)
+\end{tabular}
+
+In P werden Werte aus Wertebereichen verwendet, ebenso in Darstellung der extensionalen Prädikate als DB-Relation. Daher können wir $Kost_A$ und Dom idefntifizieren. Mithilfer der Herbrand Interpretation kann die Semantik festgelegt werden (ist möglich).
+
+
+\paragraph*{Herbrand-Interpretation /-Modelle}
+
+Gewöhnliche Interpretation: \\
+\begin{equation}
+\begin{split}
+Konst_A &= \{ a,b \}, Dom = \{ \circ, \square \} \\
+k(a) &= \circ\\
+k(b) &= \square \\
+ext(p(.,.)) &=  \{ (\circ, \square), (\square, \square) 
+\end{split}
+\end{equation}
+
+eine mögliche Herbrand-Interpretation (passt dazu)
+\begin{equation}
+\begin{split}
+Konst_A &= Dom = \{ a,b \} \\
+k(a) &= a\\
+k(b) &= b \\
+ext(p(.,.)) &=  \{ (a, b), (b, b) 
+\end{split}
+\end{equation}
+
+Entsprechende Herbrand-Interpretation. Betrachte alle Paare zu p(.,.), teste gemäß gegebener (gewöhnlicher) Interpretationin ext(p(.,.)).
+\begin{equation}
+\begin{split}
+Konst_A &= \{ a,b \}, Dom = \{ \circ, \square \} \\
+k(a) &= \square\\
+k(b) &= \square \\
+ext(p(.,.)) &=  \{ (\circ, \square), (\square, \square) 
+\end{split}
+\end{equation}
+(a,a) wird zu $(\square, \square) \in ext(p(.,.))$
+
+Herbrand-Interpretation
+\begin{equation}
+\begin{split}
+Konst_A &= Dom = \{ a,b \} \\
+k(a) &= a\\
+k(b) &= b \\
+ext(p(.,.)) &=  \{ (a,a), (a, b), (b,a), (b,b) \}
+\end{split}
+\end{equation}
+
+Bei beiden Interpretationen sind die gleichen Formeln gültig bei Beschränkung auf quantorenfreie Formeln ohne Variablen (und ohne Funktionen).
+
+\paragraph{z.B.:}
+
+Erste Interpretation: $p(a,b) \wedge p(b,a) \Rightarrow (\square, \square) \in ext(p(.,.)) \wedge ...$ bzw. $(a,b) \in ext(p(.,.)) \wedge (b,a) \in ext(p(.,.))$
+
+Menge von Konstanten und Prädikatensymbole ist endlich, daher ist die Anzahl der möglichen Herbrand-Interpreationen endlich.
+
+\subsubsubsection*{Satz von Gödel / Skolem (Herbrand, 1930)}
+Eine Klauselmenge P hat ein Modell genau dann wenn P hat ein Herbrand-Modell.
+Daraus folgt, dass ein Verfahren analog zu Wahrheitstabellen in der Aussagenlogik möglich ist.
+
 \end{document}
