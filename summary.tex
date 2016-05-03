@@ -155,7 +155,7 @@ Raumbelegung: \\
 \hline
 Kursnummer & Raum & Zeit\\ \hline
 a1 & r1 & t1 \\
-... & ... \\ & ...
+... & ... \\ & ... \\
 \hline
 \end{tabular}
 
@@ -164,7 +164,7 @@ Belegung: \\
 \hline
 Kursnummer & Teilnehmer & Wiederholer\\ \hline
 a1 & s & j \\
-... & ... \\ & ...
+... & ... \\ & ... \\
 \hline
 \end{tabular}
 
@@ -238,14 +238,73 @@ ext(p(.,.)) &=  \{ (a,a), (a, b), (b,a), (b,b) \}
 
 Bei beiden Interpretationen sind die gleichen Formeln gültig bei Beschränkung auf quantorenfreie Formeln ohne Variablen (und ohne Funktionen).
 
-\paragraph{z.B.:}
+\paragraph{Beispiel}
 
 Erste Interpretation: $p(a,b) \wedge p(b,a) \Rightarrow (\square, \square) \in ext(p(.,.)) \wedge ...$ bzw. $(a,b) \in ext(p(.,.)) \wedge (b,a) \in ext(p(.,.))$
 
 Menge von Konstanten und Prädikatensymbole ist endlich, daher ist die Anzahl der möglichen Herbrand-Interpreationen endlich.
 
-\subsubsubsection*{Satz von Gödel / Skolem (Herbrand, 1930)}
+\subsubsection*{Satz von Gödel / Skolem (Herbrand, 1930)}
 Eine Klauselmenge P hat ein Modell genau dann wenn P hat ein Herbrand-Modell.
 Daraus folgt, dass ein Verfahren analog zu Wahrheitstabellen in der Aussagenlogik möglich ist.
+
+\paragraph{Beispiel}
+$F = \{ p(a) \Rightarrow q(b), p(a) \wedge q(b) \}$, $q(b)?$
+
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+p & q & $p(a) \Rightarrow q(b) \text{erfüllt?}$ & $p(a) \wedge q(b) \text{erfüllt?}$ & $p(a) \Rightarrow q(b) \text{und} p(a) \wedge q(b) \text{erfüllt?}$\\ \hline
+$\{\}$ & $\{\}$ & \checkmark & - & - \\
+$\{\}$ & $\{ a \}$ & \checkmark & - & - \\
+$\{\}$ & $\{ b \}$ & \checkmark & \checkmark & \checkmark \\
+$\{\}$ & $\{ a, b \}$ & \checkmark & \checkmark & \checkmark \\
+$\{ a \}$ & $\{\}$ & - & \checkmark & - \\
+... & ... & ... & ... & .... \\
+$\{ b \}$ & $\{ b \}$ & \checkmark & \checkmark & \checkmark
+\end{tabular}
+
+Jedes Modell von F ist auch ein Modell von q(b), d.h. q(b) kann aus F logisch gefolgert werden. Gilt bei Klauselmengen, aber \textbf{Vorsicht bei allgemeinen Formeln}.
+\paragraph{Beispiel:} $\{p(a), (\exists X) (\lnot p(X))\}$ Formelmenge, keine Klauselmenge
+
+Modell (vgl. Übung): 
+\begin{equation}
+\begin{split}
+Dom &= \{ 0, 1 \} \\
+k(a) &= 0\\
+ext(p(.)) &=  \{ (0) \} 
+\end{split}
+\end{equation}
+
+\paragraph{Aber:} Es gibt kein durch \texttt{ext} bestimmtes Herbrand-Modell:
+
+\begin{enumerate}
+\item $ext(p(.)) = \{(a)\}, Konst = Dom = \{ a \}$
+\item $ext(p(.) = \{\})$
+\end{enumerate}
+
+Herbrand-Modell muss genügend viele Elemente enthalten, damit der Satz von Gödel / Skolem gelten kann. \textbf{Skolemisierung} bedeutet, dass man alle Existenzquantoren durch Funktionen ersetzt:
+
+\begin{equation}
+(\forall x_1,....,x_n)(\exists y) (F) \leadsto (\forall x_1,...,x_n)(F[f(x_1,...x_n) / y])
+\end{equation}
+
+
+\subsubsection{Bemerkung: Skolemisierung}
+
+Jede Formel der PL1 Logik kann man in einer \underline{erfüllbarkeitsäquivalente} Formel in Skolemform umformen:
+\begin{enumerate}
+\item Pränexnormalform
+\item Umformungen à la $(\forall x_1,....,x_n)(\exists y) (F) \leadsto (\forall x_1,...,x_n)(F[f(x_1,...x_n) / y])$ mit jeweils einem neuen Funktionssymbol
+\end{enumerate}
+Dies ist eine Art ``Materialisierung'' der durch den Existenzquantor gebundenen Variablen.
+
+\paragraph{Beispiel (von oben)}
+
+$\{p(a), \lnot p(y)\footnote{neue Variable} \}$ erfüllbar $\Longleftrightarrow \{p(a), (\exists X)(\lnot p(X))\}$ erfüllbar \\
+
+\textbf{Vorsicht:} Semantische Äquivalenz von Formeln und ihren Skolem-Normalformen im Allgemeinen bicht gegeben.
+
+Skolem-NF: $(\exists X)(p(X)) : p(a)$
+
 
 \end{document}
