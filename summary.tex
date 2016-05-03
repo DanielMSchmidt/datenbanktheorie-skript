@@ -37,4 +37,75 @@
 
 \section*{Deduktive Datenbanksysteme}
 
+\textbf{Problem:} Transitiver Abschluss ist in PL1 nicht formulierbar (mit zustandsabhängiger Formulierung möglich)\\
+\textbf{Diskussion:} \\
+Typ 5: $q_1(...), ..., q_n(...) :- .$\\
+Typ 6: $q_1(...),...,q_n(...) :- p_1(...),...,p_m(...).$\\
+$\Rightarrow$ Übungsaufgabe
+
+Nur Typ 1 und Typ 4: $q(...) :- p_1(...),...,p_n(...), n \ge 0$ (ist die Hornklauselform und wird bei definiten Datenbanken genutzt) 
+
+\subsection*{Definite Datenbanken}
+\begin{equation}
+\begin{split}
+q(...) &:- . \text{(Fakt)}\\
+q(...) &:- p_1(...),...,p_n(...). \text{(deduktive Regel, } p_{1-n} \text{ Teilziele)}
+\end{split}
+\end{equation}
+
+\begin{itemize}
+\item Mit IBen (+ Typ2, Typ3) ($:- p_1(...), ...,p_n(...)$)
+\item Typ5 + Typ6 $\Rightarrow$ \textbf{Disjunktive Datenbank}
+\item Definite Datenbank + negative Atome im Rumpf von Hornklauseln erlaubt $\Rightarrow$ Volles Datalog
+\end{itemize}
+
+\subsubsection*{Formulierung von Anfragen}
+Klauseln vom Typ: $:- p_1(...),....,p_n(...)$, geschrieben $? - p_1(...),....,p_n(...)$
+
+Beispiele:
+\begin{itemize}
+\item $? - ag(X,m).$
+\begin{itemize}
+\item Bedeutung: Welche Kurse bietet 'm' an?
+\item DRC: (x) / ANGEBOT(X, m) 
+\end{itemize}
+\item $? - ag(a3,m).$
+\begin{itemize}
+\item Bedeutung: Bietet 'm' den Kurs 'a3' an?
+\item DRC: () / ANGEBOT(a3, m) 
+\end{itemize}
+\item $? - ag(X,m), bl(X,s,j).$
+\begin{itemize}
+\item Bedeutung: Gib alle von 'm' angebotene Kurse, die 's' als Wiederholer belegt hat
+\item DRC: (x) / ANGEBOT(x, 'm') $\wedge$ BELEGUNG(x, 's', 'y') 
+\end{itemize}
+\item Wie ist (x) / ANGEBOT(x, 'm') $\wedge (\exists $y) BELEGUNG(x, 's', y) formulierbar?
+\begin{itemize}
+\item Bedeutung: Gib die Dozenten der von s als Wiederholer belegte Kurse
+\item Formulierung: $? - Ksm(X). \\ Ksm(X) :- ag(X, m), bl(X,s,y)$
+\item Bequemer: $?- ag(X, Y*), bl(X,s,y).$, * Kennzeichnet die Ausgabevariable
+\end{itemize}
+\end{itemize}
+
+In Anfragesprachen werden Vergleichsausdrücke benötigt. Dazu sind in Datalog spezielle vordefinierte Prädikate vorhanden. Für jeden Vergleichsoperator wird die Existenz eines solchen Prädikates angenommen.\\
+Zunächst: Beschränkte Variablen in Regeln. Sei eine Regel r gegeben:
+\begin{itemize}
+\item Jede Variable, die als Argument in einem gewöhnlichen Prädikat im Rumpf von r vorkommt ist beschränkt.
+\item Jede Variable, die in einem Teilziel $X=c$ oder $c=X$ von r vorkommt, ist beschränkt.
+\item Eine Variable X ist beschränkt, wenn sie in einem Teilziel $X=Y$ oder $Y=X$ von r vorkommt mit Y ist schon als beschränkt bekannt.
+\end{itemize}
+
+\subsubsection*{Definition: sicher}
+Eine Regel heißt sicher, wenn alle in ihr vorkommenden Variablen beschränkt sind.
+
+\paragraph*{Beispiele:}
+\begin{itemize}
+\item $Kls(X,Y) :- bl(Z, s, j), ag(Z, Y), X=Z.$ \textbf{sicher}
+\item $vsj(X,Y) :- bl(Y,s,j).$ \textbf{nicht sicher} (X ist nicht beschränkt)
+\item $vs(X,Y) :- vs(X, Z), kp(Z, Y).$ \textbf{sicher, wenn vs terminiert}
+\item $kla(Z,Y) :- bl(Z,V,j), ag(Z,Y), V \neq s.$ \textbf{sicher}
+\end{itemize}
+
+\paragraph*{Bemerkung:} Falls keine Build-in Prädikate erlaubt sind (/vorkommen):\\
+Eine Regel ist sicher genau dann wenn jede Variable im Kopf der Regel auch im Rumpf der Regel vorkommt.
 \end{document}
