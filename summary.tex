@@ -14,7 +14,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
-
+\DeclareUnicodeCharacter{00A0}{ }
 
 \setlength{\parskip}{1ex} %--skip lines between paragraphs
 \setlength{\parindent}{0pt} %--don't indent paragraphs
@@ -238,7 +238,7 @@ ext(p(.,.)) &=  \{ (a,a), (a, b), (b,a), (b,b) \}
 
 Bei beiden Interpretationen sind die gleichen Formeln gültig bei Beschränkung auf quantorenfreie Formeln ohne Variablen (und ohne Funktionen).
 
-\paragraph{Beispiel}
+\paragraph*{Beispiel}
 
 Erste Interpretation: $p(a,b) \wedge p(b,a) \Rightarrow (\square, \square) \in ext(p(.,.)) \wedge ...$ bzw. $(a,b) \in ext(p(.,.)) \wedge (b,a) \in ext(p(.,.))$
 
@@ -248,7 +248,7 @@ Menge von Konstanten und Prädikatensymbole ist endlich, daher ist die Anzahl de
 Eine Klauselmenge P hat ein Modell genau dann wenn P hat ein Herbrand-Modell.
 Daraus folgt, dass ein Verfahren analog zu Wahrheitstabellen in der Aussagenlogik möglich ist.
 
-\paragraph{Beispiel}
+\paragraph*{Beispiel}
 $F = \{ p(a) \Rightarrow q(b), p(a) \wedge q(b) \}$, $q(b)?$
 
 \begin{tabular}{|c|c|c|c|c|}
@@ -264,7 +264,7 @@ $\{ b \}$ & $\{ b \}$ & \checkmark & \checkmark & \checkmark
 \end{tabular}
 
 Jedes Modell von F ist auch ein Modell von q(b), d.h. q(b) kann aus F logisch gefolgert werden. Gilt bei Klauselmengen, aber \textbf{Vorsicht bei allgemeinen Formeln}.
-\paragraph{Beispiel:} $\{p(a), (\exists X) (\lnot p(X))\}$ Formelmenge, keine Klauselmenge
+\paragraph*{Beispiel:} $\{p(a), (\exists X) (\lnot p(X))\}$ Formelmenge, keine Klauselmenge
 
 Modell (vgl. Übung): 
 \begin{equation}
@@ -275,7 +275,7 @@ ext(p(.)) &=  \{ (0) \}
 \end{split}
 \end{equation}
 
-\paragraph{Aber:} Es gibt kein durch \texttt{ext} bestimmtes Herbrand-Modell:
+\paragraph*{Aber:} Es gibt kein durch \texttt{ext} bestimmtes Herbrand-Modell:
 
 \begin{enumerate}
 \item $ext(p(.)) = \{(a)\}, Konst = Dom = \{ a \}$
@@ -289,7 +289,7 @@ Herbrand-Modell muss genügend viele Elemente enthalten, damit der Satz von Göd
 \end{equation}
 
 
-\subsubsection{Bemerkung: Skolemisierung}
+\subsubsection*{Bemerkung: Skolemisierung}
 
 Jede Formel der PL1 Logik kann man in einer \underline{erfüllbarkeitsäquivalente} Formel in Skolemform umformen:
 \begin{enumerate}
@@ -298,13 +298,110 @@ Jede Formel der PL1 Logik kann man in einer \underline{erfüllbarkeitsäquivalen
 \end{enumerate}
 Dies ist eine Art ``Materialisierung'' der durch den Existenzquantor gebundenen Variablen.
 
-\paragraph{Beispiel (von oben)}
+\paragraph*{Beispiel (von oben)}
 
 $\{p(a), \lnot p(y)\footnote{neue Variable} \}$ erfüllbar $\Longleftrightarrow \{p(a), (\exists X)(\lnot p(X))\}$ erfüllbar \\
 
 \textbf{Vorsicht:} Semantische Äquivalenz von Formeln und ihren Skolem-Normalformen im Allgemeinen bicht gegeben.
 
 Skolem-NF: $(\exists X)(p(X)) : p(a)$
+Interpretation I mit 
+\begin{equation}
+\begin{split}
+Dom &= \{ 1, 2 \} \\
+k(a) &= 1\\
+ext(p(.)) &=  \{ (2) \} 
+\end{split}
+\end{equation}
+
+$\leadsto \vDash_I (\exists X)(p(X))$
+Belegung von X mit allen Elementen aus Dom, d.h. auch mit 2. Aber $\not \vDash_I p(a)$, da $(1) \not \in ext(p(.))$.
+
+\subsubsection*{Im Kontext von Datalog}
+\begin{itemize}
+\item Herbrand-Universum: Konst
+\item Herbrand-Basis (HB): Menge aller Grundatome \\ ($\leadsto EDB\footnote{gegeben durch Datenbankzustand}, IDB\footnote{muss ausgerechnet / gefolgert werden} \text{(Fakten in der Datenbank und solche die Ableitbar sind)} \subset HB$ )
+\item Herbrand-Interpretation: (Konst, id, ext), d.h. jedes Konstantensymbol wird als es selbst interpretiert. (Verglichen mit relationaler Interpretation, dort $k$ ist Bijektion)
+\item Jede Herbrand-Interpretation ist eindeutig bestimmt durch $ext$ (Extension, Ausprägung), da Konst und id unveränderlich sind
+\item Jedes Prädikat ist eindeutig bestimmt durch die Angabe der Grundatome, für  die es ``wahr'' liefert.
+\item extentional: genaue Antwort in Tupel
+\item intentional: Beispielsweise Formeln als Antworten
+\end{itemize}
+
+\subsubsection*{Definition: Herbrand-Interpretation}
+Einfache Definition: Eine Herbrand-Interpretation ist eine Teilmenge der Herbrand-Basis.
+
+
+\paragraph*{Beispiel Kursverwaltung}
+
+\begin{equation}
+\begin{split}
+\text{Aus DB-Rel. KURSPLAN} &\leadsto kp \in ePr\ddot{a}d \\
+vs(X,Y) :- kp(X,Y) &\leadsto vs \in iPr\ddot{a}d
+\end{split}
+\end{equation}
+
+\paragraph*{Gesucht:} Durch Programm P bestimmte Grundatome (Fakten).
+
+\subsubsection*{Definition: Grundatom}
+Ein Grundatom f ist eine logische folgerung einer Menge D von Datalog Klauseln (z.B. $D \vDash f$) $\diamondsuit_{Def}$. Jedes Herbrand Modell von D ist auch ein Modell von f.\\
+Da f ein Grundatom ist gilt $D \vDash f \Longrightarrow f $ ist in jedem Herbrand.Modell von D enthalten. Das heißt $f \in \bigcap \{ I | I Herbrand-Modell von D \}$.\\
+Sei $f \in \bigcap \{ I | I Herbrand-Modell von D \}$, dann ist f ein Grundatom und jedes Modell von D auch in Modell von f. 
+
+\subsubsection*{Definition: Mege aller Konsequenzen}
+
+$cons(D) =_{def} \{ f \in HB_D | D \vDash f \}$
+
+
+\subsection*{Satz 1.1}
+
+$cons(D) = \bigcap \{ I | I Herbrand-Modell von D \}$ \\
+Aufgrund der Eigenschaften unserer Regel ist der Schnitt / cons(D) ein Modell, dies gilt es zu beweisen: \\
+
+Da $cons(D) \subseteq HB_D$, ist $cons(D)$ eine Herbrand-Interpretation.
+
+\subsection*{Satz 1.2} 
+
+$cons(D)$ ist ein Herbrand-Modell von D.
+
+\subsubsection*{Beweis}
+\paragraph*{z.Z.} 
+Jedes $d \in D$ ist gültig in dieser Interpretation, also $cons(D)$ ($\vDash_{cons(D)} d$).
+
+\paragraph*{Beweis}
+
+Falls $d$ ein Grundatom ist gehört $d$ zu jedem Herbrandmodell von D, daraus folgt $d \in cons(D)$. \\
+Sei d eine Regel $q(...) :- p_1(...),...,p_m(...)$. Sei $\varrho$ eine Belegung für die Variable von d. \textit{Annahme:} $(\forall 1 \le i \le m)(|| p_i(.)||^{\varrho} \in cons(D))$, sonst d gültig unter $cons(D)$.
+Für jedes Herbrand-Modell I von D gilt, dann $||p_i(.)||^{\varrho} \in I, i = 1, ..., m$ und damit $||q_(.)||^{\varrho} \in cons(D),$ da $d$ eine Horn-Klausel ist.
+(Der Schluss ist z.B. für $d = q_1(...), q_2(...) :- p_1(...), ..., p_n(...)$ nicht möglich.) \\
+
+Damit $D \vDash_{cons(D)} ||q(...)||^{\varrho} \in cons(D)$. Wir erhalten, dass $cons(D)$ ein Herbrand-Modell von D ist. Da $d$ beliebig gewählt wird folgt der Satz.
+
+$cons(D)$ ist offensichtlich eindutig bestimmt und das kleinste Herbrand-Modell von D. Damit: Seantik eines Datalog-Programms P ist gegeben durch das kleinste Herbrand-Modell von P oder (äquivalent) durch $cons(P) = \{ f\in HB_{P} | O \vDash f \}$.
+
+\paragraph*{Beispiel}
+$r \in ePr\ddot{a}d, p,q \in iPr\ddot{a}d, Konst = \{ 1, 2, 3 \}$.
+
+\textbf{Fakten}: \\
+\begin{equation}
+\begin{split}
+r(1).& \\
+p(X) &:- q(X). \\
+q(X) &:- r(X).
+\end{split}
+\end{equation}
+
+\textbf{Herbrand-Modelle}: \\
+\begin{equation}
+\begin{split}
+\{ r(1), p(1)&, q(1) \} \\
+\{ r(1), p(1)&, q(1), q(2), p(2) \} \\
+\{ r(1), p(1)&, q(1), q(2), p(2), p(3) \} \\
+\end{split}
+\end{equation}
+
+\subsection*{Fixpunkt-Semantik}
+Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Sematik führt direkt zu einem algorithmus für die Schrittweise Berechnung des kleinsten Herbrand-Modells.
 
 
 \end{document}
