@@ -6,7 +6,7 @@
 \usepackage{fancyhdr}
 \usepackage{ textcomp }
 \usepackage{ mathrsfs }
-
+\usepackage{amssymb}
 
 \pagestyle{fancy}
 
@@ -37,7 +37,126 @@
 
 \section*{Übung 3}
 
+\subsection*{Aufgabe 1}
+
+$T_1: T_0 + $ Abschlussaxiom für Wertebereich + Gleichheitsaxiome\\
+
+\subsubsection*{a)}
+$/lnot = (a1, c4)$\\
+Gib Interpretation I an, die Modell von $T_1$ ist, aber nicht von $\lnot = (a1, c4) \leadsto \lnot = (a1, c4)$ nicht ableitbar (Satz von Gödel).\\
+
+\paragraph*{I.}
+$Dom = Konst_A$ als Beispiel, ext wie angegeben ext(=) wie üblich. $K: Konst_A \Rightarrow Dom$ mit $k(c) = \begin{cases} a1, & \mbox{wenn } c = c4\\ c, & \mbox{sonst} \end{cases}$. \\
+
+Nach Konstruktion gilt:
+\begin{itemize}
+\item $T_0$ erfüllt
+\item Gleichheitsaxiom erfüllt, insbesondere $=(a1, c4)$, da $k(c4) = a1$
+\item Abschlussaxiom erfüllt
+\end{itemize}
+
+Aber 
+\begin{equation}
+\begin{split}
+\nvDash_I \lnot &= (a1, c4)\\
+\diamondsuit nicht \vDash_i \lnot &= (a1, c4)\\
+\diamondsuit nicht nicht \vDash_i &= (a1, c4)\\
+\diamondsuit \vDash_i &= (a1, c4)
+\end{split}
+\end{equation}
+
+\subsubsection*{b)}
+$\lnot do(a0)$\\
+\paragraph*{I.} Dom wie oben, k = id, $ext(do) = \{ m, q, d, a0 \}$\\
+I erfüllt $T_2$, Gleichheits, Abschluss und Eindeutigkeitsaxiome
+
+Aber 
+
+\begin{equation}
+\begin{split}
+\nvDash_I &\lnot do(a0)\\
+\diamondsuit nicht \vDash_I &\lnot do(a0)\\
+\diamondsuit nicht nicht \vDash_I &do(a0)\\
+\diamondsuit \vDash_I &do(a0)\\
+||a0||^\rho_I &= (a0) \in ext(do)
+\end{split}
+\end{equation}
+
+\subsection*{Aufgabe 2}
+
+\paragraph*{$f_1$}: Sei $\rho$ eine Belegung mit $\rho(X) = einbruch, \rho(Z) = pathologie$. Dann gilt $(\rho(X), offen, \rho(Z)) \in ext(akte)$\\
+Also gilt: 
+
+\begin{equation}
+\begin{split}
+\vDash_{I, \rho}& akte(X, offen, Z)\\
+nicht nicht \vDash_{I, \rho}& akte(X, offen, Z)\\
+nicht \vDash_{I, \rho}& \lnot akte(X, offen, Z)\\
+nicht \vDash_{I, \rho}& (\forall Z)(\lnot akte(X, offen, Z))\\
+\vDash_{I, \rho}& \lnot (\forall Z)(\lnot akte(X, offen, Z))\\
+\vDash_{I, \rho}&  (\exists Z)(akte(X, offen, Z))\\
+\vDash_{I, \rho}& (\exists X)(\exists Z)(akte(x,offen,Z))
+\end{split}
+\end{equation}
+analog mit X
+\\
+\paragraph*{$f_2$}: Sei $f':_2 = le(X_1, Y) \wedge le(X_2, Y)$.\\
+Sei $f''_2 = (X_1, X_2)$\\
+Sei $\rho$ eine Belegung.
+
+\textbf{1.Fall}\\
+\begin{equation}
+\begin{split}
+\rho(X_1) &= \rho(X_2)\\
+\vDash_{I, \rho}& f'_2\\
+\vDash_{I, \rho}& \lnot f'_2 \vee f''_2\\
+\vDash_{I, \rho}& f'_2 \Rightarrow f''_2\\
+(\forall X_1)(\forall X_2)(\forall Y)(le(X_1, Y) \wedge le(X_2, Y) \Rightarrow (X_1, X_2)
+\end{split}
+\end{equation}
+
+\textbf{2. Fall} $\rho(X_1) = \rho(X_2)$\\
+Es gilt: $ext(le) = \{ (skinner, mulder), (skinner, scully) \}$\\
+
+Mit $\rho(X_1) = \rho(X_2)$ folgt:
+
+\begin{equation}
+\begin{split}
+&nicht (X_1, Y) \in ext(le) \vee nicht (X_2, Y) \in ext(le)\\
+&nicht ((X_1, Y) \in ext(le) \wedge (X_2, Y) \in ext(le)\\
+&nicht \vDash_{I, \rho} f'_2\\
+&\vDash_{I, \rho} \lnot f'_2\\
+&\vDash_{I, \rho} \lnot f'_2 \vee f''_2\\
+&\vDash_{I, \rho} \lnot (\forall X_1)(\forall X_2)(\forall Y)(le(X_1, Y) \wedge le(X_2, Y) \Rightarrow = (X_1, X_2))
+\end{split}
+\end{equation}
 
 
+\subsection*{Aufgabe 3}
+
+$f_1$: 
+\begin{equation}
+\begin{split}
+&\dash akte(krycek, offen, psychologie)\footnote{mit Axiom}\\
+&\dash (\exists Z) (akte(krycek, offen, Z))\\
+&\dash (\exists X) (\exists Z) (akte(X, offen, Z))
+\end{split}
+\end{equation}
+
+$f_2$: Es sei $K_{le} = \{ (skinner, mulder), (skinner scully) \}$\\
+1) $(\forall X_1)(\forall Y_1)(le(X_1, Y_1) \Rightarrow (=(X_1, skinner) \wedge =(Y_1, mulder)) \vee (= (X_1, skinner) \wedge =(Y_1, scully))$\\
+2) $(\forall X_2)(\forall Y_2)(le(X_2, Y_2) \Rightarrow (=(X_2, skinner) \cdots$\\
+3) $(\forall X_1)(\forall Y_1)(\forall X_2)(\forall Y_2)(le(X_1, Y_1) \wedge (le(X_2, Y_2) \Rightarrow (=(X_1, skinner) \wedge =(Y_1, mulder)) \vee (= (X_1, skinner) \wedge =(Y_1, scully)) \wedge (=(X_2, skinner) \wedge =(Y_2, mulder)) \vee (= (X_2, skinner) \wedge =(Y_2, scully))$\\
+4) $(\forall X_1)(\forall Y_1)(\forall X_2)(\forall Y_2)(le(X_1, Y_1) \wedge (le(X_2, Y_2) \Rightarrow =(X_1, skinner) \vee (= (X_1, skinner) \wedge =(X_2, skinner) \vee = (X_2, skinner)$\\
+5) $\cdots le(X_1, Y_1) \wedge le(X_2, Y_2) \wedge (Y_1 Y_2) \Rightarrow \cdots$\\
+6) $(\forall X_1)(\forall X_2)(\forall Y)(le(X_1, Y) \wedge le (X_2, Y) \Rightarrow (=(X_1, skinner) \vee = (X_1, skinner) \wedge =(X_2, skinner) \vee =(X2, skinner))$\\
+7) $\cdots \Rightarrow (=(X_1, skinner) \wedge =(X2, skinner))$\\
+8) $\cdots \Rightarrow (=(X_1, skinner) \wedge =(skinner, X2))$\\
+9) $(\forall X_1)(\forall X_2)(\forall Y)(le(X_1, Y) \wedge le(X_2, Y) \Rightarrow = (X_1, X_2))$
+
+\subsection*{Aufgabe 4}
+Überprüfen bei Existenzqauntor und implikation oder bei allquantor und keine implikation ensteht oft unfug\\
+
+$(\forall s, w_1, f_1, w_2, f_2) ((STUDENT(s, w_1, f_1) \wedge STUDENT(s, w_2, f_2)) \Rightarrow STUDENT(s,w_1, f_2))$
 
 \end{document}
