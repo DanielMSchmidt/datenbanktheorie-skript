@@ -6,7 +6,7 @@
 \usepackage{fancyhdr}
 \usepackage{ textcomp }
 \usepackage{ mathrsfs }
-
+\usepackage{cancel}
 
 \pagestyle{fancy}
 
@@ -404,4 +404,153 @@ q(X) &:- r(X).
 Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Sematik führt direkt zu einem algorithmus für die Schrittweise Berechnung des kleinsten Herbrand-Modells.
 
 
+%insert img1.png here
+\begin{equation}
+\begin{split}
+&c \in ac \\
+&\tau(c) \subseteq \tau(ac) \\
+&\tau(c) = c ! \\ % TODO: add cancel
+&\tau(c) = ac
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+&c \in bc \\
+&\tau(c) \subseteq \tau(bc) \\
+&\tau(c) = c ! \\ % TODO: add cancel
+&\tau(c) = bc
+\end{split}
+\end{equation}
+
+Dies ist ein Wiederspruch
+
+
+\paragraph{P Datalog-Programm}
+$\tau_P$ liefert Fakten von P vereinigt mit Fakten, die in einem Schritt aus der Argumentenmenge von $\tau_P$ mit den Regeln von P abgeleitet werden können.
+
+\subsection{Ableitung in einem Schritt}
+
+\subsubsection{Definition: Substitution}
+Eine Substitution ist eine endliche Menge der Form
+\begin{equation}
+\{ X_1 / t_1, \cdots, X_n / t_n \}, X_1,...,X_n unterschiedliche Variablen, t_1,....,t_n Terme, X_i \neq t_i
+\end{equation}
+
+Falls alle $t_i$ Konstanten ist dies eine \textbf{Grundsubstitution}.
+
+Sei $\theta$ eine Substitution, t ein Term (Variable oder Konstante), so gilt \\
+
+\begin{equation}
+t\theta =_{def} \begin{cases} t_i, & \mbox{falls } t/t_i \in \theta \\ t, & \mbox{sonst} \end{cases}
+\end{equation}
+Sei L ein Literal, $L\theta$ bezeichnet dasjenige Literal, das aus L entsteht, indem alle Variablen $X_i$ mit $L_i$ für die $X_i / t_i \in \theta$ gilt, simultan durch $t_i$ ersetzt werden. Analog $d\theta$ für eine Datalog-Klausel d.
+
+\paragraph{Beispiel}
+
+\begin{equation}
+L = p(X, Y, a), \theta = \{X / a, Y / X \} \\
+L\theta = p(a, X, a)
+\end{equation}
+
+Sei D eine Menge von Datalog Klauseln. In einem Schritt aus D ableitbare Menge von Fakten:
+
+\begin{equation}
+fakt_1(D) = \{ f \in HB_D | (\exists Regel L_0 :- L_1,...,L_n)(\exists Sicht \theta)(\{ L_1 \theta, \cdots, L_n\theta \} \subseteq D \wedge f = L_0\theta) \}
+\end{equation}
+
+(Annahme: built-in Prädikate geeignet berücksichtigt $\Rightarrow$ Algorithmus FAKT\_1)
+
+Definiere $\tau_P | 2^{HB} \Rightarrow 2^{HB}$. $\tau_P(I) =_{def} P_F \cup fakt_1(P_R \cup I)$.$ P_f = $ Menge der Fakten von P. $P_P$ Menge von Regeln von P.
+
+\subsection{Satz 1.3} Für jedes Datalog-Programm P ist $\tau_P$ eine monotone Transformation auf $(2^{HB}, \subseteq)$.
+
+\subsubsection{Beweis}
+Seien $I_1, I_2 \in HB_P$ mit $I_1 \subseteq I_2$. z.Z.: $\tau_P(I_1) \subseteq \tau_P(I_2)$. \\
+Sei $f \in \tau_P(I_1)$. Falls $f \in P_F$, dann gilt auf $f \in \tau_p(I_2)$. $f \in fakt_1(P_R \cup _1)$ da $I_1 \subseteq I_2$, gilt $P_R \cup I_1 \subseteq P_R \cup I_2$ und somit $f \in fakt_1(P_R \cup I_2)$ wg. Monotonie von Fakt\_1 auf ($2^{HB}, \subseteq$).
+
+
+\paragraph{Beispiel}
+
+\begin{equation}
+\begin{split}
+P = &p(1) \\
+= &p(2). \\
+= &r(1). \\
+&\\
+q(X) :- &s(X), r(X). \\
+s(X) :- &p(X).
+\end{split}
+\end{equation}
+
+$\leadsto^{T_p(\emptyset)}$
+
+\begin{equation}
+\begin{split}
+&p_1\\
+&p_2 \\
+&r_1
+\end{split}
+\end{equation}
+
+$\leadsto^{T_p(\cdots)}$
+
+\begin{equation}
+\begin{split}
+&p_1\\
+&p_2 \\
+&r_1\\
+&s(1) (\text{fakt\_1}) \\
+&s(2) (\text{fakt\_1})
+\end{split}
+\end{equation}
+
+$\leadsto^{T_p(\cdots)}$
+
+\begin{equation}
+\begin{split}
+&p_1\\
+&p_2 \\
+&r_1\\
+&s(1) \\
+&s(2) \\
+&q(1) (\text{fakt\_1})
+\end{split}
+\end{equation}
+
+\subsection{Satz 1.4} Für jedes Datalog-Programm P gilt $cons(P) = lf_p(\tau_p)$ (lf = least fixpunkt).
+
+\subsubsection{Beweis}:
+\paragraph{1)} $cons(P) ist ein Fixpunkt von \tau_P$. \\
+$\tau_p(cons(P)) = P_F \cup fakt\_1(P_R \cup cons(P))$. cons(P) ist kleinstes Herbrand-Modell von P, d.h. alle Regeln sind gültig unter $cons(P) \Rightarrow fakt\_1(P_R \cup cons(P) = cons(P) \backslash P_F)$. (und kein Fakt kann aus cons(P) entfernt werden, ohne dass die Modelliereigenschaft verloren geht.) $\Rightarrow \tau_P(cons(P)) = P_F \cup cons(P) \backslash P_F = cons(P)$
+
+\paragraph{2)} $cons(P)$ ist minimaler Fixpunkt von $\tau_P$.
+Annahme: $(\exists I \cancel{\subseteq} cons(P))(\tau_P(I) = I)$.
+cons(P) ist minimales Herbrand-Modell $\Rightarrow$ I ist kein Herbrand-Modell. Da $P_F \subseteq I$ wg. Annahme $\tau_P(I) = I$ folgt midestens eine Regel ist nicht erfüllt, d.h. $(\exists h_0, \cdot,h_n \in P_R)(\exists Substitution \theta)(\{ h_1\theta, \cdots, L_n(\theta)\} \subseteq I \wedge L_1 \theta \cancel{\in} I)$. Aber $L_0 \in fakt_1(P_R \cup I)$ nach Definitio von fakt\_1.
+Da auch $L_0 \theta \in P_F$ wegen $P_F \subseteq I, folgt \tau_P(I) \neq I$. Noch Fixpunkttheorem (Kuaster / Tarski) ist minimaler Fixpuknt von $\tau_P$ kleinster Fixpunkt von $\tau_P$. 
+
+\subsection{Vorgehensweise bei Fixpunktberechnung} bottom-up
+
+\subsubsection{Bezeichnung: Forward-chaining}Da ``$\Leftarrow$'' die natürliche Richtung für die Anwendung von Regeln ist.
+Da Regeln sicher sind ist $L_i \theta$ stets ein Fakt $\theta_i$.
+Betrachte Eignung der Methode zur Anfrageauswertung, z.B. ?- vs(c4, y). ``Alle Kurse, die Voraussetzung von Kurs c4 sind''
+
+\paragraph{Ineffizient} Berechnung des $lf_p$ und anschließende Siche zu vs(c4, y) passende Fakten $\Rightarrow$ Vermeide möglichst Berechnung nicht relevanter Fakten (später).
+
+Starte mit Zielklausel, Suche ein Regel die zu einem Atomder Klausel passt. Ersetze das Atom durch angepassten Rumpf der gewählten Regel, neue Anfrage, iterieren.
+
+\subsubsection{Bezeichnung: Backward-chaining}
+\paragraph{Beispiel}
+\begin{equation}
+\begin{split}
+P = &p(1) \\
+= &p(2). \\
+= &r(1). \\
+&\\
+q(X) :- &s(X), r(X). \\
+s(X) :- &p(X).
+\end{split}
+\end{equation}
+
+% img 3 hier
 \end{document}
