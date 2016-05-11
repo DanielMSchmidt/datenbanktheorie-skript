@@ -553,4 +553,109 @@ s(X) :- &p(X).
 \end{equation}
 
 % img 3 hier
+
+
+\subsection{Prozedurale Semantik}
+Beweistheoretische Sicht, übertragen auf Datalog Programm P aufgefasst als Theorie 1. Stufe \\
+Semantik: $\{f \in HB_P | P \vdash f \}$ \\
+Wie können Ableitungen (Beweise) von Fakten systematisch durchgeführt werden?
+
+Regeln: 
+\begin{equation}
+\begin{split}
+(1) vs(X, Y) &:- Kp(X, Y). \\
+(2) vs(X, Y) &:- vs(X, Z), kp(Z, Y). \\
+P &= \{ Kp (c4, a3), \cdots, kp(c2, a0), (1), (2) \} 
+\end{split}
+\end{equation}
+
+Zeige $P \vdash vs(c4, a0)$. 
+\begin{equation}
+\begin{split}
+(1) = (\forall X)(\forall Y)&(kp(X, Y) \Rightarrow vs(X, Y)) \\
+(2) = (\forall x)(\forall Y)(\forall Z)&(vs(X, Z) \wedge kp(Z , Y) \Rightarrow vs(X, Y))
+\end{split}
+\end{equation}
+
+\paragraph{Beweis}
+% img 4 hier 
+% img 5 hier
+
+\paragraph{Idee} 
+
+\begin{itemize}
+\item Erzeige alle Beweismister (Suchbäume)
+\item Suche Belegungen für die Variable, so dass alle Blätter zu Fakten aus P werden
+\item jede solche Belegung erzeugt einen Beweisbaum.
+\end{itemize}
+
+\paragraph{Zunächst} Suche nach ``passenden'' Köpfen von Regeln erfordert Definition.
+
+\subsubsection{Definition: Unifizierbar}
+
+Seien $L_1$ und $L_2$ heißen \textbf{unifizierbar}, wenn $(\exists \text{ Substitution } \Theta)(L_1\Theta = L_2\Theta)$. $\Theta$ heißt dann \textbf{Unifikator}.
+
+\paragraph{Beispiel}
+
+$L_1 = vs(X, Z)$ \\
+$L_2 = cs(X, Y)$ \\
+$\Theta = \{ Z / Y \}$ und $\Theta = \{ Y / Z \}$ sind Unifikatoren von dem Paar $L_1, L_2$, aber auch $\Theta = \{ X/a, Y/a, Z/a \}$. Die ersten beiden sind spezifischer als das letzte
+
+$L_1 = q(X, Y ,c) L_2 = q(W, b, Z)$
+Unifikation z.B.:
+\begin{equation}
+\begin{split}
+\Theta_1 &= \{ X/W Y/b Z/c \} \\
+\Theta_2 &= \{ X/T, W/T, y/b, Z/c \} \\
+\Theta_3 &= \{ X/a, W/a, Y/b, Z/c\}
+\end{split}
+\end{equation}
+
+Nicht unifizierbar:
+$L_1 = q(X, c, U) L_2 = q(W, G, Z)$ oder $L_1 = q(X, a, X) L_2 = q(b, Y, Y)$
+
+\subsubsection{Definition: Komposition}
+
+Sei $\Theta = \{ X_1 / t_1, \cdots, X_n / t_n \}, \varsigma = \{ Y_1 / n_1, \cdots, Y_m / t_m \}$ Substitutionen. \\
+Die Komposition $\Theta\varsigma$ von $\Theta$ und $\varsigma$ erhält man aus 
+\begin{equation}
+X_1 / t_1\varsigma, \cdots, X_m / t_m\varsigma, Y_1 / n_q, \cdots, Y_m / n_m
+\end{equation}
+Durch Streichen von Elementedn der Form Z/Z sowie $Y_i / n_i$ mit $Y_i = X_j$ für ein j$j \in \{1, ..., n\}$
+
+\paragraph{Beispiel} $\theta= \{ X/a,  Y/W \} \varsigma=\{X/ bm Y/ V, W/Z \}$ \\
+$\Theta\varsigma = \{ X/a, YZ, W/Z \}$
+
+\subsubsection{Definition: allgemeinere Substitution}
+Seien $\Theta, \varsigma$ Substitutionen, $\Theta$ heißt allgemeiner als $\varsigma \diamondsuit (\exists \text{Substitution} \delta)(\Theta \delta = \varsigma)$.
+Seine $L_1, L_2$ Literale. Ein allgemeinster Unifikator (mgu) von $L_1 in L_2$ ist ein Unifikator von $L_1 und L_2$, der allgemeiner als alle anderen Unifikatoren ist.
+
+\paragraph{Beispiel} $\Theta_2$  ist allgemeiner als $\Theta_3$; betrachte $\delta = \{T / a\}$, es gilt $\Theta_2\delta = \Theta_3$. $\Theta_1$ ist allgemeiner als $\Theta_2, \delta = \{ W / T \}$. mgu ist i.A. nicht eindeutig bestimmt. $L_1 = p(X,X) L_2 = p(V,W)$
+mgu: \\
+\begin{equation}
+\begin{split}
+&\{ X/W, V/W \} \\
+&\{ X / V, W/V\} \\
+&\{ V/X, W/X \}
+\end{split}
+\end{equation}
+
+\paragraph{Beispiel}
+$L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
+% bild 5 hier einfügen
+
+
+\subsection{Suchbaum} (Beweismuster zu einem Programm P)
+\begin{itemize}
+\item Wurzel ist mit einem ``Ziel'' $g = p(t_1, \cdots, t_n), p \in iPr\ddots{a}d$, bekannt.
+\item Knoten entlang eines Pfases von der Wurzel aus sind abwechselnd mit Atome und Regeln benannt. (Ziel-, Regelknoten)
+\item Alle Blattknoten sind mit Atomen benannt
+\item Sei k ein mit einem Atom $a(s_1,...,s_l)$ benannten Knoten (keine Blattknoten), dann ist der unmittelbare Nachfolger von k mit einer Regel von P benannt, deren Kopf mit $q(sq, ..., s_l)$ unifizierbar ist
+\item sei k' ein mit einer Regel $r = L_0 :- L_1,...,L_m$ benannte Knoten der unmittelbare Vorgänger von k' sei mit $q(s_1,...,s_l)$ benannt. Dann hat k' m unmittelbare Nachfolger, die mit $I_1 mgu(q(s_1, ..., s_l), I_{0}^{~}), ..., I_m mgu(q(s_1,...,s_l), I_0)$ benannt sind. Dabei sind $I_0, .., I_m$ Atome, die aus $L_1,...,L_m$ durch eventuelle Umbenennung von Variablen hevorgehen (die Variablen seien stets so umbenannt, dass sie im Baum eindeutig sind).
+\end{itemize}
+
+\paragraph{Beispiel}
+% bild 6 hier
+
+
 \end{document}
