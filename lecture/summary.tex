@@ -552,7 +552,7 @@ s(X) :- &p(X).
 \end{split}
 \end{equation}
 
-% img 3 hier
+% TODO img 3 hier
 
 
 \subsection*{Prozedurale Semantik}
@@ -578,8 +578,8 @@ Zeige $P \vdash vs(c4, a0)$.
 \end{equation}
 
 \paragraph{Beweis}
-% img 4 hier 
-% img 5 hier
+%TODO  img 4 hier 
+%TODO  img 5 hier
 
 \paragraph{Idee} 
 
@@ -642,7 +642,7 @@ mgu: \\
 
 \paragraph{Beispiel}
 $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
-% bild 5 hier einfügen
+% TODO bild 5 hier einfügen
 
 
 \subsection*{Suchbaum} (Beweismuster zu einem Programm P)
@@ -655,7 +655,87 @@ $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
 \end{itemize}
 
 \paragraph{Beispiel}
-% bild 6 hier
+% TODO bild 6 hier
 
+\subsubsection*{Suchbaum $\rightarrow$ Beweisbaum}
+Gegeben Sei der Suchbaum S und eine Grundsubstitution $\Theta$ mit folgenden Eigenschaften:
+\begin{itemize}
+\item $\Theta$ ordnet jeder Variable in S ein Konstantensymbol aus der Menge der in P vorkommenden Konstantensymbole zu.
+\item Für jedes Blatt von $S$ gilt, dass $\Theta$, angewand auf die Benennung des Blattes, einen Fakt aus $P_F$ liefert (build-in-Prädikate seien entsprechend berücksichtigt)
+\end{itemize}
+
+\paragraph{Beweisbaum} B entsteht aus S durch Anwendung von $\Theta$ auf alle Benennungen von Zielknoten. B repräsentiert einen Beweis für $g\Theta$, g benennung der Wurzel von S.
+
+\paragraph{Beispiel:}
+\begin{align}
+\Theta &= \{ X / c4, Y / a0, Z c2, Z'/ a3 \} \\
+&kp(c4,a3), kp(a3, c2), kp(c2, a0)  \text{ Fakten}\\
+\end{align}
+
+% TODO: Insert image 7
+
+\paragraph{Bezeichnung}: Voller Beweisbaum
+
+\subsubsection*{Systematische Erzeugung der Suchbäume}
+Sukzessive alle Bäume der Tiefe 1,2, ... Erzeugen (breadth first)
+
+\paragraph{Definition: Tiefe eines Baums} maximale Anzahl von Zielknoten auf einem Pfad von einem Blattknoten zur Wurzel. Entsprechend Knoten der Tiefe i, Ebene i eines Baumes. Zusätzlich: Spezielle Suchbäume (Tiefe 0) für Fakten aus P.
+
+\paragraph{Beispiel}: Ziel $g = vs(c4, y)$ \\
+
+\begin{itemize}
+\item \textbf{Tiefe 1}: vs(c4, y), $\Theta$, kein Beweisbaum
+\item \textbf{Tiefe 2}: vs(c4, y)  \\
+kp(c4,y), $\{ y / a3 \}$
+\end{itemize}
+
+% TODO: Insert Image 8
+
+\paragraph{Offensichtlich}
+\begin{itemize}
+\item Zu jedem endlichen Beweise, der mit Grundatomen ``Startet'', kann ein entsprechender Beweisbaum auf den beschriebenen Weg erhalten werden.
+\item Zu jedem Fakt  $f \in cons(P)$ gibt es einen endlichen Beweis, der mit Grundatomen startet, siehe Fixpunktberechnung $\rightarrow$ voller Beweisbaum
+\end{itemize}
+
+$\Rightarrow$ Methode Suchbaum / Beweisbaum ist vollständig. \\
+Da ein Beweisbaum mit $g\Theta$ als Benennung der Wurzel einen Beweis für $g\Theta$ darstellt $\Rightarrow$ Methode Suchbaum / Beweisbaum ist korrekt.
+
+
+\subsection*{Satz 1.5} Sei P ein Datalog-Programm. Die Suchbaum  / Beweisbaum Methode, angewand auf alle Ziele $q(X_1, \cdots, X_{Stelligkeit(q)})$, q intentionales Prädikatesymbol von P, liefert cons(P) als Ergebnis
+
+\paragraph{Frage:} Abbruchkriterium bei der Erzeugung von Suchbäumen
+
+Es gilt
+\begin{itemize}
+\item Beweisbäume sind isomorph zu den Suchbäumen, aus denen sie erzeugt wurden
+\item Zu jedem Fakt $f \in cons(P)$ gibt es einen vollen Beweisbaum, in dem auf jeder Zielknotenebene ein neuer Fakt (neues Teilziel) auftritt
+\paragraph{Beweis}
+Sei B ein voller Beweisbaum, der diese Eigenschaft nicht erfüllt.
+Dann gibt es ein i, so dass in B auf Ebene i nur Fakten auftreten, die schon auf vorhergehenden Ebenen auftreten. Die Teilbäume von B mit Wurzel auf Ebene i können ``höher gehängt'' werden $\Rightarrow$ Es gibt einen äquivalenten, vollen Beweisbaum mit geringerer Tiefe.
+
+\item Es gibt nur endlich viele verschiedene Grundatome, die aus den Prädikaten und Konstantensymbolen gebildet werden können. Konkret: Seien ap(p) die Anzahl verschiedener Prädikatensymbole die in p vorkommen
+\item ak(p) die Anzahl verschiedener Konstantensymbole, die in P vorkommen
+\end{itemize}
+
+Dann ist $max. fakt(P) = ap(P) * ak(P)^{max\_st(P)}$ eine obere Schranke für die Anzahl verschiedener Grundatome. \textbf{Damit:}
+	
+\subsubsection*{Satz 1.6} Die Suchbaum / Beweisbaum Methode bleibt vollständig für ein Programm P, wenn nur Bäume mit max. Tiefe max\_fakt(P) betrachtet werden.
+Statt breadth first andere Vorgehensweise denkbar:
+
+\begin{itemize}
+	\item Depth first mir Abbruch bei max\_fakt(P) und backtracking
+	\item Dynamische Abbruchbedingungen, abhängig von erzeugten Faktenmenge (limit 10)
+	\item Erkennen und Ausnutzen identischer (Teil-) Zielknoten ($\leadsto$ gerichteter, azyklischer Graph)
+\end{itemize}
+
+Zusammenfassen von Such und Beweisbäumen, Berücksichtigung von Fakten aus $P_F$ $\Rightarrow$ frühzeitiges Erkennen von Suchbäumen zu denen keine Beweisbäume existieren
+
+% TODO: image 9 einfügen
+
+Sei g das Ziel (Wurzelbenenung), dann erzeugt ein Baum der mit der leeren Menge endet, genau ein Ergebnis. 
+\begin{align}
+&g \Theta_1, ..., \Theta_n, (\Theta_1, ...., \Theta_n \text{die in dieser Reihenfolge angewandten Unifikatoren (von der Wurzel aus)} \\
+&\Theta = \Theta_1, ..., \theta_n \text{ heißt Antwortsubstitution.}
+\end{align}
 
 \end{document}
