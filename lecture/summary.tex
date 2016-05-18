@@ -404,7 +404,12 @@ q(X) &:- r(X).
 Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Sematik führt direkt zu einem algorithmus für die Schrittweise Berechnung des kleinsten Herbrand-Modells.
 
 
-%insert img1.png here
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img1}
+\caption{}
+\label{fig:img1}
+\end{figure}
 \begin{equation}
 \begin{split}
 &c \in ac \\
@@ -552,7 +557,7 @@ s(X) :- &p(X).
 \end{split}
 \end{equation}
 
-% TODO img 3 hier
+% TODO: img 3 hier
 
 
 \subsection*{Prozedurale Semantik}
@@ -578,13 +583,13 @@ Zeige $P \vdash vs(c4, a0)$.
 \end{equation}
 
 \paragraph{Beweis}
-%TODO  img 4 hier 
-%TODO  img 5 hier
+%TODO: img 4 hier 
+%TODO: img 5 hier
 
 \paragraph{Idee} 
 
 \begin{itemize}
-\item Erzeige alle Beweismister (Suchbäume)
+\item Erzeuge alle Beweismuster (Suchbäume)
 \item Suche Belegungen für die Variable, so dass alle Blätter zu Fakten aus P werden
 \item jede solche Belegung erzeugt einen Beweisbaum.
 \end{itemize}
@@ -642,7 +647,7 @@ mgu: \\
 
 \paragraph{Beispiel}
 $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
-% TODO bild 5 hier einfügen
+% TODO: bild 5 hier einfügen
 
 
 \subsection*{Suchbaum} (Beweismuster zu einem Programm P)
@@ -738,4 +743,38 @@ Sei g das Ziel (Wurzelbenenung), dann erzeugt ein Baum der mit der leeren Menge 
 &\Theta = \Theta_1, ..., \theta_n \text{ heißt Antwortsubstitution.}
 \end{align}
 
+\subsection*{Resolutionsmethode}
+
+Für allgemeine Klauselformen entwickelte Methode zum automatischen Beweisen.
+\paragraph{Literatur} J Allen Robinson: A machine-oriented logic base on the resolution principle. Journal of the ACM 12, S.23-41, 1965 \\
+
+In Logikprogrammierung (Horn-Klauseln): SLD-Resolution (Linear Resolution with Selected Function for Definite Clauses).
+
+\begin{itemize}
+\item S (Selection function): Legt fest, wie Literale aus einem Ziel (Klausel mit einem oder mehreren negierten Literalen) auszuwählen sind
+\item L (Linear): In jedem Schritt wird genau ein Literal ausgewählt für die Unifikation mit dem Kopf einer Regel einer einem Fakt
+\item D (Definit): Beschränkung auf Programme mit definiten Klauseln
+\end{itemize}
+
+\paragraph{Bemerkung} Methode steht für ganze Klasse von Algortihmen. Methode auch bekannt unter LUSH (Linear resolution with Unrestricted Selection function for Horn clauses) \\
+\paragraph{Übergang Such / Beweibaum $\leadsto$ Resolution}
+Nachweis der Unerfüllbarkeit einer Klausel
+
+% TODO: image 10 einfügen
+
+
+Seien $E = \{ \lnot M_1, \cdots, \lnot M_i, \cdots, \lnot M_K \}, r = L_0 :- L_1, \cdots, L_m$ eine Regel und $S(E) = \lnot M_i$. Es existiere $mgu(M_i, L_0) = 0$.
+\paragraph{Resolvente von E und r:} $\{ \lnot M_1\Theta, \cdots, \lnot M_{i-1}\Theta, \lnot L_1 \Theta, \cdots, \L_m \Theta \lnot M_{i + 1} \Theta, \cdots, \lnot M_K\Theta \}$
+\begin{itemize}
+\item Unerfüllbarkeit: Anwendung der Methode ende mit $\square$ (leere Klausel, entspricht Falsch)
+\item Ergebnis: Sei $g = \{ \lnot p(t_1, \cdots, t_n) \}$ das Ziel, $\{ p(t_1, \cdots, t_n)\Theta / \Theta$ Antwortsubstitution für eine Ableitung von g, die mit $\square$ endet \}
+
+
+
+Ohne Beweis.
+
+\subsection{Satz 1.7}
+Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datalog-Programme.
+
+\end{itemize}
 \end{document}
