@@ -414,7 +414,7 @@ Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Semati
 \begin{split}
 &c \in ac \\
 &\tau(c) \subseteq \tau(ac) \\
-&\tau(c) = c ! \\ % TODO: add cancel
+&\tau(c) = c! \\ % TODO: cancel
 &\tau(c) = ac
 \end{split}
 \end{equation}
@@ -423,12 +423,12 @@ Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Semati
 \begin{split}
 &c \in bc \\
 &\tau(c) \subseteq \tau(bc) \\
-&\tau(c) = c ! \\ % TODO: add cancel
+&\tau(c) = c! \\  % TODO: cancel
 &\tau(c) = bc
 \end{split}
 \end{equation}
 
-Dies ist ein Wiederspruch
+Dies ist ein Widerspruch
 
 
 \paragraph{P Datalog-Programm}
@@ -583,8 +583,18 @@ Zeige $P \vdash vs(c4, a0)$.
 \end{equation}
 
 \paragraph{Beweis}
-%TODO: img 4 hier 
-%TODO: img 5 hier
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img4}
+\caption{}
+\label{fig:img4}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img5}
+\caption{}
+\label{fig:img5}
+\end{figure}
 
 \paragraph{Idee} 
 
@@ -647,7 +657,12 @@ mgu: \\
 
 \paragraph{Beispiel}
 $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
-% TODO: bild 5 hier einfügen
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img6}
+\caption{}
+\label{fig:img6}
+\end{figure}
 
 
 \subsection*{Suchbaum} (Beweismuster zu einem Programm P)
@@ -660,7 +675,12 @@ $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
 \end{itemize}
 
 \paragraph{Beispiel}
-% TODO bild 6 hier
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img7}
+\caption{}
+\label{fig:img7}
+\end{figure}
 
 \subsubsection*{Suchbaum $\rightarrow$ Beweisbaum}
 Gegeben Sei der Suchbaum S und eine Grundsubstitution $\Theta$ mit folgenden Eigenschaften:
@@ -677,7 +697,12 @@ Gegeben Sei der Suchbaum S und eine Grundsubstitution $\Theta$ mit folgenden Eig
 &kp(c4,a3), kp(a3, c2), kp(c2, a0)  \text{ Fakten}\\
 \end{align}
 
-% TODO: Insert image 7
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img7}
+\caption{}
+\label{fig:img7}
+\end{figure}
 
 \paragraph{Bezeichnung}: Voller Beweisbaum
 
@@ -735,7 +760,12 @@ Statt breadth first andere Vorgehensweise denkbar:
 
 Zusammenfassen von Such und Beweisbäumen, Berücksichtigung von Fakten aus $P_F$ $\Rightarrow$ frühzeitiges Erkennen von Suchbäumen zu denen keine Beweisbäume existieren
 
-% TODO: image 9 einfügen
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img8}
+\caption{}
+\label{fig:img8}
+\end{figure}
 
 Sei g das Ziel (Wurzelbenenung), dann erzeugt ein Baum der mit der leeren Menge endet, genau ein Ergebnis. 
 \begin{align}
@@ -757,10 +787,15 @@ In Logikprogrammierung (Horn-Klauseln): SLD-Resolution (Linear Resolution with S
 \end{itemize}
 
 \paragraph{Bemerkung} Methode steht für ganze Klasse von Algortihmen. Methode auch bekannt unter LUSH (Linear resolution with Unrestricted Selection function for Horn clauses) \\
-\paragraph{Übergang Such / Beweibaum $\leadsto$ Resolution}
+\paragraph{Übergang Such / Beweisbaum $\leadsto$ Resolution}
 Nachweis der Unerfüllbarkeit einer Klausel
 
-% TODO: image 10 einfügen
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img9}
+\caption{}
+\label{fig:img9}
+\end{figure}
 
 
 Seien $E = \{ \lnot M_1, \cdots, \lnot M_i, \cdots, \lnot M_K \}, r = L_0 :- L_1, \cdots, L_m$ eine Regel und $S(E) = \lnot M_i$. Es existiere $mgu(M_i, L_0) = 0$.
@@ -775,6 +810,19 @@ Ohne Beweis.
 
 \subsection{Satz 1.7}
 Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datalog-Programme.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img10}
+\caption{}
+\label{fig:img10}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img11}
+\caption{}
+\label{fig:img11}
+\end{figure}
 
 \end{itemize}
 \end{document}
