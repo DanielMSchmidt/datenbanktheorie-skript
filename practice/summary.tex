@@ -159,4 +159,47 @@ $f_2$: Es sei $K_{le} = \{ (skinner, mulder), (skinner scully) \}$\\
 
 $(\forall s, w_1, f_1, w_2, f_2) ((STUDENT(s, w_1, f_1) \wedge STUDENT(s, w_2, f_2)) \Rightarrow STUDENT(s,w_1, f_2))$
 
+\section*{Übung 4}
+
+\textbf{Typ 5}: $q_1(\cdots), \cdots, q_n(\cdots) :-.$ (n > 1) $\leadsto$ ist ungenaues Wissen, disjunktive Information
+\paragraph{Beispiel}: BEARB(Black, Einbruch), BEARB(Black, Krycek) :- . ($T_K \leadsto T'_K$)\\
+$\lnot$BEARB(Black, Einbruch). In $T_K$ wahr $\leadsto$ $T'_K$ inkonsistent.
+
+\paragraph{$\leadsto$ notwendig:} Abänderung des Vollständigkeitsaxioms: $\lnot BEARB(Black, Einbruch)$ und $\lnot BEARB(Black, Krycek)$ dürfen nicht mehr ableitbar sein.
+
+\subsubsection*{Verändertes Vollständigkeitsaxiom}
+\begin{align}
+&(\forall X)(\forall Y) (BEARB(X,Y) \Rightarrow \\
+&=(X,Scully) \wedge =(Y, Einbruch)) \vee \\
+&=(X,Black) \wedge =(Y, Einbruch)) \vee \\
+&=(X,Black) \wedge =(Y, Krycek)) \vee 
+\end{align}
+
+Füge $T'_K$ das Literal $\lnot$BEARB(Black, Einbruch) hinzu $\Rightarrow$ BEARB(Black, Krycek) ableitbar.
+
+\textbf{Typ 6}:
+
+\paragraph{Beispiel} ERM(X, Sonderermittlung), ERM(X, Psychologie) :- AKTE(V,W, Psychologie), BEARBEITER(X,V).
+Gilt nicht in $T_K$ (s. Scully) $\leadsto$ Hinzufügen führt zu inkonsistenten Theorie
+
+Streichen von Tupeln als Option, Ergänzung des Vollständigkeitsaxioms:
+
+\begin{align}
+&(\forall V)(\forall W)(\forall X)(\forall Y)(ERM(X,Y) \Rightarrow (=(X, Black) \wedge =(Y, Sonderermittlung)) \\
+&\vee \cdots \vee \\
+&\vee (=(Akte(V,W, Psychologie) \wedge BEARBEITET(X,V)) \wedge =(Y, Sonderermittlung)) \\
+&\vee (=(Akte(V,W, Psychologie) \wedge BEARBEITET(X,V)) \wedge =(Y, Psychologie)))
+\end{align}
+
+\subsection*{A3}
+
+a) $(\forall X)(\forall Y)(\forall Z)(\lnot (AKTE(X, offen, Z) \wedge AKTE(X, geloest, Z)))$ \\
+b) $(\exists X)(\exists Y)(LTD\_ERMITTLER(X,Y))$. \\
+Versuch: LTD\_ERMITTLER(X,Y) :- . // Funktioniert nicht, weil X=Y möglich \\
+c) Typ 4: 2 mal \\
+d) $(\forall E)(AKTE(Krycek, offen, E) \Rightarrow BEARBEITET(Mulder, Krycek))$ (Typ 4) \\
+e) $(\forall N)(\forall A)(ERMITTLER(N, A) \Rightarrow (=(A, Sonderermittlung) \vee (\exists M)(LERM(N,M)) \vee (\exists F)(BEARBEITET(N, F))))$
+f) $(\forall N) (\forall F)(BEARR(N,F) \Rightarrow (\exists E) (AKTE(F, offen, E)))$ \\
+$(\forall N) (\forall F)(BEARR(N,F) \Rightarrow \lnot(\exists E) (AKTE(F, geloest, E)))$
+
 \end{document}
