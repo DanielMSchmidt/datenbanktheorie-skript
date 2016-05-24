@@ -823,6 +823,124 @@ Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datal
 \caption{}
 \label{fig:img11}
 \end{figure}
-
 \end{itemize}
+
+
+\paragraph{Beispiel} m alle Kurse $\neq$ a3 mit ihren Studierenden, die Voraussetzung von c4 sind.
+
+\begin{align}
+r_1 = &vs(X,Y) :- Kp(X,Y). \\
+&vs(c4, Y) :- vs(v4,Z), Kp(Z,Y). \\
+&m(Z,W) :- vs(c4,Z), ag(Z,X), bl(Z,W,U), Z \neq a3.
+\end{align}
+
+\paragraph{1.Schritt}
+\begin{itemize}
+\item $r_1$ \checkmark
+\item $r_2 \leadsto \tilde{r_2} = vs(Q,Y) :- vs(C4,Z), kp(Z,Y), Q = c4.$
+\item $r_3$ \checkmark
+\end{itemize}
+
+\paragraph{2.Schritt}
+\begin{itemize}
+\item $E_{r_1}$ = KURSPLAN
+\item $E_{r_2} = \sigma_{Q = c4} \underbrace{\Pi_2 (\varsigma_{@1 = c4}(VS)}_Z \bowtie\footnote{Join Operation} \underbrace{KURSPLAN}_Z,Y \bowtie \underbrace{\{c4\}_Q)}_Q$
+\item $E_{r_3} = \sigma_{Z \neq a3} \underbrace{\Pi_2 (\varsigma_{@1 = c4}(VS)}_Z \bowtie ANGEBOT \bowtie BELEGUNG$
+\end{itemize}
+
+\paragraph{3.Schritt}
+vereinfacht $Q \Rightarrow X$\footnote{kommt nicht im Rumpf von $\tilde{r_2}$ vor}, damit $\tilde{r_1}$ und $\tilde{r_2}$ passen.
+\begin{align}
+&vs(X,Y) \\
+&vs(X,Y) \\
+&m(Z,W)
+\end{align}
+
+
+\paragraph{4.Schritt}
+\begin{align}
+&VS = \underbrace{KURSPLAN}_{X Y} \cup \underbrace{(\Pi_2 (\varsigma_{@1 = c4}(VS)) \bowtie KURSPLAN \bowtie \{ c4 \}_X)}_X Y \\
+&M = (\varsigma_{Z \neq a3}(\Pi_2 (\varsigma_{@1 = c4}(VS)) \bowtie ANGEBOT \bowtie BELEGUNG))[z,w]
+\end{align}
+
+\subsubsection{Schreibweise für Gleichungssysteme}
+
+\begin{align}
+&R_i = E_i \underbrace{(R_1, \cdots, R_n)}_{DB-Relationen}, i = 1, \cdots, n
+\end{align}
+
+
+Vergleich der Ausruckskraft\footnote{genauere Definition später} von Datalog und Relationale Algebra:
+
+\begin{itemize}
+\item Reines Datalog ohne Rekursion entspricht $RA^+$ (monotone Relationale Algebra)
+\item Reines Datalog ohne Rekursion entspricht $RA^+$ ohne Gleichungssysteme (> $RA^+$)
+\end{itemize}
+
+\paragraph{Beispiel:}
+
+Kursplan (kp): \\
+\begin{tabular}{|c|c|}
+\hline
+X & Y\\ \hline
+c4 & a3 \\
+a3 & c2 \\
+c4 & a2 \\
+c2 & a0 \\
+\hline
+\end{tabular}
+
+
+\begin{align}
+&vs(X,Y) :- Kp(X,Y).
+&vs(X,Y) :- \underbrace{vs(X,Z)}_{X Z}, \underbrace{kp(Z,Y)}_{Z Y}.
+&\leadsto vs = \Pi_{1,3}(VS \bowtie KURSPLAN) \cup KURSPLAN
+\end{align}
+
+Jacobs entspricht Gauss-Seidel
+
+\begin{align}
+R^0 &= \emptyset \\
+Q^1 &= \emptyset \\
+R^1 &= KP \quad \leftarrow (\emptyset_{X2} \bowtie KP_{ZY}) [X,Y] \\
+Q^2 &= KP \\
+R^2 &= \{ (c4,c2), (a3,a0) \} \cup KP \quad (KP_{XZ}) \bowtie KP_{ZY})[X,Y] \cup KP_{X,Y} \\
+Q^3 &= R^2 \\
+R^3 &= \{(c4,a0)\} \cup R^2 \quad (((KP_{XZ} \bowtie KP_{ZY}\footnote{Es wird zu viel berechnet beim Join. Siehe unten})[X,Y] \cup KP_{XY})_{XZ})[X,Y] \cup KP_{XY}  \\
+\end{align}
+
+\subsubsection{Anmerkung}
+Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS' \cup VS'') \bowtie KURSPLAN = VS' \bowtie KURSPLAN \cup VS'' \bowtie KURSPLAN $
+
+\paragraph{Nach Schritt 4}
+
+\begin{align}
+&R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit $\delta$ - Berücksichtigung} \footnote{Ist suboptimal, weil wieder zu viel brerchnet wird} \\
+& \delta R_1 \bowtie \cup R_2 \bowtie R_3 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_1 \bowtie R_2 \cup R_2 \bowtie \delta R_3 \\
+&\Rightarrow\footnote{Ist besser} \delta R_1 \bowtie R_2 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_w \bowtie \delta R_3
+\end{align}
+
+\begin{align}
+& \delta R^0 = KP \\
+& R^0 = KP \\
+& \delta Q^1 = KP \\
+& \delta R^1 = \{ (c4,c2), (a3,a0)\} \cup KP \\
+& \delta R^1 = \{ (c4,c2), (a3,a0)\} \cup KP \\
+& R^1 = Kp \cup \{(c4,c2), (a3,a0)\} \\
+& \delta Q^2 = \{(c4,c2), (a3,a0)\} \\
+& \delta R^2 =  \delta Q^2 \botwie Kp \cup Kp = \{(c4,a0)\}  \cup Kp \\
+& R^2 =  Kp \cup \{ (c4,c2), (a3,a0) \} \cup \{(c4,a0)\} \\
+& \delta Q^3 = \{(c4,a0)\} \\
+& \delta R^3 = \delta Q^3 \bowtie Kp \cup Kp = Kp \\
+& \delta R^3 = \emptyset \\
+& R^3 =  R^2 \cup \emptyset
+\end{align}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img12}
+\caption{}
+\label{fig:img12}
+\end{figure}
+
 \end{document}
