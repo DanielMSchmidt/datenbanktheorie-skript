@@ -915,7 +915,7 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 \paragraph{Nach Schritt 4}
 
 \begin{align}
-&R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit $\delta$ - Berücksichtigung} \footnote{Ist suboptimal, weil wieder zu viel brerchnet wird} \\
+&R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit \delta - Beruecksichtigung} \footnote{Ist suboptimal, weil wieder zu viel brerchnet wird} \\
 & \delta R_1 \bowtie \cup R_2 \bowtie R_3 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_1 \bowtie R_2 \cup R_2 \bowtie \delta R_3 \\
 &\Rightarrow\footnote{Ist besser} \delta R_1 \bowtie R_2 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_w \bowtie \delta R_3
 \end{align}
@@ -928,7 +928,7 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 & \delta R^1 = \{ (c4,c2), (a3,a0)\} \cup KP \\
 & R^1 = Kp \cup \{(c4,c2), (a3,a0)\} \\
 & \delta Q^2 = \{(c4,c2), (a3,a0)\} \\
-& \delta R^2 =  \delta Q^2 \botwie Kp \cup Kp = \{(c4,a0)\}  \cup Kp \\
+& \delta R^2 =  \delta Q^2 \bowtie Kp \cup Kp = \{(c4,a0)\}  \cup Kp \\
 & R^2 =  Kp \cup \{ (c4,c2), (a3,a0) \} \cup \{(c4,a0)\} \\
 & \delta Q^3 = \{(c4,a0)\} \\
 & \delta R^3 = \delta Q^3 \bowtie Kp \cup Kp = Kp \\
@@ -938,9 +938,47 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 
 \begin{figure}
 \centering
-\includegraphics[width=0.7\linewidth]{img/img12}
+\includegraphics[width=0.95\linewidth]{img/img12}
 \caption{}
 \label{fig:img12}
 \end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img13}
+\caption{}
+\label{fig:img13}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img14}
+\caption{}
+\label{fig:img14}
+\end{figure}
+
+\paragraph{Beispiel}
+
+\begin{align}
+&r_2 = vs^{fb}(X,Y) :- vs^{fb}\_(X,Z), Kp(Z,Y). \\
+&i) \checkmark \\
+&ii) \cdots magic\_r_2\_vs^{fb}\_1(X,Z) \cdots \\
+&iii) \cdots magic\_r_2\_vs^{fb}\_1(Z) \cdots \\
+&iv) vs^{fb}(Y)\\
+& magic\_r_2\_vs^{fb}\_1(Z) :- magic\_vs^{fb}(Y), kp(Z,Y).
+\end{align}
+
+
+\begin{align}
+&r_0 = query^f(X :- vs^{fb}\_(X,a0). \\
+&i) \cdots \\
+&ii) query^f(X) :- magic\_r_0\_vs^{fb}\_1(X,a0) \\
+&iii) query^f(X) :- magic\_r_0\_vs^{fb}\_1(a0) \\
+&iv) - \\
+&v) vs^{fb}(Y)\\
+& magic\_r_0\_vs^{fb}\_1(a0) :- magic\_query^f().
+r_0 &\leadsto\footnote{``Sideways information passing''} magic\_r_0\_vs^{fb}\_1(a0) :- .
+r_2 &\leadsto magic\_r_2\_vs^{fb}\_1(Z) :- magic\_vs^{fb}(Y), Kp(Z,Y).
+\end{align}
 
 \end{document}
