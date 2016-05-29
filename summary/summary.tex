@@ -7,6 +7,7 @@
 \usepackage{ textcomp }
 \usepackage{ mathrsfs }
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 \pagestyle{fancy}
 
@@ -113,5 +114,25 @@ Die Suchbaum / Beweisbaum Methode bleibt vollständig für ein Programm P, wenn 
 \section*{Resolutionsmethode}
 Für allgemeine Klauselformen entwickelte Methode zum automatischen Beweisen.
 
+
+\section*{Definition: Vollständiger Verband}
+Partiell geordnete Mengt $(V, \le)$ bei der zu jeder Teilmenge ein Infinum($\bot_V$) \& Suprenum ($\top_V$)besteht.
+Jeder endliche Verband (und jeder Teilmengenverband) ist vollständig.
+
+\section*{Definition: Monotone Transformation}
+Abbildung $\tau$ mit $(\forall a,b \in V) (a \le b \Rightarrow \tau(a) \le \tau(b))$.
+ 
+\section*{Definition: Fixpunkt}
+$a \in V: \tau(a) = a$
+
+\section*{Magic Set Methode}
+Transformiere ein Programm in eine Version, die für ein gegebenes Ziel die gleiche Ausgabe hat aber das Ziel bei bottom-up Auswertung berücksichtigt wird. \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_set.pdf}{Algorithmus}, \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_Beispiel.pdf}{Beispiel hier.}
+
+\section*{Definition: Ausgezeichnet}
+\subsection*{Argument eines Teilziels}
+Konstantensymbol, gemäß $\alpha$ gebunden, es in einem EDB-Prädikat auftritt, das ein ausgezeichnetes Argument hat.
+
+\subsection*{EDB-Prädikat}
+Alle seine Argumente sind ausgezeichnet
 
 \end{document}
