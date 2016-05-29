@@ -344,8 +344,8 @@ vs(X,Y) :- kp(X,Y) &\leadsto vs \in iPr\ddot{a}d
 \paragraph*{Gesucht:} Durch Programm P bestimmte Grundatome (Fakten).
 
 \subsubsection*{Definition: Grundatom}
-Ein Grundatom f ist eine logische folgerung einer Menge D von Datalog Klauseln (z.B. $D \vDash f$) $\diamondsuit_{Def}$. Jedes Herbrand Modell von D ist auch ein Modell von f.\\
-Da f ein Grundatom ist gilt $D \vDash f \Longrightarrow f $ ist in jedem Herbrand.Modell von D enthalten. Das heißt $f \in \bigcap \{ I | I Herbrand-Modell von D \}$.\\
+Ein Grundatom f ist eine logische Folgerung einer Menge D von Datalog Klauseln (z.B. $D \vDash f$) $\diamondsuit_{Def}$. Jedes Herbrand Modell von D ist auch ein Modell von f.\\
+Da f ein Grundatom ist gilt $D \vDash f \Longrightarrow f $ ist in jedem Herbrand-Modell von D enthalten. Das heißt $f \in \bigcap \{ I | I Herbrand-Modell von D \}$.\\
 Sei $f \in \bigcap \{ I | I Herbrand-Modell von D \}$, dann ist f ein Grundatom und jedes Modell von D auch in Modell von f. 
 
 \subsubsection*{Definition: Mege aller Konsequenzen}
@@ -439,10 +439,10 @@ $\tau_P$ liefert Fakten von P vereinigt mit Fakten, die in einem Schritt aus der
 \subsubsection*{Definition: Substitution}
 Eine Substitution ist eine endliche Menge der Form
 \begin{equation}
-\{ X_1 / t_1, \cdots, X_n / t_n \}, X_1,...,X_n unterschiedliche Variablen, t_1,....,t_n Terme, X_i \neq t_i
+\{ X_1 / t_1, \cdots, X_n / t_n \}, X_1,...,X_n \text{ unterschiedliche Variablen, } t_1,....,t_n Terme, X_i \neq t_i
 \end{equation}
 
-Falls alle $t_i$ Konstanten ist dies eine \textbf{Grundsubstitution}.
+Falls alle $t_i$ Konstanten sind, ist dies eine \textbf{Grundsubstitution}.
 
 Sei $\theta$ eine Substitution, t ein Term (Variable oder Konstante), so gilt \\
 
@@ -526,11 +526,11 @@ $\leadsto^{T_p(\cdots)}$
 \subsection*{Satz 1.4} Für jedes Datalog-Programm P gilt $cons(P) = lf_p(\tau_p)$ (lf = least fixpunkt).
 
 \subsubsection*{Beweis}:
-\paragraph{1)} $cons(P) ist ein Fixpunkt von \tau_P$. \\
+\paragraph{1)} cons(P) ist ein Fixpunkt von $\tau_P$. \\
 $\tau_p(cons(P)) = P_F \cup fakt\_1(P_R \cup cons(P))$. cons(P) ist kleinstes Herbrand-Modell von P, d.h. alle Regeln sind gültig unter $cons(P) \Rightarrow fakt\_1(P_R \cup cons(P) = cons(P) \backslash P_F)$. (und kein Fakt kann aus cons(P) entfernt werden, ohne dass die Modelliereigenschaft verloren geht.) $\Rightarrow \tau_P(cons(P)) = P_F \cup cons(P) \backslash P_F = cons(P)$
 
-\paragraph{2)} $cons(P)$ ist minimaler Fixpunkt von $\tau_P$.
-Annahme: $(\exists I \cancel{\subseteq} cons(P))(\tau_P(I) = I)$.
+\paragraph{2)} $cons(P)$ ist minimaler Fixpunkt von $\tau_P$.\\
+Annahme: $(\exists I \not\subseteq cons(P))(\tau_P(I) = I)$.\\
 cons(P) ist minimales Herbrand-Modell $\Rightarrow$ I ist kein Herbrand-Modell. Da $P_F \subseteq I$ wg. Annahme $\tau_P(I) = I$ folgt midestens eine Regel ist nicht erfüllt, d.h. $(\exists h_0, \cdot,h_n \in P_R)(\exists Substitution \theta)(\{ h_1\theta, \cdots, L_n(\theta)\} \subseteq I \wedge L_1 \theta \cancel{\in} I)$. Aber $L_0 \in fakt_1(P_R \cup I)$ nach Definitio von fakt\_1.
 Da auch $L_0 \theta \in P_F$ wegen $P_F \subseteq I, folgt \tau_P(I) \neq I$. Noch Fixpunkttheorem (Kuaster / Tarski) ist minimaler Fixpuknt von $\tau_P$ kleinster Fixpunkt von $\tau_P$. 
 
@@ -668,7 +668,7 @@ $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
 \subsection*{Suchbaum} (Beweismuster zu einem Programm P)
 \begin{itemize}
 \item Wurzel ist mit einem ``Ziel'' $g = p(t_1, \cdots, t_n), p \in iPr\ddots{a}d$, bekannt.
-\item Knoten entlang eines Pfases von der Wurzel aus sind abwechselnd mit Atome und Regeln benannt. (Ziel-, Regelknoten)
+\item Knoten entlang eines Pfades von der Wurzel aus sind abwechselnd mit Atome und Regeln benannt. (Ziel-, Regelknoten)
 \item Alle Blattknoten sind mit Atomen benannt
 \item Sei k ein mit einem Atom $a(s_1,...,s_l)$ benannten Knoten (keine Blattknoten), dann ist der unmittelbare Nachfolger von k mit einer Regel von P benannt, deren Kopf mit $q(sq, ..., s_l)$ unifizierbar ist
 \item sei k' ein mit einer Regel $r = L_0 :- L_1,...,L_m$ benannte Knoten der unmittelbare Vorgänger von k' sei mit $q(s_1,...,s_l)$ benannt. Dann hat k' m unmittelbare Nachfolger, die mit $I_1 mgu(q(s_1, ..., s_l), I_{0}^{~}), ..., I_m mgu(q(s_1,...,s_l), I_0)$ benannt sind. Dabei sind $I_0, .., I_m$ Atome, die aus $L_1,...,L_m$ durch eventuelle Umbenennung von Variablen hevorgehen (die Variablen seien stets so umbenannt, dass sie im Baum eindeutig sind).
@@ -808,7 +808,7 @@ Seien $E = \{ \lnot M_1, \cdots, \lnot M_i, \cdots, \lnot M_K \}, r = L_0 :- L_1
 
 Ohne Beweis.
 
-\subsection{Satz 1.7}
+\subsection*{Satz 1.7}
 Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datalog-Programme.
 
 \begin{figure}
