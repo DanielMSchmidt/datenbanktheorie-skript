@@ -202,4 +202,75 @@ e) $(\forall N)(\forall A)(ERMITTLER(N, A) \Rightarrow (=(A, Sonderermittlung) \
 f) $(\forall N) (\forall F)(BEARR(N,F) \Rightarrow (\exists E) (AKTE(F, offen, E)))$ \\
 $(\forall N) (\forall F)(BEARR(N,F) \Rightarrow \lnot(\exists E) (AKTE(F, geloest, E)))$
 
+\section*{Übung 4/5}
+
+\subsection*{Aufgabe 1}
+\subsubsection*{a)}
+
+$\tau_1(M) = \{x - 1 / x \in M, x \neq 1\}$. Fixpunkt: $\emptyset$
+
+\subsubsection*{b)}
+Bei Hannes nachsehen
+
+\subsubsection*{c)}
+$\tau_3(M) = R \backslash M$ \\
+Sei $R = \{ 1 \}, A = \{ 2 \}, B = \{ 1,2 \}$, also $A \subseteq B$ \\
+$\tau_3(A) = \{ 1\} \tau_3(B) = \emptyset$ also $\tau_3(A) \subseteq \tau_3(B)$ \\
+$R = \emptyset \leadsto \tau_3(\emptyset) = \emptyset \leadsto \emptyset$ ist Fixpunkt  \\
+$R = \emptyset, m \in M \leadsto m \not\in \tau_3(M) \leadsto \tau_3(M) \neq M$
+
+\subsubsection*{d)}
+$tau_4(M) = \{ 1 \} \cup \{ 2x / x \in M \}$ \\
+$A \subseteq B, a \in tau_4(A) \leadsto a = 1 \text{oder} (\exists a' \in M)(a = 2 a') \leadsto (\exists a \in B)(a = 2 a') \leadsto a' \in tau_4(B)$ \\
+$\{ 1 \} \cup \{ 2^i / i \ge 0 \} = \{ 1 \} \cup \{ 2 \cdot 1 \} \cup \{2 \cdot 2x / x = 2^i, i \ge 0\} = \{ 1 \} \cup \{ 2 \} \cup \{ 2x / x = 2^i, i \ge 1 \} = \{ 2x / x = 2^i, i \ge 0 \}$
+
+
+\subsection*{Aufgabe 2}
+
+\subsubsection*{1)}
+$I_1 \cap I_2$ \\
+$r: q(\cdots) :- p_1(\cdots), \cdots, p_m(\cdots) \in P_R$ \\
+
+\paragraph{Fall 1}
+$p_1(\cdots), \cdots, p_m(\cdots) \in I_1, q(\cdots) \in I_1$ \\
+$(\exists p_i(\cdots))(j \in \{ 1, \cdots, m \} \wedge p_j \not \in I_2) \leadsto I_1 \cap I_2$ erfüllt r, da nicht alle $p_j \in I_1 \cap I_2$ 
+
+\paragraph{Fall 2}
+$p_1(\cdots), \cdots, p_m(\cdots), q(\cdots) \in I_1, I_2$ \\
+Alles drin, kein Problem
+
+\paragraph{Fall 3}
+$\{ p_{i_1}(\cdots), \cdots, p_{i_k} \} \subseteq \{ p_1(\cdots), \cdots, p_m(\cdots \})$ von $I_1$ erfüllt. $\leadsto$ höchstens $p_{i_1}(\cdots), \cdots, p_{i_k}$ von $I_1 \cap I_2$ erfüllt $\Rightarrow$ r von $I_1 \cap I_2$ erfüllt.\\
+
+\subsubsection*{2)}
+Gegenbeispiel: \\
+$p(i) :- p(a), p(b).$ \\
+$ext_{I_1}(p) = \{ p(a)\}, ext_{I_2}(p) = \{ p(b) \}, ext_{I_1 \cup I_2}(p) = \{ p(a), p(b) \}$
+
+p(c) müsste drin sein, fehlt aber, daher kein Modell.
+
+\subsubsection*{3)}
+\checkmark
+
+\subsubsection*{4)}
+Gegenbeispiel: \\
+$P = \{ p(a) \}$ Belegung $\rho$, es gilt aber $\emptyset \neq p(a)$.
+Ein Programm mit einem Fakt drin, führt zu einem nicht leeren Herbrand Universum
+
+\subsubsection*{5)}
+Siehe Hannes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{document}
