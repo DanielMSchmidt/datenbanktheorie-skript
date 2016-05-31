@@ -692,10 +692,10 @@ Gegeben Sei der Suchbaum S und eine Grundsubstitution $\Theta$ mit folgenden Eig
 \paragraph{Beweisbaum} B entsteht aus S durch Anwendung von $\Theta$ auf alle Benennungen von Zielknoten. B repräsentiert einen Beweis für $g\Theta$, g benennung der Wurzel von S.
 
 \paragraph{Beispiel:}
-\begin{align}
+\begin{align*}
 \Theta &= \{ X / c4, Y / a0, Z c2, Z'/ a3 \} \\
 &kp(c4,a3), kp(a3, c2), kp(c2, a0)  \text{ Fakten}\\
-\end{align}
+\end{align*}
 
 \begin{figure}
 \centering
@@ -768,10 +768,10 @@ Zusammenfassen von Such und Beweisbäumen, Berücksichtigung von Fakten aus $P_F
 \end{figure}
 
 Sei g das Ziel (Wurzelbenenung), dann erzeugt ein Baum der mit der leeren Menge endet, genau ein Ergebnis. 
-\begin{align}
+\begin{align*}
 &g \Theta_1, ..., \Theta_n, (\Theta_1, ...., \Theta_n \text{die in dieser Reihenfolge angewandten Unifikatoren (von der Wurzel aus)} \\
 &\Theta = \Theta_1, ..., \theta_n \text{ heißt Antwortsubstitution.}
-\end{align}
+\end{align*}
 
 \subsection*{Resolutionsmethode}
 
@@ -828,11 +828,11 @@ Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datal
 
 \paragraph{Beispiel} m alle Kurse $\neq$ a3 mit ihren Studierenden, die Voraussetzung von c4 sind.
 
-\begin{align}
+\begin{align*}
 r_1 = &vs(X,Y) :- Kp(X,Y). \\
 &vs(c4, Y) :- vs(v4,Z), Kp(Z,Y). \\
 &m(Z,W) :- vs(c4,Z), ag(Z,X), bl(Z,W,U), Z \neq a3.
-\end{align}
+\end{align*}
 
 \paragraph{1.Schritt}
 \begin{itemize}
@@ -850,24 +850,24 @@ r_1 = &vs(X,Y) :- Kp(X,Y). \\
 
 \paragraph{3.Schritt}
 vereinfacht $Q \Rightarrow X$\footnote{kommt nicht im Rumpf von $\tilde{r_2}$ vor}, damit $\tilde{r_1}$ und $\tilde{r_2}$ passen.
-\begin{align}
+\begin{align*}
 &vs(X,Y) \\
 &vs(X,Y) \\
 &m(Z,W)
-\end{align}
+\end{align*}
 
 
 \paragraph{4.Schritt}
-\begin{align}
+\begin{align*}
 &VS = \underbrace{KURSPLAN}_{X Y} \cup \underbrace{(\Pi_2 (\varsigma_{@1 = c4}(VS)) \bowtie KURSPLAN \bowtie \{ c4 \}_X)}_X Y \\
 &M = (\varsigma_{Z \neq a3}(\Pi_2 (\varsigma_{@1 = c4}(VS)) \bowtie ANGEBOT \bowtie BELEGUNG))[z,w]
-\end{align}
+\end{align*}
 
 \subsubsection{Schreibweise für Gleichungssysteme}
 
-\begin{align}
+\begin{align*}
 &R_i = E_i \underbrace{(R_1, \cdots, R_n)}_{DB-Relationen}, i = 1, \cdots, n
-\end{align}
+\end{align*}
 
 
 Vergleich der Ausruckskraft\footnote{genauere Definition später} von Datalog und Relationale Algebra:
@@ -891,15 +891,15 @@ c2 & a0 \\
 \end{tabular}
 
 
-\begin{align}
+\begin{align*}
 &vs(X,Y) :- Kp(X,Y).
 &vs(X,Y) :- \underbrace{vs(X,Z)}_{X Z}, \underbrace{kp(Z,Y)}_{Z Y}.
 &\leadsto vs = \Pi_{1,3}(VS \bowtie KURSPLAN) \cup KURSPLAN
-\end{align}
+\end{align*}
 
 Jacobs entspricht Gauss-Seidel
 
-\begin{align}
+\begin{align*}
 R^0 &= \emptyset \\
 Q^1 &= \emptyset \\
 R^1 &= KP \quad \leftarrow (\emptyset_{X2} \bowtie KP_{ZY}) [X,Y] \\
@@ -907,20 +907,20 @@ Q^2 &= KP \\
 R^2 &= \{ (c4,c2), (a3,a0) \} \cup KP \quad (KP_{XZ}) \bowtie KP_{ZY})[X,Y] \cup KP_{X,Y} \\
 Q^3 &= R^2 \\
 R^3 &= \{(c4,a0)\} \cup R^2 \quad (((KP_{XZ} \bowtie KP_{ZY}\footnote{Es wird zu viel berechnet beim Join. Siehe unten})[X,Y] \cup KP_{XY})_{XZ})[X,Y] \cup KP_{XY}  \\
-\end{align}
+\end{align*}
 
 \subsubsection{Anmerkung}
 Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS' \cup VS'') \bowtie KURSPLAN = VS' \bowtie KURSPLAN \cup VS'' \bowtie KURSPLAN $
 
 \paragraph{Nach Schritt 4}
 
-\begin{align}
+\begin{align*}
 &R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit \delta - Beruecksichtigung} \footnote{Ist suboptimal, weil wieder zu viel brerchnet wird} \\
 & \delta R_1 \bowtie \cup R_2 \bowtie R_3 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_1 \bowtie R_2 \cup R_2 \bowtie \delta R_3 \\
 &\Rightarrow\footnote{Ist besser} \delta R_1 \bowtie R_2 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_w \bowtie \delta R_3
-\end{align}
+\end{align*}
 
-\begin{align}
+\begin{align*}
 & \delta R^0 = KP \\
 & R^0 = KP \\
 & \delta Q^1 = KP \\
@@ -934,7 +934,7 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 & \delta R^3 = \delta Q^3 \bowtie Kp \cup Kp = Kp \\
 & \delta R^3 = \emptyset \\
 & R^3 =  R^2 \cup \emptyset
-\end{align}
+\end{align*}
 
 \begin{figure}
 \centering
@@ -959,17 +959,17 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 
 \paragraph{Beispiel}
 
-\begin{align}
+\begin{align*}
 &r_2 = vs^{fb}(X,Y) :- vs^{fb}\_(X,Z), Kp(Z,Y). \\
 &i) \checkmark \\
 &ii) \cdots magic\_r_2\_vs^{fb}\_1(X,Z) \cdots \\
 &iii) \cdots magic\_r_2\_vs^{fb}\_1(Z) \cdots \\
 &iv) vs^{fb}(Y)\\
 & magic\_r_2\_vs^{fb}\_1(Z) :- magic\_vs^{fb}(Y), kp(Z,Y).
-\end{align}
+\end{align*}
 
 
-\begin{align}
+\begin{align*}
 &r_0 = query^f(X :- vs^{fb}\_(X,a0). \\
 &i) \cdots \\
 &ii) query^f(X) :- magic\_r_0\_vs^{fb}\_1(X,a0) \\
@@ -979,6 +979,65 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 & magic\_r_0\_vs^{fb}\_1(a0) :- magic\_query^f().\\
 r_0 &\leadsto\footnote{``Sideways information passing''} magic\_r_0\_vs^{fb}\_1(a0) :- . \\
 r_2 &\leadsto magic\_r_2\_vs^{fb}\_1(Z) :- magic\_vs^{fb}(Y), Kp(Z,Y).
-\end{align}
+\end{align*}
+
+\begin{align*}
+&p(X):- \lnot q(X) \\
+&p(X) \cup q(X) \\
+&q(X) :- \lnot p(X)
+\end{align*}
+
+$P = \{ ag(a3, o) :- \lnot ag(a3,m) \}.$ \\
+``Falls `m' Kurs a3 nicht anbietet, bietet o den Kurs an'' \\
+Mit CWA: 
+
+\begin{align*}
+&ag(a3,m) \not\in ANGEBOT \\
+&ag(a3,o) \not\in ANGEBOT
+\end{align*}
+
+Da beide keine logische Folgerung von P (müsste in allen Modellen gültig sein) Nimm Modelle $\{ ag(a3, o) \}$.
+
+\begin{align*}
+&\{ ag(a3, o) \} \\
+& \Rightarrow^{CWA\footnote{Closed World Assumption}} \lnot ag(a3, m) \text{ und } \lnot ag(a3, o) \text{ sind gültig.} \\
+& \text{Aber } \lnot ag(a3,m) \Rightarrow ag(a3,0) \leadsto \text{Wiederspruch zur CWA}
+\end{align*}
+
+
+Beachte folgende HB-Interpretation von P.
+
+\begin{align*}
+&I_1 = \{ ag(a3, o) \} \text{ und } I_2 = \{ ag(a3, m) \} (I_1, I_2 \text{ sind minimale Modelle}) \\
+&I_3 = \{ ag(a4, o), ag(a4,m) \} \text{ ist ebenfalls Modell von P}
+\end{align*}
+
+In $I_1$ gilt mit CWA: $\lnot ag(a3,m)$ \\
+In $I_2$ gilt mit CWA: $\lnot ag(a3,o)$ \\
+
+\paragraph{Grund für Problem:} Implikation $\lnot ag(a3,m) \Rightarrow ag(a3, o)$ äquivalent zu $ag(a3,m) \vee ag(a3, 0)$. Welches Modell soll ausgezeichnet werden? Semantik?
+
+\paragraph{Offensichtlich:} I Modell von P $\diamondsuit$ I Modell von $P' = \{ ag(a3,m) :- ag(a3, o)\}$
+Gehe wie bei Fuxpunktberechnung vor:
+
+\paragraph{P}
+Bekannte Fakten $EDB = \{ ag(a1,m)\, ag(c4,q), ag(a3,d), \cdots \}$ \\
+$ag(a3, m) \not \in EDB$ \\
+CWA: $\lnot ag(a3, m) \text{ gilt} \Rightarrow^{\text{Regel}} ag(a3,0)$ \\
+
+\paragraph{P'}
+$ag(a3, o) \not \in EDB$ \\
+CWA: $\lnot ag(a3, 0) \text{ gilt} \Rightarrow^{\text{Regel}} ag(a3,m)$ \\
+
+Daraus folgt: Wähle $I_1(I_2)$ als Modell (Semantik) von P(P') $\leadsto$ Auswertungsrichtung gemäß Implikation legt Semantik fest. D.h. Semantik ist abhängig von der Art des Aufschreibens der Klauseln. Daraus ergibt sich die Frage nach einer besseren Semantikdefinition.
+
+% TODO: BILD HIER
+
+\begin{align*}
+r(1), s(1), s(2).& \\
+U(X) :- r(X). r(1) \leadsto u(1)& \\
+q(X) :- s(X), \lnot u(X).& \Leftarrow s(1) \leadsto q(1)\\
+& \Leftarrow s(2) \leadsto q(2)
+\end{align*}
 
 \end{document}
