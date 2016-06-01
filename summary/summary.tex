@@ -128,6 +128,43 @@ $a \in V: \tau(a) = a$
 \section*{Magic Set Methode}
 Transformiere ein Programm in eine Version, die für ein gegebenes Ziel die gleiche Ausgabe hat aber das Ziel bei bottom-up Auswertung berücksichtigt wird. \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_set.pdf}{Algorithmus}, \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_Beispiel.pdf}{Beispiel hier.}
 
+\subsection*{Vorgehen}
+
+\subsubsection*{1.Schritt}
+
+Füge für das Ziel $g = q(\cdots)$ die Regel $query^{f\cdots}\footnote{Hochgestellte Zeichen sind Bindungsmuster (wie in Coral)}(X_1, \cdots, X_k) :- q^{\alpha}(\cdots).$ ein, wobei $X_1, \cdots, X_k$ Variablen aus $q^{\alpha}(\cdots)$ sind. Erzeuge für jede Regel $r \in P$ und jedes mögliche Bindungsmuster $\beta$ des Prädikates im Kopf von r eine Regel mit Bindungsmuster für jedes ihrer itensionalen Prädikate. Bestimme dabei unter Beachtung von $\beta$ für jedes Argument im Rumpf ob es ausgezeichnet ist oder nicht. Falls ein IDB-Pr¨adikat im Rumpf mehrfach auftritt, sollte man es durchnummerieren.
+
+\subsubsection*{2.Schritt}
+
+Forme $P^B_g$\footnote{Menge aller erreichbaren Regeln aus Schritt 1} zu $P^{magic}_g$\footnote{Bezüglich g äquivalent}. \\
+Sei $P^{magic}_g := P^B_g$. Mach dann für jedes $r \in P^B_g$ und draus folgend für jedes Vorkommen $p^{\beta}\_i(t_1, \dots t_l)$ eines IDB-Prädikates im Rumpf von r folgendes:
+
+\begin{itemize}
+\item Streiche alle anderen Vorkommen von IDB-Prädikaten im Rumpf von r
+\item Ersetze $p^{\beta}_g$ durch $magic\_r\_p^{\beta}\_i$
+\item Streiche alle Variablen aus $(t_1, \dots t_l)$, die nicht ausgezeichnet sind. \footnote{Bei ``Prädikaten'' ohne Argumente die entsthen können: Fall entsprechende Relation $\neq \emptyset$ wahr, sonst falsch}
+\item Streiche alle nicht ausgezeichneten EDB-Prädikate aus r.
+\item Sei $z^{\alpha}(s_1, \cdots, s_k)$ das Prädikat im Kopf von r. Streiche alle Variablen aus $(s_1, \cdots, s_k)$, die nicht ausgezeichnet sind; $\alpha$ wird nicht verändert. \\
+Ersetze $magic\_r\_p^{\beta}\_i(t_1, \dots t_l)$ durch $magic\_z^{\alpha}(s'_1, \cdots s'_{\widetilde{l}})\footnote{Änderungen aus letztem Schritt}$
+
+\item Füge $P^{magic}_g$ die neuen Regeln hinzu
+\end{itemize}
+\subsubsection*{3. + 4.Schritt}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img1}
+\caption{}
+\label{fig:img1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img2}
+\caption{}
+\label{fig:img2}
+\end{figure}
+
 \section*{Definition: Ausgezeichnet}
 \subsection*{Argument eines Teilziels}
 Konstantensymbol, gemäß $\alpha$ gebunden, es in einem EDB-Prädikat auftritt, das ein ausgezeichnetes Argument hat.
@@ -135,6 +172,5 @@ Konstantensymbol, gemäß $\alpha$ gebunden, es in einem EDB-Prädikat auftritt,
 \subsection*{EDB-Prädikat}
 Alle seine Argumente sind ausgezeichnet
 
-% TODO: magic set method => einfügen
 
 \end{document}
