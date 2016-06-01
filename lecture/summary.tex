@@ -863,7 +863,7 @@ vereinfacht $Q \Rightarrow X$\footnote{kommt nicht im Rumpf von $\tilde{r_2}$ vo
 &M = (\varsigma_{Z \neq a3}(\Pi_2 (\varsigma_{@1 = c4}(VS)) \bowtie ANGEBOT \bowtie BELEGUNG))[z,w]
 \end{align*}
 
-\subsubsection{Schreibweise für Gleichungssysteme}
+\subsubsection*{Schreibweise für Gleichungssysteme}
 
 \begin{align*}
 &R_i = E_i \underbrace{(R_1, \cdots, R_n)}_{DB-Relationen}, i = 1, \cdots, n
@@ -906,19 +906,20 @@ R^1 &= KP \quad \leftarrow (\emptyset_{X2} \bowtie KP_{ZY}) [X,Y] \\
 Q^2 &= KP \\
 R^2 &= \{ (c4,c2), (a3,a0) \} \cup KP \quad (KP_{XZ}) \bowtie KP_{ZY})[X,Y] \cup KP_{X,Y} \\
 Q^3 &= R^2 \\
-R^3 &= \{(c4,a0)\} \cup R^2 \quad (((KP_{XZ} \bowtie KP_{ZY}\footnote{Es wird zu viel berechnet beim Join. Siehe unten})[X,Y] \cup KP_{XY})_{XZ})[X,Y] \cup KP_{XY}  \\
+R^3 &= \{(c4,a0)\} \cup R^2 \quad (((KP_{XZ} \bowtie KP_{ZY}\footnotemark)[X,Y] \cup KP_{XY})_{XZ})[X,Y] \cup KP_{XY}  \\
 \end{align*}
-
-\subsubsection{Anmerkung}
+\footnotetext{Es wird zu viel berechnet beim Join. Siehe unten}
+\subsubsection*{Anmerkung}
 Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS' \cup VS'') \bowtie KURSPLAN = VS' \bowtie KURSPLAN \cup VS'' \bowtie KURSPLAN $
 
 \paragraph{Nach Schritt 4}
 
 \begin{align*}
-&R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit \delta - Beruecksichtigung} \footnote{Ist suboptimal, weil wieder zu viel brerchnet wird} \\
+&R_1 \bowtie R_2 \cup R_2 \bowtie R_3 \Rightarrow^{mit \delta - Beruecksichtigung} \footnotemark \\
 & \delta R_1 \bowtie \cup R_2 \bowtie R_3 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_1 \bowtie R_2 \cup R_2 \bowtie \delta R_3 \\
 &\Rightarrow\footnote{Ist besser} \delta R_1 \bowtie R_2 \cup R_1 \bowtie \delta R_2 \cup \delta R_2 \bowtie R_3 \cup R_w \bowtie \delta R_3
 \end{align*}
+\footnotetext{Ist suboptimal, weil wieder zu viel brerchnet wird}
 
 \begin{align*}
 & \delta R^0 = KP \\
@@ -977,9 +978,10 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 &iv) - \\
 &v) vs^{fb}(Y)\\
 & magic\_r_0\_vs^{fb}\_1(a0) :- magic\_query^f().\\
-r_0 &\leadsto\footnote{``Sideways information passing''} magic\_r_0\_vs^{fb}\_1(a0) :- . \\
+r_0 &\leadsto\footnotemark magic\_r_0\_vs^{fb}\_1(a0) :- . \\
 r_2 &\leadsto magic\_r_2\_vs^{fb}\_1(Z) :- magic\_vs^{fb}(Y), Kp(Z,Y).
 \end{align*}
+\footnotetext{``Sideways information passing''}
 
 \begin{align*}
 &p(X):- \lnot q(X) \\
@@ -1000,10 +1002,10 @@ Da beide keine logische Folgerung von P (müsste in allen Modellen gültig sein)
 
 \begin{align*}
 &\{ ag(a3, o) \} \\
-& \Rightarrow^{CWA\footnote{Closed World Assumption}} \lnot ag(a3, m) \text{ und } \lnot ag(a3, o) \text{ sind gültig.} \\
+& \Rightarrow^{CWA\footnotemark} \lnot ag(a3, m) \text{ und } \lnot ag(a3, o) \text{ sind gültig.} \\
 & \text{Aber } \lnot ag(a3,m) \Rightarrow ag(a3,0) \leadsto \text{Wiederspruch zur CWA}
 \end{align*}
-
+\footnotetext{Closed World Assumption}
 
 Beachte folgende HB-Interpretation von P.
 
@@ -1044,5 +1046,107 @@ U(X) :- r(X). r(1) \leadsto u(1)& \\
 q(X) :- s(X), \lnot u(X).& \Leftarrow s(1) \leadsto q(1)\\
 & \Leftarrow s(2) \leadsto q(2)
 \end{align*}
+
+\subsection*{Disjunktives Datalog}
+Einige Bermerkungen zu disjunktivem Datalog. Negationen im Rumpf sind umgeschrieben genau ein Oder (Disjunktion).
+
+Form 6: $q_1(\cdots), \cdots, q_n(\cdots) :- p_1(\cdots), \cdots, p_n(\cdots).$
+
+Negation in Rümpfen erlaubt $\Rightarrow$ Frage: Sind Disjunktionen im Kopf von Regeln notwendig? \\
+
+\paragraph{Beispiel:}  
+Tim ist 18 oder\footnote{Altagserfahrung: Exklusiv, Theoretisch liegt dieses Wissen um exklusivitöt nicht vor.} 16 Jahre alt: $alter(tim, 18), alter(tim, 16) :- .$
+
+Logisch äquivalent zu: \footnote{Tim ist 18 oder 16 Jahr alt, mehr wissen wir nicht (oder formal gesehen inklusives Oder)}
+\begin{align*}
+&alter(tim, 18) :- \lnot alter(tim, 16). \\
+&alter(tim, 16) :- \lnot alter(tim, 18). \footnotemark
+\end{align*}
+\footnotetext{Tim ist 18 Jahre alt, wenn er nicht 16 Jahre alt ist}
+$\leadsto$ Falls auf ``Tim ist nicht 18 Jahre alt.'' etwas mit CWA geschlossen werden kann, folgt definitiv ``Tim ist 16 Jahre alt.''.\\
+Mehrere Semantiken in Literatur vorgelschlagen, etwa:
+
+\subsubsection*{``General Closed World Assumption'' (GCWA)}
+\paragraph{Idee:}
+Weil mehrere minimale Herbrand Modelle möglich sind $\leadsto$ Schluss auf das Negaitve, $\lnot p$, genau dann möglich wenn $p$ in keinem minimalen Modell enthalten ist.
+
+\paragraph{Beispiel:} $\{ alter(tim, 18) \}, \{ alter(tim, 16) \}$ sind die beiden minimalen Modelle \\
+$\{ alter(tim, 18), alter(tim, 16) \}$ ist auch ein Modell, aber nicht minimal. \\
+
+Minimale Modelle: $\{ q,r \}, \{q,s \}$
+\begin{align*}
+P = \{ p,q :-.& \\
+q :- . & \\
+r,s :-.& \}
+\end{align*}
+
+p ist in keinem minimalen MOdell enthalten $\leadsto \lnot p$  kann unter GCWA angenommen werden.
+
+\paragraph{Eigenschaften}
+GCWA erfüllt die Eigenschaften der
+
+\begin{itemize}
+\item + Konsistenz: Negative Information, die auf Grund der GCWA hinzugefügt wird, führt nicht zu Widerspruch in der Theorie.
+\item + Stabilität: Negative Information, die auf Grund der GCWA hinzugefügt wird, verringert die positive Information nicht und vergrößert sie auch nicht.
+\item + Reduktion: Für definite Programme entspricht die GCWA der CWA. 
+\item - Monotonie: CWA garantiert Monotonie, GCWA nicht.
+\end{itemize}
+
+\subsubsection*{Monoton}
+Seien P,P' definite oder disjunkte Programme. Sei R eine Negationsregel mit R(P) definiert die Menge der negativen Atome, die gemäß R für P angenommen werden können. \\
+R ist monoton $\diamondsuit P \subseteq P' \Rightarrow R(P') \subseteq R(P)$  
+
+\paragraph{Beispiel}
+
+\begin{align*}
+&P =  \{ p(a) \vee p(b) \} \\
+&P' = P \cup \{ p(a) \} \\
+&P'' = P' \cup \{ p(b) \}
+\end{align*}
+
+Success:
+\begin{align*}
+&\text{Success von }P =  \{ p(a) \vee p(b) \} \\
+&\text{Success von }P' = \{ p(a) \vee p(b), p(a) \} \\
+&\text{Success von }P'' = \{ p(a) \vee p(b), p(a), p(b) \}
+\end{align*}
+
+Unknown:
+\begin{align*}
+&\text{Unknown von }P =  \{ p(a), p(b) \} \\
+&\text{Unknown von }P' = \emptyset \\
+&\text{Unknown von }P'' = \emptyset
+\end{align*}
+
+Mit GCWA:
+\begin{align*}
+&\text{Durch GCWA von }P =  \emptyset \\
+&\text{Durch GCWA von }P' = \{ \lnot p(b) \} \\
+&\text{Durch GCWA von }P'' = \emptyset
+\end{align*}
+
+Dadurch ist zu sehen, dass die Monotonie verletzt (zwischen P' und P''), damit ist die GCWA nicht monoton.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img16}
+\caption{}
+\label{fig:img16}
+\end{figure}
+
+
+\begin{align*}
+& ANCESTRY(X,Y) :- MOTHERHOOD(X,Y). \\
+& ANCESTRY(X,Y) :- MOTHERHOOD(X,Z), ANCESTRY(Z,Y). \\
+\end{align*}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.95\linewidth]{img/img17}
+\caption{}
+\label{fig:img17}
+\end{figure}
 
 \end{document}
