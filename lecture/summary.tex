@@ -13,6 +13,8 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{arydshln}
+\usepackage{listings}
 
 \DeclareUnicodeCharacter{00A0}{ }
 
@@ -748,14 +750,14 @@ Dann gibt es ein i, so dass in B auf Ebene i nur Fakten auftreten, die schon auf
 \end{itemize}
 
 Dann ist $max. fakt(P) = ap(P) * ak(P)^{max\_st(P)}$ eine obere Schranke für die Anzahl verschiedener Grundatome. \textbf{Damit:}
-	
+    
 \subsubsection*{Satz 1.6} Die Suchbaum / Beweisbaum Methode bleibt vollständig für ein Programm P, wenn nur Bäume mit max. Tiefe max\_fakt(P) betrachtet werden.
 Statt breadth first andere Vorgehensweise denkbar:
 
 \begin{itemize}
-	\item Depth first mir Abbruch bei max\_fakt(P) und backtracking
-	\item Dynamische Abbruchbedingungen, abhängig von erzeugten Faktenmenge (limit 10)
-	\item Erkennen und Ausnutzen identischer (Teil-) Zielknoten ($\leadsto$ gerichteter, azyklischer Graph)
+    \item Depth first mir Abbruch bei max\_fakt(P) und backtracking
+    \item Dynamische Abbruchbedingungen, abhängig von erzeugten Faktenmenge (limit 10)
+    \item Erkennen und Ausnutzen identischer (Teil-) Zielknoten ($\leadsto$ gerichteter, azyklischer Graph)
 \end{itemize}
 
 Zusammenfassen von Such und Beweisbäumen, Berücksichtigung von Fakten aus $P_F$ $\Rightarrow$ frühzeitiges Erkennen von Suchbäumen zu denen keine Beweisbäume existieren
@@ -1148,5 +1150,94 @@ Dadurch ist zu sehen, dass die Monotonie verletzt (zwischen P' und P''), damit i
 \caption{}
 \label{fig:img17}
 \end{figure}
+
+\subsection*{Rekursion in SQL}
+
+Flüge: \\
+\begin{tabular}{|c|c|c|c|}
+\hline
+Flugnr. & Ab & Ziel & Kosten \\ \hline
+LH577 & FRA & JSK & 700 \\
+RA170 & LHR & JFK & 400 \\
+LH122 & HAM & FRA & 100 \\
+BA730 & FRA & LHR & 150 \\ 
+... & ... & ... & ... \\
+\hline
+\end{tabular}
+
+Reisen: \\
+\begin{tabular}{|c|c|c|}
+\hline
+Ziel & Route & Gesamtkosten \\ \hline
+fra & ``fra'' & 100 \footnote{Initial Subquery} \\
+\hdashline
+jfk & ``FRA,JFK'' & 800\footnote{Recursive Subquery (1)} \\
+lhr & ``Fra,lhr'' & 250\footnote{Recursive Subquery (1)} \\
+\hdashline
+jfk & ``fra,lhr,jfk'' & 650\footnote{Recursive Subquery (2)} \\
+... & ... & ...  \\
+\hline
+\end{tabular}
+
+\subsection*{Negation in SQL}
+(except \& not) \\
+
+\paragraph{Forderung}: Stratifikation
+\paragraph{Beispiel}: Gegeben DAG(K1, K"). Gesucht Paare von Knoten, die nur mit Pfade in gerader Länge verbunden sind.
+\paragraph{1.Ansatz}
+\begin{lstlisting}[language=SQL]
+with recursive UAB(K1, K2) as 
+((select * from DAG)
+  union 
+  (( select d.K1, g.k2
+     from DAG d, GAB g 
+     where d.K2 = g.K1)
+    except
+      (select * from GAB))),
+      GAB(K1, K2) as (select d.K1, UAB u where d.K2 = u.K1) 
+      ))
+\end{lstlisting}
+\footnote{GAB noch nicht bekannt}
+
+\paragraph{Uniformulieren}
+
+\begin{lstlisting}[language=SQL]
+with recursive UAB(K1, K2) as
+  ((select * from DAG)
+    union 
+    ((select d.K1, u.K2 from DAG d, DAG d1, UAB u
+      where d.K2 = d1.K1 and d1.K2 = u.K1)
+      except
+        (select * from GAB))),
+        GAB(K1, K2) as ((select d.K1, d.K2 from DAG d, DAG d1 
+          where d.K2 = d1.K1)
+          union
+          (select d.K1, g.K2 from DAG d, DAG d1, GAB g
+            where d.K2 = d1.K1 and d1.K2 = g.K1))
+    )
+  )
+select x from UAB;
+\end{lstlisting}
+
+\section*{2: Ausdruckskraft und Komplexität von Anfragesprachen}
+
+Ausdruckskraft infromell: Welche Information kann mit Hilfe der Anfrage der Spracha sue einer beliebigen Datenbank ermittelt werden.
+
+\subsection*{Formalisierung für relationale Datenbanken}
+\subsubsection*{Definition: Anfrage}
+Sei $\sigma = \{ (RT_1, \alpha_1), \cdots, (RT_nm \alpha_n) \}$ ein relationales Datenbankschema über $\alpha = \bigcup^n_{i = 1} \alpha_i$ mit Wertebereichsfunktion dom. Sei $\alpha$ in eine genügend große Attributmenge $\alpha_0$ eingebettet\footnote{Enthalten darin}. \\
+Eine Anfrage q auf $\sigma$ ist eine partielle Funktion
+\begin{align*}
+q | Z \sigma \Rightarrow R^{\infty}_{\beta}
+\end{align*}
+
+dabei gilt $\beta \subseteq \alpha_0$ und $R^{\infty}_{\beta}$ ist die Menge der verallgemeinerten DB-Relationen über $\beta$. (unendliche Tupelmenge erlaubt)
+
+\subsubsection*{Definition: Anfragesprache}
+Eine Anfragesprache zu $\sigma$ ist eine Menge $L_0$ von Ausdrücken zusammen mit einer Bedeutungsfunktion (in Zeichen: $(L_{\sigma}\footnote{Sprache}, \mu\footnote{Bedeutungsfunktion})$), so dass für jeden Ausdruck $e \in L_{\sigma}$ gilt: $\mu(e) \text{ ist eine Anfrage von } \sigma$ 
+
+\subsubsection*{Definition: Ausdruckskraft}
+Die Ausdruckskraft einer Anfragesprache $(L_{\sigma}, \mu)$ zu einer DB-Schema $\sigma$ ist definiert als $\mu(L_{\sigma}) =_{Def.} \{ \mu(e) | e \in L_{\sigma} \}$. Eine Sprache $(L_{\sigma}, \mu')$ ist \textbf{ausdrucksstärker} als eine Sprache $(L_{\sigma}, \mu)$, wenn gilt: $\mu(L_{\sigma}) \subseteq \mu'(L'_{\sigma})$
+Im Fall $\mu(L_{\sigma}) = \mu'(L'_{\sigma})$ werden die Sprachen \textbf{äquivalent} genannt
 
 \end{document}
