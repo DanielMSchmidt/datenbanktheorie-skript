@@ -36,6 +36,134 @@
 \leftright{\textbf{Datenbanktheorie SS 16}}{}}
 \fancyfoot[C]{\thepage}
 
+\section*{Definition: Prädikatenlogische Sprache erster Stufe (PL1- Sprache)}
+(ohne Funktionssymbole) \\
+gegeben durch Paar $(A,F)$ mit 
+\begin{itemize}
+\item $A$ = Alphabet mit 
+\begin{itemize}
+\item unendlich viele Variable (aus einer Variablenmenge, genannt $Var_A$)
+\item keine oder beliebig viele Konstantensymbole (aus einer Konstantenmenge Konst, genannt $Konst_A$)
+\item mindestens ein Prädikatensymbol, möglicherweise unendlich viele Prädikatensymbole (aus einer Prädikatensymbolmenge, genannt $\textnormal{Präd}_A$)
+\end{itemize}
+\item $F$ = Menge aller wohlgeformten Formeln (Ausdrücke) mit Symbolen aus $A$
+\end{itemize}
+
+\section*{Definition: Term}
+Ein Konstantensymbol aus $Konst_A$ oder eine Variable aus $Var_A$.
+
+\section*{Definition: Atomare Formel (Atom)}
+$p(t_1, \cdots, t_n)$ mit p ist n-stelliges Prädikatensymbol aus $A$ und $t_1, \cdots, t_n$ Terme
+
+\section*{Satz: Konstruktionsregel für F}
+kleinste Menge mit 
+\begin{itemize}
+\item Jedes Atom aus $A$ ist in $F$
+\item Falls f und g in $F$ sind, dann sind auch $\lnot f, (f \wedge g), (f \vee g), (f \Rightarrow g), (f \Leftrightarrow g)$ in $F$
+\item Falls X eine Variable ist und f in F, dann sind auch $(\forall X)(f)$ und $(\exists X)(f)$ in F
+\end{itemize}
+
+\section*{Definition: Interpretation}
+Eine Interpretation I für eine PL1-Sprache $(A,F)$ ist ein Tripel (Dom, k, ext) mit:
+\begin{itemize}
+\item $dom$ ist eine nicht leere Menge, genannt Wertebereich (domain) von I
+\item $k$ ist eine Abbildung von Konstantensymbolen aus $A$ in $dom$
+\item $ext$ (extension) ist eine Abbildung von Prädikatensymbolen aus $A$ in Mengen von Tupeln, gebildet aus Werten von Dom unter Beachtung der Stelligkeit der Prädikatensymbole. Diese Tupelmengen heißen \textbf{Prädikate}, $ext(p)$ wird auch \textbf{Ausprägung} von p genannt.
+\end{itemize}
+
+\section*{Definition: Wahrheitswerte für PL1}
+\subsection*{Konstanten und Variablen}
+$\parallel t_1 \parallel_{I, \rho}: Var_A \cup Konst_A \rightarrow Dom$ definiert durch: 
+\begin{itemize}
+\item $k(c)$ für Konstantensymbole
+\item $p(X)$ für Variablen
+\end{itemize}
+
+\subsection*{Relationen}
+$\models_{I,\rho} p(t_1, \cdots, t_n)$ (Unter der Interpretation I und Belegung $\rho$ wahr) genau dann wenn $(\parallel t_1 \parallel_{I, \rho}, \cdots \parallel t_n \parallel_{I, \rho}) \in ext(\rho))$ für jedes Atom $p(t_1, \cdots, t_n)$ aus F
+
+\section*{Definition: Folgerung ($F' \models f$)}
+Formel $f \in F$ mit $F' \subseteq F$, falls jedes Modell von $F'$ auch ein Modell von $f$ ist.
+
+\section*{Definition: unter Folgerbarkeit abgeschlossen}
+Transitive Hülle von Folgerung
+
+\section*{Definition: Theorie}
+Besteht aus PL1-Sprache $(A, F)$ und Formelmenge $F' \subseteq F$, die unter Folgerbarkeit abgeschlossen ist. ($F'$: Sätze der Theorie)
+
+\section*{Definition: Axiomatisierbar}
+Theorie $T$, falls es eine entscheidbare Formelmenge $X \subseteq T$ gibt, derart dass alle Sätze von $T$ Folgerungen von $X$ (dann Axiomensystem von $T$ mit Elementen Axiome) sind
+
+\section*{Satz: Modell einer Theorie}
+Eine Interpretation I ist ein Modell einer Theorie $T$, falls I ein Modell der Menge aller Sätze von $T$  ist.
+
+\section*{Definition: Konsistente Theorie}
+Falls Theorie wenigstens ein Modell hat, sonst inkonsistent.
+
+\section*{Definition: formale Ableitung}
+Eine formale Ableitung einer Formel f von der Menge $\{f_1,..., f_m \}$ in der PL1- Logik ist eine Folge $b_1, \cdots, b_l$ von Formeln der Sprache $(A, F)$ mit 
+\begin{itemize}
+\item $b_l$ ist gleich f 
+\item jede Formel $b_j, j \in \{ 1, \cdots l \}$ ist eine der Formeln $f_i, i \in \{ 1, \cdots, m \}$ oder eine allgemeingültige Formel, die aus $b_j$ in der Liste  vorangehender Formeln durch Anwendung einer Ableitungsregel der PL1-Logik erhalten werden kann.
+\end{itemize}
+
+\section*{Definition: ableitbar ($\vdash$)}
+Falls es eine formale Ableitung gibt (aus $\emptyset$ oder Formelmenge)
+
+\section*{Satz: Vollständigkeitssatz von Gödel}
+\begin{align*}
+&\emptyset \models f \Longrightarrow \vdash f
+\end{align*}
+
+\section*{Definition: Relationale Sprache}
+$R = (A,F)$ mit 
+\begin{itemize}
+	\item Es gibt in A
+	\begin{itemize}
+		\item $1 \le |Konst_A| < \infty$
+		\item $|\textnormal{Präd}_A| < \infty$
+		\item ausgezeichnetes, zweistelliges Prädikatensymbol = (Gleichheit)
+		\item ausgezeichnete Teilmenge einstelliger Prädikatensymbole, die \textbf{einfachen Typen}
+	\end{itemize}
+	\item Typen, kleinste Menge mit 
+	\begin{itemize}
+		\item jeder einfache Typ  von A ist ein Typ von R
+		\item falls $\tau_1, \tau_2 \textnormal{ Typen von } R$, dann auch $(\tau_1 \wedge \tau_2), (\tau_1 \vee \tau_2), \lnot \tau_1$ Typen von $R$
+	\end{itemize}
+\end{itemize}
+
+\section*{Definition: Relationale Interpretation}
+Sei $R = (A, F)$ relationale Sprache, dann ist eine Interpretation $I = (Dom, k, ext)$ für R eine relationale Interpretation für R, wenn
+\begin{itemize}
+	\item k ist eine Bijektion (Dom ist endlich)
+	\item $ext(=) = \{ (d,d) | d \in Dom \}$
+\end{itemize}
+
+\section*{Definition: Relationale Datenbank}
+Tripel $(R, I, IB)$ mit
+\begin{itemize}
+	\item R ist eine relationale Sprache
+	\item I ist eine relationale Interpretation
+	\item IB ist eine Menge von Formeln von R, so dass insbesondere für jedes n- stellige Prädikatensymbol P, das verschieden ist von "=" und von den einfachen Typen, IB eine Formel der folgenden Gestalt enthalten muss ($\tau_1, \cdots \tau_n$ einfache Typen):
+	\begin{align*}
+	(\forall X_1) \cdots (\forall X_n) (p(X_1, \cdots X_n) \Rightarrow \tau_1(X_1) \wedge \cdots \wedge \tau_n(X_n))
+	\end{align*}
+\end{itemize}
+
+\section*{Definition: Erlaubte relationale Datenbank}
+Falls I ein Modell von IB ist
+
+\section*{Definition: Intentionale, extentionale Prädikatensymbole}
+\begin{itemize}
+	\item Intentional: durch ein Programm definiert
+	\item Extentional:  als Relationen in einer Datenbank gespeichert
+\end{itemize}
+
+\section*{Definition: Fixpunkttheorem (Knaster / Tarski)}
+Sei $\tau$ eine monotone Transformation auf einem vollständigen Verband $(V, \le)$. Dann hat $\tau$ einen kleinsten Fixpunkt 
+\begin{align*}
+&lfp(\tau) = inf(\{ x \in V | \tau(x) le x \})
+\end{align*}
 
 \section*{Definition: Datalog Programm}
 Ein Datalog-Programm P (ohne IBen(Integritätsbedingungen)) ist eine endliche Menge von Horn-Klauseln mit Jedes $d \in P$ ist entweder
@@ -125,6 +253,12 @@ Abbildung $\tau$ mit $(\forall a,b \in V) (a \le b \Rightarrow \tau(a) \le \tau(
 \section*{Definition: Fixpunkt}
 $a \in V: \tau(a) = a$
 
+\section*{Satz: Fixpunkttheorem (Knaster / Tarski)}
+Sei $\tau$ eine monotone Transformation auf einem vollständigen Verband $(V, \le)$. Dann hat $\tau$ einen kleinsten Fixpunkt 
+\begin{align*}
+&lfp(\tau) = inf(\{ x \in V | \tau(x) le x \})
+\end{align*}
+
 \section*{Magic Set Methode}
 Transformiere ein Programm in eine Version, die für ein gegebenes Ziel die gleiche Ausgabe hat aber das Ziel bei bottom-up Auswertung berücksichtigt wird. \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_set.pdf}{Algorithmus}, \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_Beispiel.pdf}{Beispiel hier.}
 
@@ -172,5 +306,41 @@ Konstantensymbol, gemäß $\alpha$ gebunden, es in einem EDB-Prädikat auftritt,
 \subsection*{EDB-Prädikat}
 Alle seine Argumente sind ausgezeichnet
 
+\section*{Definition: Abhängigkeitsgraph}
+Gerichteter Graph $DG(P) = (V,E)$ eines Programms P, falls $V$ die Menge aller Prädikatensymbole von P und $e = (p,q) \in E \Leftrightarrow q$ kommt im Rumpf einer Regel von P vor, deren Kopfprädikat p ist. $e$ ist mit ``$\lnot$'' benannt, wenn q dabei wenigstens einmal negiert vorkommt.
+
+\section*{Definition: Schichtung eines Programms}
+Eine Folge $\Pi_1, \cdots, \Pi_n$ von Mengen von Prädikatensymbolen mit
+\begin{itemize}
+	\item $\{ \Pi_1, \cdots, \Pi_n \}$ ist eine Partition der Prädikatensymbole in P
+	\item $q \in \Pi_i, r \in \Pi_j, (q,r)$ Kante in $DG(P) \Rightarrow i \ge j$, für alle Prädikatensymbole q,r aus P, $i,j \in \{1, \cdots, n\}$
+	\item $q \in \Pi_i, r \in \Pi_j, (q,r)$ mit ``$\lnot$'' markierte Kante in $DG(P) \Rightarrow i > j$
+\end{itemize}
+
+\section*{Definition: Geschichtetes Programm}
+Ein Programm P heißt geschichtet, wenn P eine Schichtung hat.
+
+\section*{Satz: Schichtung / Zyklus}
+Ein Programm P ist geschichtet, gdw. $DG(P)$ enthält keinen Zyklus mit einer Kante, die mit ``$\lnot$'' markiert ist.
+
+\section*{Eigenschaften: Perfektes Modell}
+``Kleinstes'' der minimalen Modelle, wenn das stärkste Gewicht darauf gelegt wird, dass die Prädikate niedriger Schichten klein bleiben
+
+\section*{Satz: sicher geschichtet / perfektes Modell}
+Sei P ein sicheres, geschichtetes Programm, dann ist das Perfekte Modell von P unabhängig von der Wahl der Schichtungen
+
+\section*{Definition: Anfrage}
+Sei $\sigma = \{ (RT_1, \alpha_1), \cdots, (RT_nm \alpha_n) \}$ ein relationales Datenbankschema über $\alpha = \bigcup^n_{i = 1} \alpha_i$ mit Wertebereichsfunktion dom. Sei $\alpha$ in eine genügend große Attributmenge $\alpha_0$ eingebettet\footnote{Enthalten darin}. \\
+Eine Anfrage q auf $\sigma$ ist eine partielle Funktion
+\begin{align*}
+q | Z \sigma \Rightarrow R^{\infty}_{\beta}
+\end{align*}
+
+\section*{Definition: Anfragesprache}
+Eine Anfragesprache zu $\sigma$ ist eine Menge $L_0$ von Ausdrücken zusammen mit einer Bedeutungsfunktion (in Zeichen: $(L_{\sigma}\footnote{Sprache}, \mu\footnote{Bedeutungsfunktion})$), so dass für jeden Ausdruck $e \in L_{\sigma}$ gilt: $\mu(e) \text{ ist eine Anfrage von } \sigma$ 
+
+\section*{Definition: Ausdruckskraft}
+Die Ausdruckskraft einer Anfragesprache $(L_{\sigma}, \mu)$ zu einer DB-Schema $\sigma$ ist definiert als $\mu(L_{\sigma}) =_{Def.} \{ \mu(e) | e \in L_{\sigma} \}$. Eine Sprache $(L_{\sigma}, \mu')$ ist \textbf{ausdrucksstärker} als eine Sprache $(L_{\sigma}, \mu)$, wenn gilt: $\mu(L_{\sigma}) \subseteq \mu'(L'_{\sigma})$
+Im Fall $\mu(L_{\sigma}) = \mu'(L'_{\sigma})$ werden die Sprachen \textbf{äquivalent} genannt
 
 \end{document}
