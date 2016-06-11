@@ -343,4 +343,37 @@ Eine Anfragesprache zu $\sigma$ ist eine Menge $L_0$ von Ausdrücken zusammen mi
 Die Ausdruckskraft einer Anfragesprache $(L_{\sigma}, \mu)$ zu einer DB-Schema $\sigma$ ist definiert als $\mu(L_{\sigma}) =_{Def.} \{ \mu(e) | e \in L_{\sigma} \}$. Eine Sprache $(L_{\sigma}, \mu')$ ist \textbf{ausdrucksstärker} als eine Sprache $(L_{\sigma}, \mu)$, wenn gilt: $\mu(L_{\sigma}) \subseteq \mu'(L'_{\sigma})$
 Im Fall $\mu(L_{\sigma}) = \mu'(L'_{\sigma})$ werden die Sprachen \textbf{äquivalent} genannt
 
+\subsubsection*{Definition: Anfragesprache von $\rho$}
+%TODO: Überprüfen wegen schlechter handschrift
+Sei $\rho = \{ (RT_i, \alpha_i) | i \in Lm \}$ ein relationales Datenbankschema über $\alpha = \bigcup \alpha_i$ mit Werteberichsfunktion dom. Sei $\alpha$ in eine genügend große Attributmenge $\alpha_0$ eingebettet. Eine Anfrage q ist eine partielle Funktion mit $q: \delta_\rho \rightarrow R^{\infty}_\beta,  \delta \subseteq \alpha_0, R^{\infty}_\beta$ ist die Menge der verallgemeinerten DB-Relationen über $\beta$ (unendliche Teilmengen sind erlaubt). \\
+Eine Anfragesprache zu $\rho$ ist eine Menge $L_\rho$ von Ausdrücken mit einer Bedeutungsfunktion $\mu$ (schreibe $(L_\rho, \mu)$), so dass für jeden Ausdruck $e \in L_\rho$ gilt $\mu(e)$ ist eine Anfrage an $\rho$.
+
+\subsubsection*{Definition: Ausdruckskraft einer Anfragesprache von $\rho$}
+Die Ausdruckskraft einer Anfragesprache $(L_\rho, \mu)$) zu $\rho$ ist definiert als $\mu(L_\rho) = \{ \mu(e) | e \in L_\rho \}$
+
+\subsubsection*{Definition: Äquivalenz von Sprachen}
+$(L'_\rho, \mu') = (L_\rho, \mu)$, wenn $\mu'(L'_\rho) = \mu(L_\rho)$. Kleiner und größer analog.
+Falls Anfragesprache L für alle $\rho$ äquivalent zu Anfragesprache L' ist werden beide als äquivalent bezeichnet.
+
+\subsubsection*{Satz 2.1}
+Sei e ein zu einem gegebenen Datenbankschema $\rho$ passender RA-Ausdruck ohne Komplement. Dann gibt es einen äquivalenten zu e passenden Ausdruck der RA e' in dem als Operatoren nur Selektionen mit einfachen Vergleichsausdrücken, direktes Produkt, Projektion, Umbenennung, Differenz, Vereinigung vorkommen. Als Operanden ermittelt e' neben Relationstypbezeichnern aus $\rho$ nur (extensionale) DB-Relationen der Form $\{(A, C), A \in \alpha_\rho, c \in dom(A) \} $\\
+
+Weitere Einschränkungen sind möglich $\rightarrow$ Projektionen nur auf ein Attribut, Vergleichsausdrücke = und >. \\
+Falls Komplementbildung hinzugenommen, Differenz nicht mehr notwendig: \\
+$R \backslash S = (R[kompl] \cup S)[kompl]$
+
+\subsubsection*{Satz 2.2}
+%TODO: Überprüfen wegen schlechter handschrift
+Eine derart ??? Operationsmenge der RA ist minimal, d.h. es kann keine Operation entfernt werden, ohne dass die Ausdruckskraft eingeschränkt ist.
+
+\subsubsection*{Satz 2.3}
+Sei RT der Bezeichner eines beliebigen, zweistelligen Relationstyp über abzählbaren unendlichen Wertebereich. Sei Rt* der Relationstyp für die transitive Hülle von Relationen des Typs RT. Es gibt keinen Ausdruck  der Relationenalgebra mit der Eigenschaft $e(RT) ? = RT*$. \\
+
+Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R_l = \{ (a_i, a_i+1) | i \in [l-1] \}$ für $l \in \mathbb{N} \}$. $R_l$ ist eine mathematische Relation, die Tupel sind also geordnet. Zeige $e(R_l) \neq R*_l$ für jeden RA - Ausdruck e, der zu Wertebereichen passt und für genügend großes l. $e(R_l)$ bedeutet $R_l$ für RT eingesetzt. RA-Operationen sind anzupassen (wir haben keine Bezeichner $\leadsto$ Permutationen einführen) .
+\begin{itemize}
+	\item Projektion: \footnote{entspricht $\exists$: es gibt da was in der spalte, aber was das ist, ist mir egal} erlaubte Permutationen (vgl p(x) :- r(y,x) ist Projektion in r)
+	\item Selektionen mit atomaren Vergleichsausdrücken der Form $i = a_m, i \neq a_m, i = j, i \neq j$ für $i,j \in [k], m \in [l]$ k ist bestimmt durch Größe der konstruierten Tupel $(b_1, \cdots, b_k), b_i \in \{a_1, \cdots a_l \}$
+\end{itemize}
+
+
 \end{document}
