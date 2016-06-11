@@ -72,14 +72,14 @@ Eine Interpretation I für eine PL1-Sprache $(A,F)$ ist ein Tripel (Dom, k, ext)
 \end{itemize}
 
 \section*{Definition: Wahrheitswerte für PL1}
-\subsection*{Konstanten und Variablen}
+\paragraph{Konstanten und Variablen}
 $\parallel t_1 \parallel_{I, \rho}: Var_A \cup Konst_A \rightarrow Dom$ definiert durch: 
 \begin{itemize}
 \item $k(c)$ für Konstantensymbole
 \item $p(X)$ für Variablen
 \end{itemize}
 
-\subsection*{Relationen}
+\paragraph{Relationen}
 $\models_{I,\rho} p(t_1, \cdots, t_n)$ (Unter der Interpretation I und Belegung $\rho$ wahr) genau dann wenn $(\parallel t_1 \parallel_{I, \rho}, \cdots \parallel t_n \parallel_{I, \rho}) \in ext(\rho))$ für jedes Atom $p(t_1, \cdots, t_n)$ aus F
 
 \section*{Definition: Folgerung ($F' \models f$)}
@@ -262,13 +262,13 @@ Sei $\tau$ eine monotone Transformation auf einem vollständigen Verband $(V, \l
 \section*{Magic Set Methode}
 Transformiere ein Programm in eine Version, die für ein gegebenes Ziel die gleiche Ausgabe hat aber das Ziel bei bottom-up Auswertung berücksichtigt wird. \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_set.pdf}{Algorithmus}, \href{http://www.is.informatik.uni-kiel.de/~hjk/Datenbanktheorie/Magic_Beispiel.pdf}{Beispiel hier.}
 
-\subsection*{Vorgehen}
+\paragraph{Vorgehen}
 
-\subsubsection*{1.Schritt}
+\paragraph{1.Schritt}
 
 Füge für das Ziel $g = q(\cdots)$ die Regel $query^{f\cdots}\footnote{Hochgestellte Zeichen sind Bindungsmuster (wie in Coral)}(X_1, \cdots, X_k) :- q^{\alpha}(\cdots).$ ein, wobei $X_1, \cdots, X_k$ Variablen aus $q^{\alpha}(\cdots)$ sind. Erzeuge für jede Regel $r \in P$ und jedes mögliche Bindungsmuster $\beta$ des Prädikates im Kopf von r eine Regel mit Bindungsmuster für jedes ihrer itensionalen Prädikate. Bestimme dabei unter Beachtung von $\beta$ für jedes Argument im Rumpf ob es ausgezeichnet ist oder nicht. Falls ein IDB-Pr¨adikat im Rumpf mehrfach auftritt, sollte man es durchnummerieren.
 
-\subsubsection*{2.Schritt}
+\paragraph{2.Schritt}
 
 Forme $P^B_g$\footnote{Menge aller erreichbaren Regeln aus Schritt 1} zu $P^{magic}_g$\footnote{Bezüglich g äquivalent}. \\
 Sei $P^{magic}_g := P^B_g$. Mach dann für jedes $r \in P^B_g$ und draus folgend für jedes Vorkommen $p^{\beta}\_i(t_1, \dots t_l)$ eines IDB-Prädikates im Rumpf von r folgendes:
@@ -283,7 +283,7 @@ Ersetze $magic\_r\_p^{\beta}\_i(t_1, \dots t_l)$ durch $magic\_z^{\alpha}(s'_1, 
 
 \item Füge $P^{magic}_g$ die neuen Regeln hinzu
 \end{itemize}
-\subsubsection*{3. + 4.Schritt}
+\paragraph{3. + 4.Schritt}
 \newpage
 \begin{figure}
 \centering
@@ -300,10 +300,10 @@ Ersetze $magic\_r\_p^{\beta}\_i(t_1, \dots t_l)$ durch $magic\_z^{\alpha}(s'_1, 
 \end{figure}
 
 \section*{Definition: Ausgezeichnet}
-\subsection*{Argument eines Teilziels}
+\paragraph{Argument eines Teilziels}
 Konstantensymbol, gemäß $\alpha$ gebunden, es in einem EDB-Prädikat auftritt, das ein ausgezeichnetes Argument hat.
 
-\subsection*{EDB-Prädikat}
+\paragraph{EDB-Prädikat}
 Alle seine Argumente sind ausgezeichnet
 
 \section*{Definition: Abhängigkeitsgraph}
@@ -343,30 +343,30 @@ Eine Anfragesprache zu $\sigma$ ist eine Menge $L_0$ von Ausdrücken zusammen mi
 Die Ausdruckskraft einer Anfragesprache $(L_{\sigma}, \mu)$ zu einer DB-Schema $\sigma$ ist definiert als $\mu(L_{\sigma}) =_{Def.} \{ \mu(e) | e \in L_{\sigma} \}$. Eine Sprache $(L_{\sigma}, \mu')$ ist \textbf{ausdrucksstärker} als eine Sprache $(L_{\sigma}, \mu)$, wenn gilt: $\mu(L_{\sigma}) \subseteq \mu'(L'_{\sigma})$
 Im Fall $\mu(L_{\sigma}) = \mu'(L'_{\sigma})$ werden die Sprachen \textbf{äquivalent} genannt
 
-\subsubsection*{Definition: Anfragesprache von $\rho$}
+\section*{Definition: Anfragesprache von $\rho$}
 %TODO: Überprüfen wegen schlechter handschrift
 Sei $\rho = \{ (RT_i, \alpha_i) | i \in Lm \}$ ein relationales Datenbankschema über $\alpha = \bigcup \alpha_i$ mit Werteberichsfunktion dom. Sei $\alpha$ in eine genügend große Attributmenge $\alpha_0$ eingebettet. Eine Anfrage q ist eine partielle Funktion mit $q: \delta_\rho \rightarrow R^{\infty}_\beta,  \delta \subseteq \alpha_0, R^{\infty}_\beta$ ist die Menge der verallgemeinerten DB-Relationen über $\beta$ (unendliche Teilmengen sind erlaubt). \\
 Eine Anfragesprache zu $\rho$ ist eine Menge $L_\rho$ von Ausdrücken mit einer Bedeutungsfunktion $\mu$ (schreibe $(L_\rho, \mu)$), so dass für jeden Ausdruck $e \in L_\rho$ gilt $\mu(e)$ ist eine Anfrage an $\rho$.
 
-\subsubsection*{Definition: Ausdruckskraft einer Anfragesprache von $\rho$}
+\section*{Definition: Ausdruckskraft einer Anfragesprache von $\rho$}
 Die Ausdruckskraft einer Anfragesprache $(L_\rho, \mu)$) zu $\rho$ ist definiert als $\mu(L_\rho) = \{ \mu(e) | e \in L_\rho \}$
 
-\subsubsection*{Definition: Äquivalenz von Sprachen}
+\section*{Definition: Äquivalenz von Sprachen}
 $(L'_\rho, \mu') = (L_\rho, \mu)$, wenn $\mu'(L'_\rho) = \mu(L_\rho)$. Kleiner und größer analog.
 Falls Anfragesprache L für alle $\rho$ äquivalent zu Anfragesprache L' ist werden beide als äquivalent bezeichnet.
 
-\subsubsection*{Satz 2.1}
+\section*{Satz 2.1}
 Sei e ein zu einem gegebenen Datenbankschema $\rho$ passender RA-Ausdruck ohne Komplement. Dann gibt es einen äquivalenten zu e passenden Ausdruck der RA e' in dem als Operatoren nur Selektionen mit einfachen Vergleichsausdrücken, direktes Produkt, Projektion, Umbenennung, Differenz, Vereinigung vorkommen. Als Operanden ermittelt e' neben Relationstypbezeichnern aus $\rho$ nur (extensionale) DB-Relationen der Form $\{(A, C), A \in \alpha_\rho, c \in dom(A) \} $\\
 
 Weitere Einschränkungen sind möglich $\rightarrow$ Projektionen nur auf ein Attribut, Vergleichsausdrücke = und >. \\
 Falls Komplementbildung hinzugenommen, Differenz nicht mehr notwendig: \\
 $R \backslash S = (R[kompl] \cup S)[kompl]$
 
-\subsubsection*{Satz 2.2}
+\section*{Satz 2.2}
 %TODO: Überprüfen wegen schlechter handschrift
 Eine derart ??? Operationsmenge der RA ist minimal, d.h. es kann keine Operation entfernt werden, ohne dass die Ausdruckskraft eingeschränkt ist.
 
-\subsubsection*{Satz 2.3}
+\section*{Satz 2.3}
 Sei RT der Bezeichner eines beliebigen, zweistelligen Relationstyp über abzählbaren unendlichen Wertebereich. Sei Rt* der Relationstyp für die transitive Hülle von Relationen des Typs RT. Es gibt keinen Ausdruck  der Relationenalgebra mit der Eigenschaft $e(RT) ? = RT*$. \\
 
 Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R_l = \{ (a_i, a_i+1) | i \in [l-1] \}$ für $l \in \mathbb{N} \}$. $R_l$ ist eine mathematische Relation, die Tupel sind also geordnet. Zeige $e(R_l) \neq R*_l$ für jeden RA - Ausdruck e, der zu Wertebereichen passt und für genügend großes l. $e(R_l)$ bedeutet $R_l$ für RT eingesetzt. RA-Operationen sind anzupassen (wir haben keine Bezeichner $\leadsto$ Permutationen einführen) .
