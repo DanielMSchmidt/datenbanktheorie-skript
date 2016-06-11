@@ -32,9 +32,9 @@
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
 \fancyhead[L]{
-\leftright{\textbf{Zusammenfassung}}{Daniel Schmidt}
+\leftright{}{Daniel Schmidt}
 \line
-\leftright{\textbf{Datenbanktheorie SS 16}}{}}
+\leftright{\textbf{DBT SS 16 - VL}}{}}
 \fancyfoot[C]{\thepage}
 
 \section*{Deduktive Datenbanksysteme}
@@ -1239,5 +1239,100 @@ Eine Anfragesprache zu $\sigma$ ist eine Menge $L_0$ von Ausdrücken zusammen mi
 \subsubsection*{Definition: Ausdruckskraft}
 Die Ausdruckskraft einer Anfragesprache $(L_{\sigma}, \mu)$ zu einer DB-Schema $\sigma$ ist definiert als $\mu(L_{\sigma}) =_{Def.} \{ \mu(e) | e \in L_{\sigma} \}$. Eine Sprache $(L_{\sigma}, \mu')$ ist \textbf{ausdrucksstärker} als eine Sprache $(L_{\sigma}, \mu)$, wenn gilt: $\mu(L_{\sigma}) \subseteq \mu'(L'_{\sigma})$
 Im Fall $\mu(L_{\sigma}) = \mu'(L'_{\sigma})$ werden die Sprachen \textbf{äquivalent} genannt
+
+\paragraph{Informell}
+Welche Information können mit Hilfe der Anfragen der Spache aus einer beliebigen Datenbank ermittelt werden
+
+\paragraph{Problem}
+Information mit Algebra geht nicht: ``Die Mitarbeiter die über 10k verdienen sind grade die Manager''. Inrinsische Informationen stellen ein Problem dar.
+
+\subsubsection*{Definition: Anfragesprache von $\rho$}
+%TODO: Überprüfen wegen schlechter handschrift
+Sei $\rho = \{ (RT_i, \alpha_i) | i \in Lm \}$ ein relationales Datenbankschema über $\alpha = \bigcup \alpha_i$ mit Werteberichsfunktion dom. Sei $\alpha$ in eine genügend große Attributmenge $\alpha_0$ eingebettet. Eine Anfrage q ist eine partielle Funktion mit $q: \delta_\rho \rightarrow R^{\infty}_\beta,  \delta \subseteq \alpha_0, R^{\infty}_\beta$ ist die Menge der verallgemeinerten DB-Relationen über $\beta$ (unendliche Teilmengen sind erlaubt). \\
+Eine Anfragesprache zu $\rho$ ist eine Menge $L_\rho$ von Ausdrücken mit einer Bedeutungsfunktion $\mu$ (schreibe $(L_\rho, \mu)$), so dass für jeden Ausdruck $e \in L_\rho$ gilt $\mu(e)$ ist eine Anfrage an $\rho$.
+
+\subsubsection*{Definition: Ausdruckskraft einer Anfragesprache von $\rho$}
+Die Ausdruckskraft einer Anfragesprache $(L_\rho, \mu)$) zu $\rho$ ist definiert als $\mu(L_\rho) = \{ \mu(e) | e \in L_\rho \}$
+
+\subsubsection*{Definition: Äquivalenz von Sprachen}
+$(L'_\rho, \mu') = (L_\rho, \mu)$, wenn $\mu'(L'_\rho) = \mu(L_\rho)$. Kleiner und größer analog.
+Falls Anfragesprache L für alle $\rho$ äquivalent zu Anfragesprache L' ist werden beide als äquivalent bezeichnet.
+
+\subsubsection*{Vergleich Datalog - Relationenalgebra}
+\begin{itemize}
+	\item Reines Datalog ohne Rekursion \texttt{entspricht} $RA^+$ (monotone Relationenalgebra)
+	\item Reines Datalog mit Rekursion \texttt{entspricht} RA Gleichungssysteme
+	\item Datalog mit Negation ohne Rekursion \texttt{entspricht} RA
+	\item volles Datalog \texttt{>} RA
+	\item Datalog mit geschichteter Negation \texttt{<} Inflationäre Semantik
+\end{itemize}
+
+\subsubsection*{Berechenbarkeitsmodelle}
+Alegraisch logische Definitionen
+\begin{itemize}
+	\item allgemein rekursiove Funktionen (Gödel / Herbrand 1936)
+	\item $\lambda$-def. Funktionen (A. Church 1936) 
+	\item $\mu$-rekursive Funktionen und partiell definierte Funktionen (Gödel / Kleene 1936)
+\end{itemize}
+
+\subsubsection*{Wortersetzungssysteme}
+\begin{itemize}
+	\item Turing Maschine (1936)
+	\item Postsche Kanonische Systeme (1945)
+	\item Markov-Algorithmen (1951)
+\end{itemize}
+
+\subsubsection*{Theoretische Berechnungsmodelle}
+\begin{itemize}
+	\item unbeschränkte Registermaschine (1963)
+	\item Random Access Machine (1964)
+\end{itemize}
+
+\subsection*{Ausdruckskraft von Relationenalgebra und ???}
+Grobe Charakterisierung der RA (ohne Erweiterung)
+\begin{itemize}
+	\item Operatoren können keine neuen Werte erzeugen, d.h. Werte in Ergebnissen müssen in Operanden auftauchen
+	\item es können beliebige Relationstypen über den gegebenen Wertebereichen auftreten / erzeugt werden (Umbenennung)
+	\item Für einen festen Datenbankzustand $\delta$ zu $\rho$ gilt: mit RA-Ausdrücken können alle Relationen erzeugt werden, die nur Informationen erhalten der schon in Z enthalten ist.
+\end{itemize}
+
+\paragraph{Operatoren:}  $\cup, \cap, \backslash, \bowtie,$ Projektion, Selektion (mit allg. Vergleichsausdrücken,  Division, Umbenennung)
+\paragraph{Sonderstellung:} Komplement \\
+Sei R eine DB Relation über $\beta$, $T_\beta$ sei die Menge aller DB-Tupel über $\beta$. R[kompl] = $T_\beta \backslash R $ (i.A. eine unendliche Tupelmenge)
+\paragraph{Beispiel:} Noch offene Blätter für jeden angemeldeten
+
+\subsubsection*{Satz 2.1}
+Sei e ein zu einem gegebenen Datenbankschema $\rho$ passender RA-Ausdruck ohne Komplement. Dann gibt es einen äquivalenten zu e passenden Ausdruck der RA e' in dem als Operatoren nur Selektionen mit einfachen Vergleichsausdrücken, direktes Produkt, Projektion, Umbenennung, Differenz, Vereinigung vorkommen. Als Operanden ermittelt e' neben Relationstypbezeichnern aus $\rho$ nur (extensionale) DB-Relationen der Form $\{(A, C), A \in \alpha_\rho, c \in dom(A) \} $\\
+
+Weitere Einschränkungen sind möglich $\rightarrow$ Projektionen nur auf ein Attribut, Vergleichsausdrücke = und >. \\
+Falls Komplementbildung hinzugenommen, Differenz nicht mehr notwendig: \\
+$R \backslash S = (R[kompl] \cup S)[kompl]$
+
+\subsubsection*{Satz 2.2}
+Eine derart ??? Operationsmenge der RA ist minimal, d.h. es kann keine Operation entfernt werden, ohne dass die Ausdruckskraft eingeschränkt ist.
+
+\paragraph*{Beweisidee:} Diskutiere die speziellen Eigenschaften und zeige dass diese Operation über Eigenschaften verfügt, die keiner anderen Operation oder Kombination von Operationen zukommt. Z.B. Vereinigung: Streiche, Neuverknüpfung 2er Relationen dann nur noch über Differenz und direktes Produkt möglich. Vereinigung erlaub das hinzufügen eines neuen Tupels unter Attribut Kombination, direktes Produkt und Differenz nicht \\
+
+Mit der Relationenalgebra kann nicht allgemein die transitive Hülle berechnet werden.
+
+\subsubsection*{Satz 2.3}
+Sei RT der Bezeichner eines beliebigen, zweistelligen Relationstyp über abzählbaren unendlichen Wertebereich. Sei Rt* der Relationstyp für die transitive Hülle von Relationen des Typs RT. Es gibt keinen Ausdruck  der Relationenalgebra mit der Eigenschaft $e(RT) ? = RT*$. \\
+
+Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R_l = \{ (a_i, a_i+1) | i \in [l-1] \}$ für $l \in \mathbb{N} \}$. $R_l$ ist eine mathematische Relation, die Tupel sind also geordnet. Zeige $e(R_l) \neq R*_l$ für jeden RA - Ausdruck e, der zu Wertebereichen passt und für genügend großes l. $e(R_l)$ bedeutet $R_l$ für RT eingesetzt. RA-Operationen sind anzupassen (wir haben keine Bezeichner $\leadsto$ Permutationen einführen) .
+\begin{itemize}
+	\item Projektion: \footnote{entspricht $\exists$: es gibt da was in der spalte, aber was das ist, ist mir egal} erlaubte Permutationen (vgl p(x) :- r(y,x) ist Projektion in r)
+	\item Selektionen mit atomaren Vergleichsausdrücken der Form $i = a_m, i \neq a_m, i = j, i \neq j$ für $i,j \in [k], m \in [l]$ k ist bestimmt durch Größe der konstruierten Tupel $(b_1, \cdots, b_k), b_i \in \{a_1, \cdots a_l \}$
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
 
 \end{document}
