@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{paralist}
 \usepackage{latexsym}
+\usepackage{ upgreek }
 \usepackage{fancyhdr}
 \usepackage{ textcomp }
 \usepackage{ mathrsfs }
@@ -287,7 +288,7 @@ ext(p(.)) &=  \{ (0) \}
 Herbrand-Modell muss genügend viele Elemente enthalten, damit der Satz von Gödel / Skolem gelten kann. \textbf{Skolemisierung} bedeutet, dass man alle Existenzquantoren durch Funktionen ersetzt:
 
 \begin{equation}
-(\forall x_1,....,x_n)(\exists y) (F) \leadsto (\forall x_1,...,x_n)(F[f(x_1,...x_n) / y])
+(\forall X_1,....,X_n)(\exists y) (F) \leadsto (\forall X_1,...,X_n)(F[f(X_1,...X_n) / y])
 \end{equation}
 
 
@@ -296,7 +297,7 @@ Herbrand-Modell muss genügend viele Elemente enthalten, damit der Satz von Göd
 Jede Formel der PL1 Logik kann man in einer \underline{erfüllbarkeitsäquivalente} Formel in Skolemform umformen:
 \begin{enumerate}
 \item Pränexnormalform
-\item Umformungen à la $(\forall x_1,....,x_n)(\exists y) (F) \leadsto (\forall x_1,...,x_n)(F[f(x_1,...x_n) / y])$ mit jeweils einem neuen Funktionssymbol
+\item Umformungen à la $(\forall X_1,....,X_n)(\exists y) (F) \leadsto (\forall X_1,...,X_n)(F[f(X_1,...X_n) / y])$ mit jeweils einem neuen Funktionssymbol
 \end{enumerate}
 Dies ist eine Art ``Materialisierung'' der durch den Existenzquantor gebundenen Variablen.
 
@@ -1324,5 +1325,105 @@ Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R
 	\item Selektionen mit atomaren Vergleichsausdrücken der Form $i = a_m, i \neq a_m, i = j, i \neq j$ für $i,j \in [k], m \in [l]$ k ist bestimmt durch Größe der konstruierten Tupel $(b_1, \cdots, b_k), b_i \in \{a_1, \cdots a_l \}$
 \end{itemize}
 
+\subsection*{Beweis}
 
+\begin{align*}
+&R_l = \{(a_1, a_2), (a_2, a_3), \cdots, (a_{l-1}, a_l) \} \\
+&e(R_l) = R^+_l \\
+&\text{Selektionen:} \\
+&i = a_m \quad i \neq a_m \quad i = j \quad i \neq j
+\end{align*}
+
+Andere Formen sind nicht von Interesse, da Werebereich ohne Ordnungsrelation und ohne spezielle Operationen festgelegt. Z.B. nicht möglich $(R_l[1] \bowtie R_l[2])[ 2 > 1]$.
+Elemente Operatorn in RA-Ausdrücken, die zu RT passen:
+\begin{itemize}
+\item RT
+\item endl. Teilmenge des Wertebereichs
+\end{itemize}
+
+
+Betrachte Kalkülausdruck der Form $\{ (X_1, \cdots, X_K) / \Psi(X_1, \cdots, X_k) \}$ mit folgenden Vergleichsausdrücken:
+\begin{itemize}
+\item $X_i = a_m,\quad X_i \neq a_m$
+\item $X_i = X_j \uparrow c,\quad X_i \neq X_j \uparrow c, \quad c \in \mathbb{Z} \text{ beliebig, mit Interpretation } (b_1, \cdots, b_K) \text{ erfüllt } X_i = X_j \uparrow c \bowtie_{Definition} \lnot(\exists m)(b_j = a_m \wedge b_i = a_{m+c}$
+\end{itemize}
+
+\paragraph{Beispiel:} $(a_1, a_4, a_3, a_5, a_1)$ erfüllt $X_4 = X_2 \uparrow 1$. Setze ein $m=4 \quad b_2 = a_4 \quad b_4 = a_5$.
+
+\paragraph{Idee:}
+% img hier
+
+\subsubsection*{Lemma 2.1} 
+Sei e ein beliebiger RA-Ausdruck, der zum Wertebereich $\{ a_1, a_2, a_3, \cdots \}$ passt und zu RT. Dann lässt sich $e(R_l)$ für ein genügend großes l darstellen als
+\begin{align*}
+&e(R_l) = \{ (X_1, \cdots, X_K) / \Psi(X_1, \cdots, X_K) \} \subseteq \{ a_1, \cdots, a_l \}^K
+\end{align*}
+
+mit $K \in \mathbb{N}$, $\Psi$ aussagenlogischer Ausdruck in disjunktiver Form, wobei atomare Ausdrücke nur Vergleichsausdrücke der oben genannten Form auftreten.
+
+\paragraph*{Beweis:} (durch Induktion über den Aufbau von e)
+\textbf{Annahme:} Abarbeitungsreihenfolge für e festgelegt, etwa durch vollständige Klammerung. Die Tiefe von e sei m. \\
+\textbf{Induktionsanfang:} $n = 0 \leadsto $ Operand isr $R_l$ oder Teilmenge $\{ c_1, \cdots, c_m \} \subseteq \{ a_1, \cdots, a_l \}$
+\begin{align*}
+&R_l: \{ (X_1, X_2) | X_2 = X_1 \uparrow 1 \}\footnotemark \\
+&\{c_1, \cdots c_n \} : \{ (x) | x = c_1 \vee x = c_2 \vee \cdots \vee x = c_m \}
+\end{align*}
+\footnotetext{Wegen $R_l = \{(a_1, a_2), (a_2, a_3), \cdots \}$}
+
+\textbf{Induktionsannahme:} Lemma gilt für alle Anfragen mit Tiefe kleiner gleich m.
+\textbf{Induktionsschluss:} 
+\begin{align*}
+& e = e_1 \cup e_2 \quad e = e_1 \backslash e_2 \quad e = e_1 \times e_2 \\
+& \Psi_1() \wedge \lnot \Psi_2() \quad (b_1, \cdots, b_k, b'_1, \cdots, b'_{k'}) / \Psi_1() \wedge \Psi_2() \quad ()/\Psi() \wedge F()
+\end{align*}
+
+\textbf{Schwieriger:} Projektion, allgemein darstellbar als: \\
+Permutationen + Projektionen mit Elimination der letzten Stelle. Wirkung von Permutationen klar (wir haben in $\Psi$ ja Variablen) $\Rightarrow$ interessant: $e = e_1[1, \cdots, K-1]$. \\
+Sei $e \sim \{ (X_1, \cdots, X_K) | \Psi(X_1, \cdots, X_K) \} \leadsto e \sim \{(X_1, \cdots, X_{K-1}) | (\exists X_k) (\Psi(X_1, \cdots, X_k) \}$\footnote{Nicht gewünschte Form}
+
+$\Psi = \Psi_1 \vee \cdots \vee \Psi_P$ nach Annahme, $\Psi_i$ konjunktiver Ausdruck \\
+Damit $e \sim \bigcup^{\uparrow}_{i = 1} \{ (X_1, \cdots, X_{K - 1}) | (\exists X_K)(\Psi_i(X_1, \cdots, X_k)) \}$ \\
+$\Rightarrow$ Betrachte nur noch \textit{konjunktive Ausdrücke} $\Psi$ ($\cup$ erledigt) \\
+
+\paragraph{Fall 1:} Es gibt in $\Psi$ keine atomaren Ausdrücke der Form
+$X_K = a_j, \quad X_K = X_i \uparrow c, \quad X_i = X_K \uparrow c$ mit K Index der letzen Komponente.
+Sei $\Psi'$ die Konjunktion aller Atome von $\Psi$, die kein $X_K$ enthalten\footnote{Wirf Atome mit $X_K \neq \cdots$ raus} \\
+Dann gilt
+\begin{align*}
+&* e \sim \{ (X_1, \cdots, X_{K - 1}) | \Psi'(X_1, \cdots, X_{K - 1} \} 
+\end{align*}
+
+Beispiel
+
+\begin{align*}
+& e_1 \sim \{ (X_1, X_2, X_3) | X_2 = X_1 \uparrow 1 \wedge X_2 \neq X_3 \uparrow 0 \wedge X_3 \neq X_1 \uparrow 2 \} \\
+& e = e_1[1,2] \leadsto e \sim \{ (X_1, X_2) | X_2 = X_1 \uparrow 1 \}
+\end{align*}
+
+Begründung für * 
+
+\underline{Annahme}: $(b_1, \cdots, b_{K-1}$ erfüllt $\Psi'$, für genügend großes l kann für $X_k$ ein $a_m$ gewählt werden $(\exists)$, so dass alle Atome $X_k \neq a_j, \quad X_k \neq X_i \uparrow c, X_i \neq X_K \uparrow c$ erfüllt sind. Dan erfüllt $(b_1, \cdots, b_{K - 1})$ auch $(\exists X_K)(\Psi(X_1, \cdots, X_K)$. \\
+Umgekehrt: $(b_1, \cdots, b_{K - 1})$ erfülle $(\exists X_K)(\Psi(X_1, \cdots, X_K)$. Dann erfüllt $(b_1, \cdots, b_{K - 1})$ insbesndere alle Atome, die $X_K$ nicht enthalten.
+
+\paragraph{Fall 2:} Es gebe in $\Psi$ \underline{ein} Atome der Form $X_K = a_j, \quad X_K = X_i \uparrow c \text{ oder } X_i = X_K \uparrow c$ sei es mit $\upxi$ benannt. \\
+Falls mehrere vorhanden: wähle ein aus, ersetze $X_K$ in allen anderen Vorkommen durch $a_j, \quad X_i \uparrow c \text{ bzw } X_i \uparrow c' (c' = -c)$. Lasse $\upxi$ weg. \\
+Mögliche Folge dieser Einsetzung im Ausdruck $\Psi$:
+\begin{itemize}
+\item atomare Ausdrücke, die direkt zu wahr oder falsch ausgewertet werden können: Bei wahr weglassen, bei falsch $e \sim \{ X_1, \cdots, X_{K - 1} \} = \emptyset$
+\item nicht zulässige Ausdrücke: $\leadsto$ geeignet umformen: \\
+\begin{align*}
+&a_j \uparrow c \rightarrow a_{j+c} \quad a_j = X_k \uparrow c \rightarrow X_K = a_{j - c} \\
+&X_i \uparrow c = a_i \rightarrow X_i = a_{j - c} \\
+& X_i \uparrow c \uparrow c' \rightarrow X_i \uparrow c'', c'' = c + c' \\
+& X_i \uparrow c = X_k \uparrow c' \Rightarrow X_i = X_k \uparrow c'' mit c'' = c' - c 
+\end{align*}
+Analog bei $\neq$
+Falls nicht ``falsch'' als Ergebnis enthalten werden kann gilt $e \sim \{ (X_1, \cdots, X_{K - 1}) | \Psi'(X_1, \cdots, X_{K - 1} \}$, wobei $\Psi'$ aus $\Psi$ wie folgt erhalten wird:
+\begin{itemize}
+\item Ersetze und forme um wie oben angegeben
+\item Ausgewähltes Atom $\upxi$ hat die Form $X_K = X_i \uparrow c, c \ge 0 \text{ oder } X_i = X_k \uparrow c, c \le 0$. Füge Atome $X_i \neq a_j$ für $l-c < j \le j$ hinzu. \footnote{Damit $X_K$ nicht aus dem Wertebereich führt}
+\item Ausgewähltes Atom $\upxi$ hat die Form $X_K = X_i \uparrow c, c < 0, \text{ oder } X_i = X_K \uparrow c, c > 0 \rightarrow$ Füge Atome $x_i \neq a_j$ für $1 \le j \le c$ hinzu. Damit: Zu jeder Belegung $a_i$ von $x_i$ wird ein $a_j$ mit $a_ = a_{i + c}$ gefunden.
+\paragraph{Beispiel:} $(\exists x_3)(\cdots, x_3 = x_2 \uparrow 2 \cdots) \leadsto (\cdots \wedge X_2 \neq a_4 \wedge x_2 \neq a_5 \wedge \cdots$
+\end{itemize}
+\end{itemize}
 \end{document}
