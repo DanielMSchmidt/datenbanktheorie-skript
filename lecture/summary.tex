@@ -1329,9 +1329,27 @@ Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R
 
 \begin{align*}
 &R_l = \{(a_1, a_2), (a_2, a_3), \cdots, (a_{l-1}, a_l) \} \\
-&e(R_l) = R^+_l \\
-&\text{Selektionen:} \\
-&i = a_m \quad i \neq a_m \quad i = j \quad i \neq j
+&e(R_l) = R_l^+
+\end{align*}
+
+Einfache Erweiterung, um Hüllenberechnung zu ermöglichen: \\
+Erlaubte Gleichungen (vgl. Datalog-Übersetzung) der Form 
+\begin{align*}
+&RT = f(RT) \\
+&(RT, \{ A_1, \cdots, A_k \}), \{ A_1, \cdots, A_k \} \subseteq \alpha_0 \\
+& RT \in \{ RT_1, \cdots, RT_m \}
+\end{align*}
+
+\paragraph{$f(RT):$} RA-Ausdruck, der bis auf RT zu $\sigma$ passt, und der nicht die Differenz enthält ($\leadsto$ monoton).
+\paragraph{Beispiel}: Sei $(S, \{A, B \})$ ein binärer Relationstyp und o die Komposition von Relationen mit Darstellung $R_1 o R_2 = (R_1 \bowtie R_2)[1,4]$.
+
+\paragraph{Hülle von S:} kleinster Fixpunkt von $R = R o S \cup S$. \\
+Berechnung (Fixpunktsatz): $f^{m_0}(\emptyset) = \bigcup^{\infty}_{i = 1} S o \cdots o S\footnote{i-Mal}$, $m_0$ Zahl mit $f^{m_0})(\emptyset) = f^{m_0 + 1}(\emptyset)$ 
+ 
+
+\paragraph{Selektionen:}
+\begin{align*}
+i = a_m \quad i \neq a_m \quad i = j \quad i \neq j
 \end{align*}
 
 Andere Formen sind nicht von Interesse, da Werebereich ohne Ordnungsrelation und ohne spezielle Operationen festgelegt. Z.B. nicht möglich $(R_l[1] \bowtie R_l[2])[ 2 > 1]$.
@@ -1426,4 +1444,68 @@ Falls nicht ``falsch'' als Ergebnis enthalten werden kann gilt $e \sim \{ (X_1, 
 \paragraph{Beispiel:} $(\exists x_3)(\cdots, x_3 = x_2 \uparrow 2 \cdots) \leadsto (\cdots \wedge X_2 \neq a_4 \wedge x_2 \neq a_5 \wedge \cdots$
 \end{itemize}
 \end{itemize}
+
+\subsubsection*{Beweis von Satz 2.3}
+Betrachte Wertebereich $\{ a_1, a_2, a_3, \cdots \}$ und passende RA-Ausdrücke mit RT i Teilmenge des Wertebereichs als Operanden. \\
+\paragraph{Annahme:} Es gibt e mit $e(RT) = RT^+$ \\
+$\leadsto$ Für jede Relation $R_l$ filt $e(R_l) = R_l^+$ \\
+$\leadsto$ (Lemma 2.1) $e \sim \{ (X_1, X_2) | \Psi(X_1, X_2) \}$
+
+\paragraph{1. Fall:}
+Jeder konjunktive Ausdruck von $\Psi$ hat ein Atom der Form 
+\begin{align*}
+x_i = a_j, \quad x_2 = a_j, \quad x_1 = x_2 \uparrow c, \quad x_2 = x_1 \uparrow c
+\end{align*}
+Bei genügnd großen l gibt es ein Intervall [$q_1, q_2$], in dem Indizes m und m+d liegen, so dass $(a_m, a_{m+d}$ keinen konjunktiven Ausdruck von $\Psi$ erfüllt, aber in $R_l^+$ enthalten ist!
+Wähle m größer als jedes vorkommende j (es gibt ein größtes festes ``j'' in $\Psi$) bzw d größer als jedes ``c'' $\Rightarrow$ kein konjunktiver Term erfüllt $(a_m, a_{m-d})$.
+
+\paragraph{2. Fall:}
+Es gibt einen konjunktiven Ausdruck in $\Psi$, dessen Atome alle von der Form
+\begin{align*}
+x_i \neq a_j, \quad x_2 \neq a_j, \quad x_1 \neq x_2 \uparrow c, \quad x_2 \neq x_1 \uparrow c
+\end{align*}
+
+Falls l genügend groß, gibt es ein Paar $(a_{m+d}, a_m)$, das den Ausdruck erfüllt, aber nicht in $R_l^+$ liegt. Das führt zum Wiederspruch.
+
+Einfache Erweiterung, um Hüllenberechnung zu ermöglichen: \\
+Erlaubte Gleichungen (vgl. Datalog-Übersetzung) der Form \\
+\begin{align*}
+&RT = f(RT) \\
+&(RT, \{ A_1, \cdots, A_k \}), \{ A_1, \cdots, A_k \} \subseteq \alpha_0 \\
+& RT \in \{ RT_1, \cdots, RT_m \}
+\end{align*}
+
+\paragraph{$f(RT):$} RA-Ausdruck, der bis auf RT zu $\sigma$ passt, und der nicht die Differenz enthält ($\leadsto$ monoton).
+\paragraph{Beispiel}: Sei $(S, \{A, B \})$ ein binärer Relationstyp und o die Komposition von Relationen mit Darstellung $R_1 o R_2 = (R_1 \bowtie R_2)[1,4]$.
+
+\paragraph{Hülle von S:} kleinster Fixpunkt von $R = R o S \cup S$. \\
+Berechnung (Fixpunktsatz): $f^{m_0}(\emptyset) = \bigcup^{\infty}_{i = 1} S o \cdots o S\footnote{i-Mal}$, $m_0$ Zahl mit $f^{m_0}(\emptyset) = f^{m_0 + 1}(\emptyset)$
+
+\paragraph{Frage:} Wann soll eine Anfragesprache als vollständig bezeichnet werden?
+
+Oben: $q | \Upxi_\delta \rightarrow R^\infty_\beta \leadsto$ 
+
+\begin{itemize}
+\item getypt (vollständige Signatur), mögliche Verallgemeinerung: $q | \Upxi_\delta \rightarrow \bigcup_{B \subseteq \alpha} R^\infty_\beta$
+\item q Fukntion $\leadsto$ nicht möglich: ``Gib Daten für einen beliebigen Angestellten.''
+\end{itemize}
+
+Bsp:
+
+\begin{lstlisting}[language=SQL]
+select * 
+from ANG a, (select count(*) as N from ANG) as N of ANG
+where cast((rand() * 1000) / N of ANG N) as integer
+= (select rank() over (order by a.Name) as Rank_number
+from ANG a)
+\end{lstlisting}
+
+\subsubsection*{Forderungen}
+\begin{enumerate}
+\item q berechenbar (partiell rekursiv) $\leadsto$ $R_\beta$ statt $R^\infty_\beta$
+\item q generisch (isomorphietreu)
+\end{enumerate}
+
+\paragraph{zu 2.} Sei mit Dom die Menge aller Wertebereichelemente bezeichnet. Sei $C \subseteq Dom$, C endlich, sei $z \in \Upxi_\delta$
+
 \end{document}
