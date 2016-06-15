@@ -375,5 +375,31 @@ Gegeben Wertebereich $\{a_1, a_2, \cdots \}$ ohne Ordnungsrelation. Betrachte $R
 	\item Selektionen mit atomaren Vergleichsausdrücken der Form $i = a_m, i \neq a_m, i = j, i \neq j$ für $i,j \in [k], m \in [l]$ k ist bestimmt durch Größe der konstruierten Tupel $(b_1, \cdots, b_k), b_i \in \{a_1, \cdots a_l \}$
 \end{itemize}
 
+\section*{Lemma 2.1} 
+Sei e ein beliebiger RA-Ausdruck, der zum Wertebereich $\{ a_1, a_2, a_3, \cdots \}$ passt und zu RT. Dann lässt sich $e(R_l)$ für ein genügend großes l darstellen als
+\begin{align*}
+&e(R_l) = \{ (X_1, \cdots, X_K) / \Psi(X_1, \cdots, X_K) \} \subseteq \{ a_1, \cdots, a_l \}^K
+\end{align*}
+
+mit $K \in \mathbb{N}$, $\Psi$ aussagenlogischer Ausdruck in disjunktiver Form, wobei atomare Ausdrücke nur Vergleichsausdrücke der oben genannten Form auftreten.
+
+
+\section*{Definition: Vollständigkeit einer Anfragesprache}
+
+Eine Anfragesprache $(L_0, \mu)$ zu einem DB-Schema $\sigma$ heißt vollständig, wenn gilt: 
+\begin{enumerate}
+\item Für jeden Ausdruck $e \in L_\sigma$ ist $\mu(e)$ berechenbar und generisch
+\item Für jede berechenbare und generische Anfrage q an $\sigma$ gibt es einen Ausdruck $e \in L_\sigma$ mit $\mu(e) = q$.
+\end{enumerate}
+
+
+\section*{Definition: Abgeschlossenheit einer Anfragesprache}
+
+Eine allgemeine Anfragesprache L mit Interpretationsvorschrift $\mu$ heißt abgeschlossen, wenn sie zu jedem Datenbank-Schema $\sigma$ eine vollständige Anfragesprache $(L_\sigma, \mu)$ enthält.
+Offensichtlich: 
+\begin{itemize}
+\item Alle RA-Anfragen sind berechenbar und generisch
+\item Die RA ist nicht abgeschlossen (s. Satz 2.3)
+\end{itemize}
 
 \end{document}
