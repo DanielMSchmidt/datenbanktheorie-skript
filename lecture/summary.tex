@@ -1530,6 +1530,48 @@ Bedeutung von C: enthält die in q verwendeten Konstanten(symbole). $C = \emptys
 \label{fig:img20}
 \end{figure}
 
+\subsection*{Definition: Vollständigkeit einer Anfragesprache}
 
+Eine Anfragesprache $(L_0, \mu)$ zu einem DB-Schema $\sigma$ heißt vollständig, wenn gilt: 
+\begin{enumerate}
+\item Für jeden Ausdruck $e \in L_\sigma$ ist $\mu(e)$ berechenbar und generisch
+\item Für jede berechenbare und generische Anfrage q an $\sigma$ gibt es einen Ausdruck $e \in L_\sigma$ mit $\mu(e) = q$.
+\end{enumerate}
+
+
+\subsection*{Definition: Abgeschlossenheit einer Anfragesprache}
+
+Eine allgemeine Anfragesprache L mit Interpretationsvorschrift $\mu$ heißt abgeschlossen, wenn sie zu jedem Datenbank-Schema $\sigma$ eine vollständige Anfragesprache $(L_\sigma, \mu)$ enthält.
+Offensichtlich: 
+\begin{itemize}
+\item Alle RA-Anfragen sind berechenbar und generisch
+\item Die RA ist nicht abgeschlossen (s. Satz 2.3)
+\end{itemize}
+
+\paragraph{Frage:} Wie RA zu vollständiger Spache erweitern? Problem? Effizient? (Weitere Diskussion später) \\
+Oben: Fixpunktoperator. Reicht allein nicht. \\
+Bsp. PERSON(Vname, Geschlecht) \\
+Anfrage: ``Ist die Anzahl weiblicher Personen gerade?''
+
+\subsubsection{Vorschlag für abgeschlossene Sprache QL}
+
+Programmiersprache (Zuweisungen, while-Konstrukt, Hintereinanderausführung von Anweisungen) mit eingeschränkter Menge von Datenbankoperationen.
+
+\begin{itemize}
+\item Gleichheit
+\item Komplement
+\item Durchschnitt
+\item Test auf Leerheit
+\item vereinfachte Versionen der Projektion und des kartesischen Produkts $\leadsto$ Simulation beliebiger Turingmaschinen
+\end{itemize}
+
+\paragraph{Vereinfachung:} \textbf{ein} Wertebereich Dom, Relationen $\subset Dom^i$, i Stelligkeit der Relation (rank(R))
+
+\paragraph{QL-Syntax:} Seien $x_1, x_2, \cdots$ Variablen, $r_1, r_2, \cdots$ Relationen \\
+Die Menge der QL-Terme ist induktiv definiert:
+\begin{enumerate}
+\item E (Gleichheit) ist ein Term, $r_i, x_i$ sind Terme
+\item Falls e, e' Terme sind, dann $(e \cap e'), (\lnot e), (e \downarrow), (e \uparrow) \text{ und } e\circlearrowright$
+\end{enumerate}
 
 \end{document}
