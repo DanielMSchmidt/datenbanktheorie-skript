@@ -1567,11 +1567,114 @@ Programmiersprache (Zuweisungen, while-Konstrukt, Hintereinanderausführung von 
 
 \paragraph{Vereinfachung:} \textbf{ein} Wertebereich Dom, Relationen $\subset Dom^i$, i Stelligkeit der Relation (rank(R))
 
-\paragraph{QL-Syntax:} Seien $x_1, x_2, \cdots$ Variablen, $r_1, r_2, \cdots$ Relationen \\
-Die Menge der QL-Terme ist induktiv definiert:
+\subsection{QL-Syntax:} Seien $x_1, x_2, \cdots$ Variablen, $r_1, r_2, \cdots$ Relationen \\
+
+\paragraph{Definition: QL-Terme}
+Die Menge der \textbf{QL-Terme} ist induktiv definiert:
 \begin{enumerate}
 \item E (Gleichheit) ist ein Term, $r_i, x_i$ sind Terme
 \item Falls e, e' Terme sind, dann $(e \cap e'), (\lnot e), (e \downarrow), (e \uparrow) \text{ und } e\circlearrowright$
 \end{enumerate}
+
+
+\paragraph{Definition: QL-Programme}
+Die Menge der \textbf{QL-Programme} ist induktiv definiert durch
+
+\begin{enumerate}
+\item $x_i := e$ ist ein Programm für einen Term $e$ und $i \ge 1$
+\item Für Programme $P,P'$ sind $(P; P')$ und \texttt{while } $x_i$ \texttt{do P} Programme. Es gelten die üblichen Klammereinsparungsregeln
+\end{enumerate}
+
+\paragraph{Beispiel}
+
+\begin{align*}
+&x_2 := x_1, \quad x_3 := E \downarrow\downarrow\downarrow; \\
+& while x_2 do (P; x_2 := e; x_3 := E); \\
+& while x_3 do (P'; x_3 := E);
+\end{align*}
+
+
+\paragraph{QL-Semantik}
+
+Seien $\sigma = \{ (RT_1, s_1), \cdots, (RT_m, s_m) \},\quad s_i \in \mathbb{N}, \quad z \in \xi_\sigma$.
+\begin{itemize}
+\item $R^\emptyset_S:$ leere Relation der Stelligkeit s
+\item $R_S:$ Menge der Relationen mit Stelligkeit
+\item $R_{-1} = \{ R^\emptyset_0 \}$
+\end{itemize}
+
+$\leadsto E \in R_2$  mit $E = \{ (d,d) | d \in Dom \}$ \\
+
+\begin{itemize}
+\item $r_i = \begin{cases} z(RT_i) \text{falls } i \le m \\ R^\emptyset_0, \text{sonst} \end{cases}$
+\item ``$\cap$'' entspricht Durchschnitt, falls beide Argumente gleiche Stelligkeit haben, sonst $R^\emptyset_0$
+\item ``$\lnot$'': $R_S \rightarrow R_S$: $\lnot e =_{def} Dom^s - e$
+\item ``$\downarrow$'' $R_S \rightarrow R_{s-1}$: $e\downarrow =_{def} \{ (d_2, \cdots, d_s) | (d_1, \cdots, d_s) \in e \}$
+\item ``$\uparrow$' $R_S \rightarrow R_{s+1}$: $e\uparrow =_{def} \{ (d_2, \cdots, d_s, d) | (d_1, \cdots, d_s) \in e, d \in Dom \}$
+\item ``$\circlearrowright$'' $R_S \rightarrow R_S$: $e\circlearrowright =_{def} \{ (d_1, \cdots, d_{s-2}, d_s, d_{s-1}) | (d_1, \cdots, d_s) \in e \}$
+\end{itemize}
+
+\paragraph{Bemerkung}
+\begin{align*}
+&\lnot (Dom^S) = R^\emptyset_S \quad e\downarrow = \{ () \} \text{falls Stelligkeit von e gleich 1 und } e \neq R^\emptyset_1 \\
+&\{()\}\uparrow = E\downarrow = Dom \\
+&E\downarrow = \{(d)\}\\
+&E\downarrow\downarrow = \{()\}\\
+& E\downarrow\downarrow\downarrow = \emptyset?
+\end{align*}
+
+
+\begin{itemize}
+	\item Alle Variablen werden mit $R^\emptyset_0$ initialisiert
+	\item Test von $x_i$ in while-Anweisung ist wahr $\diamondsuit_{def} x_i$ ist nicht leer
+\end{itemize}
+
+
+\subsubsection*{Satz 2.4} 
+QL ist abgeschlossen
+
+\paragraph*{Beweisidee}
+
+Zeige zunächst, dass einige übliche Operationen auf Relationen ausdrückbar sind, etwa zählen:
+
+\begin{align*}
+& 0: E \downarrow\downarrow (= \{()\})
+\end{align*}
+
+Ebenso ausrückbar:
+\begin{align*}
+&e_1 \times e_2 \text{(kartesisches Produkt)} \\
+&e[s_1, \cdots, s_p] \text{(allgemeine Projektion)} \\
+&e\uparrow \text{(Projeziere links hinein} d,d_1,\cdots,d_s)
+\end{align*}
+
+Sei $e$ Darstellung von $i \quad i+1 : e\uparrow \quad i-1: e\downarrow$ \\ Test von e auf 0: Teste $e\downarrow$ auf Leerheit mit if + while $\leadsto$ s.o.
+
+\paragraph{Transitive Hülle} 
+$x_1 := E; \quad x_2 := r_1; \quad x_3 := \lnot (\lnot E \cap \lnot x_2); \quad x_4 := \lnot E \cap x_2;$ \\
+while $x_4$ nicht leer do ($x_1 := x_3; x_3 := x_3 \cup (((x_3 \times x_2) \cap \uparrow E \uparrow)_{[1,4]}); x_4 = \lnot x_1 \cap x_3$)
+
+\paragraph{Einfach:} QL-Programme sind partiell rekursiv und generisch. Schwieriger: Jede berechenbare und generische Anfrage lässt sich als QL-Programm schreiben.
+
+Andere Idee für Erweiterung: Erweitere TRC geeignet um arithmetische Operationen für $\mathbb{N}$, (Gödel: In einer Sprache der Arithmetik erster Stufe lassen sich alle rekursiven Funktionen ausdrücken)
+
+\subsection*{Tupelorientierter Relationenkalkül}
+PL1-Logike $\rightarrow$ getypter Kalkül (DB-Schema beachten)
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img22}
+\caption{}
+\label{fig:img22}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img23}
+\caption{}
+\label{fig:img23}
+\end{figure}
+
 
 \end{document}
