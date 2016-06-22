@@ -1676,5 +1676,33 @@ PL1-Logike $\rightarrow$ getypter Kalkül (DB-Schema beachten)
 \label{fig:img23}
 \end{figure}
 
+\paragraph{Beispiel:} 
+\begin{align*}
+&typ(x) = \{A,C\}, \quad typ(y) = \{B,C\}, \quad typ(z) = \{A,B\} \\
+& (x,y B) / R.x \wedge S.y \wedge (\forall z: Tz)(z.A = x.A \wedge z.B > y.B) \\
+& R.x \leadsto R[A \rightarrow x\_A, C \rightarrow x\_C] \\
+& S.y \leadsto S[B \rightarrow y\_B, C \rightarrow y\_C]\footnotemark \\
+& (\forall z: T.z)(\cdots) \leadsto ((( R \backslash R)[A][A \rightarrow z.A][Kompl]  \\
+&\times \cdots \times (R \backslash R)[A][A \rightarrow x\_A][kompl] \times \cdots \times x\_c \cdots)[z.A = x.A]) \\
+&\cap \cdots \text{ analog } \cdots \times (R \backslash R)[A][A \rightarrow x\_A][kompl] \times \cdots \times x\_c
+\end{align*}
+
+\footnotetext{$\{ \emptyset \}$ entspricht nicht-leere Relation über leerer Attributmenge, d.h. enthält das total undefinierte Tupel}
+
+\subsection*{Komplexität von Anfragesprachen}
+
+Zur Erinnerung: Komplexitätsklassen
+
+\paragraph{Zeit}
+\begin{itemize}
+	\item DTIME(n) $\le$ DTIME($n^2$) $\le$ P = PTIME = $\bigcup_{k \in \mathbb{N}} DTIME(n^K)$
+	\item NTIME(n) $\le$ NTIME($n^2$) $\le$ NP = NPTIME = $\bigcup_{k \in \mathbb{N}} NTIME(n^K)$
+	\item EXPTIME = $\bigcup_{k \in \mathbb{N}} DTIME(n^{P(K)})$
+\end{itemize}
+
+\paragraph{Platz}
+\begin{itemize}
+	\item LOGSPACE = DTAPE(log n)
+\end{itemize}
 
 \end{document}
