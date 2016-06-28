@@ -1689,7 +1689,7 @@ PL1-Logike $\rightarrow$ getypter Kalkül (DB-Schema beachten)
 
 \footnotetext{$\{ \emptyset \}$ entspricht nicht-leere Relation über leerer Attributmenge, d.h. enthält das total undefinierte Tupel}
 
-\subsection*{Komplexität von Anfragesprachen}
+\section*{Komplexität von Anfragesprachen}
 
 Zur Erinnerung: Komplexitätsklassen
 
@@ -1702,7 +1702,88 @@ Zur Erinnerung: Komplexitätsklassen
 
 \paragraph{Platz}
 \begin{itemize}
-	\item LOGSPACE = DTAPE(log n)
+	\item LOGSPACE = DTAPE(log n)\footnote{mit Speicheplatz O(S(n))}
 \end{itemize}
 
+$DTAPE(n) \subseteq DTAPE(n^2) \cdots DPSPACE = \bigcup_{d \in \mathbb{N}} DTAPE(n^K)$ \\
+$NTAPE(n) \subseteq NTAPE(n^2) \cdots NPSPACE = \bigcup_{d \in \mathbb{N}} NTAPE(n^K)$ 
+
+\subsection*{Inklusionssatz}
+
+\begin{align*}
+LOGSPACE \subseteq^? NLOGSPACE \subseteq^? P &\subseteq^? NP  \\
+\subseteq^? PSPACE \subseteq NPSPACE \subseteq EXPTIME &\subseteq REK
+\end{align*}
+
+\begin{itemize}
+\item P $\leadsto$ explizite Anfrage
+\item PSPACE $\leadsto$ while Anfrage
+\end{itemize}
+
+\paragraph{Frage}
+Was ist die Problemgröße bei Anfragen an Datenbanken? \\
+2 Möglichkeiten:
+\begin{itemize}
+	\item Länge der Anfrage (DB fest) $\leadsto$ ''Anfragenkomplexität``
+	\item Größe der DB (q fest) $\leadsto$ ''Datenkomplexität``
+\end{itemize}
+
+\paragraph{Erkennungsproblem für Anfragen} Gegeben ein DB-Zustand  $z$ zu einem DB-Schema $\sigma$, Anfrage $q | \phi_\sigma \rightarrow R_\beta$ und Tupel t über $\beta. \leadsto$ Stelle fest, ob $t \in q(z)$.
+
+\begin{align*}
+&\{ code_E(z) \# code_E(t) | t \in q(z), E \text{ Aufzählung von} DOM_{q,z} \} \\
+&E =  \{ d_1, d_2, \cdots \}
+\end{align*}
+
+
+\subsection*{Definition: Datenkomplexität einer Anfrage}
+Die Datenkomplexität\footnote{kurz: Komplexität} einer Anfrage q ist die Komplexität ihres Erkennungsproblems. Größe des Ergebnisses (der Antwort) ist nicht erfasst. Falls gewünscht \textbf{|Antwortkomplexität}: $\{ code_E(z) + code_e(q(z))  | \cdots \}$ Komplexität der Konstruktion des Ergebnisses erfasst. \\
+Unterschied nicht wesentlich bei Komplexitätsklassen, die bzgl. Polynomialfaktor unempfindlich sind (ab ''P`` aufwärts) \\
+
+\textbf{Aber} Mit Antwortkomplexität keine Unterscheidung zwischen leichten und schwierigen Anfragen, die große Ergebnisse haben möglich
+
+\paragraph{Beispiel}
+
+\begin{align*}
+&\sigma = \{ (G, \{ V_1, V_2 \}) \} (Graph) \\
+& 1) kart(G) = G[V_1] \times G[V_2] \\
+&2) pfade(G) = \{ (x,y) | \text{es gibt einen Pfad zwischen x und y} \} \\
+&3) ident(G) = G
+\end{align*}
+
+Betrachte Zeitkomplexität: 
+\begin{itemize}
+\item 1) $\leftrightarrow$ 2) Antwortkomplexität: $O(n^2)$ bei 1) und 2) \\
+Datenkomplexität: 1) O(n), 2) O($n^2$)
+\item 1) $\leftrightarrow$ 3): Antwortkomplexität 1) $O(n^2)$, 3) O(n) \\
+Datenkomplexität: O(n) 1) + 3)
+\end{itemize}
+
+
+\paragraph{Betrachte $\bowtie$} 
+Datenkomplexität: O(n log n), Antwortkomplexität: $O(n^2)$ \\
+
+Im Folgenden: Komplexität entspricht Datenkomplexität. Zunächst: L $\rightleftarrows$ Komplexitätsklasse
+
+\paragraph{Problem:} Falls auf Wertebereichen keine Ordnung angenommen:
+\begin{itemize}
+	\item Für PRTIME und Klassen darunter sind keine Sprachen bekannt, die genau einer Komplexitätsklasse entsprechen
+	\item Anderer Zusammenhang von Interesse: Bezug auf vollständige Probleme einer Klasse
+\end{itemize}
+
+\paragraph{Definition: Vollständiges Problem:} schweres Problem (Problem lösen entspricht Menge entscheiden).
+\paragraph{Definition hartes Problem} Ein Problem heißt hart für eine Komplexitätsklasse K unter einem Reduktionstyp, falls jedes Problem in K mit einer Reduktion des Typs auf p reduziert werden kann. Falls p in K: p ist K-vollständig
+\paragraph{Definition: Vollständigkeit bezüglich einer Komplexitätsklasse K} Eine Anfragesprache $L_\sigma$ zu einem DBSchema $\sigma$ ist vollständig bezüglich einer Komplexitätsklasse, falls gilt: 
+Sei $Q_\sigma K$ die Menge aller Anfragen an $\sigma$ mit Komplexität K:
+\begin{enumerate}
+	\item $\{ \mu(e) | e \in L_\sigma \} \subseteq Q_\sigma K$
+	\item $(\exists e \in L_\sigma)$(das Erkennungsproblem für e ist vollständig bezüglich K)
+\end{enumerate}
+
+L heißt vollständig bezüglich K, falls $L_\sigma$ für jedes $\sigma$ vollständig ist bezüglich K.
+Wichtig in diesem Zusammenhang: Komplexität der Reduktion. \\
+
+z.B. Vollständigkeit bei logarithmischen Platz bezüglich K bedeutet: Jede Anfrage kann mit logarithmischen Platzaufwand auf die vollständige Anfrage reduziert werden. Reduktion muss nicht in L ausdrückbar sein. Es kann einfache Anfragen in QK geben, die nicht in L ausdrückbar snid (obwohl einige vollständige Anfrage in QK in L ausdrückbar sind)
+
+DB Menge undiffernzierter Elemente generisch $\leadsto$ einheiliche Behandlung in Anfrage. Wie ist ``erstes Element'' spezifiziert?
 \end{document}
