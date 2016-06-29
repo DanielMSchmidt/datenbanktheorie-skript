@@ -407,7 +407,7 @@ q(X) &:- r(X).
 Deklarative Semantik liefert keinen brauchbaren Algorithmus. Die Fixpunkt-Sematik führt direkt zu einem algorithmus für die Schrittweise Berechnung des kleinsten Herbrand-Modells.
 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img1}
 \caption{}
@@ -586,13 +586,13 @@ Zeige $P \vdash vs(c4, a0)$.
 \end{equation}
 
 \paragraph{Beweis}
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img4}
 \caption{}
 \label{fig:img4}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img5}
 \caption{}
@@ -660,7 +660,7 @@ mgu: \\
 
 \paragraph{Beispiel}
 $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img6}
 \caption{}
@@ -678,7 +678,7 @@ $L_1 = q(X,Y,c)\footnote{t1, t2, t3} L_2 = q(W, b, Z) \footnote{k1 k2 k3}$ \\
 \end{itemize}
 
 \paragraph{Beispiel}
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img7}
 \caption{}
@@ -700,7 +700,7 @@ Gegeben Sei der Suchbaum S und eine Grundsubstitution $\Theta$ mit folgenden Eig
 &kp(c4,a3), kp(a3, c2), kp(c2, a0)  \text{ Fakten}\\
 \end{align*}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img7}
 \caption{}
@@ -763,7 +763,7 @@ Statt breadth first andere Vorgehensweise denkbar:
 
 Zusammenfassen von Such und Beweisbäumen, Berücksichtigung von Fakten aus $P_F$ $\Rightarrow$ frühzeitiges Erkennen von Suchbäumen zu denen keine Beweisbäume existieren
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img8}
 \caption{}
@@ -793,7 +793,7 @@ In Logikprogrammierung (Horn-Klauseln): SLD-Resolution (Linear Resolution with S
 \paragraph{Übergang Such / Beweisbaum $\leadsto$ Resolution}
 Nachweis der Unerfüllbarkeit einer Klausel
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img9}
 \caption{}
@@ -814,13 +814,13 @@ Ohne Beweis.
 \subsection*{Satz 1.7}
 Die SLD-Resolution liefert korrekte und vollständige Ergebnisse für alle Datalog-Programme.
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img10}
 \caption{}
 \label{fig:img10}
 \end{figure}
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img11}
 \caption{}
@@ -940,21 +940,21 @@ Berücksichtigung der ``neuen'' Information für VS hätte genügt. Grund: $(VS'
 & R^3 =  R^2 \cup \emptyset
 \end{align*}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img12}
 \caption{}
 \label{fig:img12}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img13}
 \caption{}
 \label{fig:img13}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img14}
 \caption{}
@@ -1036,7 +1036,7 @@ CWA: $\lnot ag(a3, 0) \text{ gilt} \Rightarrow^{\text{Regel}} ag(a3,m)$ \\
 
 Daraus folgt: Wähle $I_1(I_2)$ als Modell (Semantik) von P(P') $\leadsto$ Auswertungsrichtung gemäß Implikation legt Semantik fest. D.h. Semantik ist abhängig von der Art des Aufschreibens der Klauseln. Daraus ergibt sich die Frage nach einer besseren Semantikdefinition.
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img15}
 \caption{}
@@ -1131,7 +1131,7 @@ Mit GCWA:
 Dadurch ist zu sehen, dass die Monotonie verletzt (zwischen P' und P''), damit ist die GCWA nicht monoton.
 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img16}
 \caption{}
@@ -1145,7 +1145,7 @@ Dadurch ist zu sehen, dass die Monotonie verletzt (zwischen P' und P''), damit i
 \end{align*}
 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.95\linewidth]{img/img17}
 \caption{}
@@ -1369,7 +1369,7 @@ Betrachte Kalkülausdruck der Form $\{ (X_1, \cdots, X_K) / \Psi(X_1, \cdots, X_
 \paragraph{Beispiel:} $(a_1, a_4, a_3, a_5, a_1)$ erfüllt $X_4 = X_2 \uparrow 1$. Setze ein $m=4 \quad b_2 = a_4 \quad b_4 = a_5$.
 
 \paragraph{Idee:}
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img18}
 \caption{}
@@ -1513,7 +1513,7 @@ from ANG a)
 
 \paragraph{zu 2.} Sei mit Dom die Menge aller Wertebereichelemente bezeichnet. Sei $C \subseteq Dom$, C endlich, sei $z \in \Upxi_\delta$ \\
 q heißt C-generisch, falls für jede Permutation $\rho$ auf Dom mit $\rho(x) = x$ für alle $x \in C$ folgendes Diagramm kommutiert:
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img19}
 \caption{}
@@ -1523,7 +1523,7 @@ q heißt C-generisch, falls für jede Permutation $\rho$ auf Dom mit $\rho(x) = 
 Falls $C = \emptyset$ heißt q generisch. \\
 Bedeutung von C: enthält die in q verwendeten Konstanten(symbole). $C = \emptyset$ immer möglich: Verwende ``konstante'' Relationen als Operanden ($\{A : c \}$) $\leadsto$ keine Konstanten(symbole) in Anfrage notwendig.
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img20}
 \caption{}
@@ -1662,14 +1662,14 @@ Andere Idee für Erweiterung: Erweitere TRC geeignet um arithmetische Operatione
 PL1-Logike $\rightarrow$ getypter Kalkül (DB-Schema beachten)
 
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img22}
 \caption{}
 \label{fig:img22}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\linewidth]{img/img23}
 \caption{}
@@ -1785,5 +1785,93 @@ Wichtig in diesem Zusammenhang: Komplexität der Reduktion. \\
 
 z.B. Vollständigkeit bei logarithmischen Platz bezüglich K bedeutet: Jede Anfrage kann mit logarithmischen Platzaufwand auf die vollständige Anfrage reduziert werden. Reduktion muss nicht in L ausdrückbar sein. Es kann einfache Anfragen in QK geben, die nicht in L ausdrückbar snid (obwohl einige vollständige Anfrage in QK in L ausdrückbar sind)
 
-DB Menge undiffernzierter Elemente generisch $\leadsto$ einheiliche Behandlung in Anfrage. Wie ist ``erstes Element'' spezifiziert?
+DB Menge undiffernzierter Elemente generisch $\leadsto$ einheitliche Behandlung in Anfrage. Wie ist ``erstes Element'' spezifiziert?
+
+\subsection*{Turingmaschine (TM)}
+
+Kodiert die Eingabe auf Band (``Hinschreiben'') liefert zusätzliche Information, die Lösung trivial macht (erstes Element steht links) (lineare Zeit) $\leadsto$ andere ``Rechengeräte'' erforderlich (keine Ordnung auf Band) $\leadsto$ Forschung ``generisch'' kann Aufgaben schwierig machen.
+
+\subsubsection*{PSPACE - vollständige Probleme}: 
+\begin{itemize}
+\item QSAT $\Phi (x_1, \cdots, x_n)$ in konjunktiver Normalform: $(\exists x_1)(\forall x_2)(\exists x_3) \cdots : \Phi(x_1, \cdots, x_n)$ ist wahr?
+\item GO
+\item GEOGRAPHY (einzigartige Stadtnamenfolge mit letzter Buchstabe gleich erster Buchstabe des nächsten)
+\end{itemize}
+
+\subsubsection*{Komplexität von Kalkülanfragen (RA)}
+
+\paragraph*{Annahme:} TM hat lesebeschränktes Eingabeband und Arbeitsband, Kodierung des DB-Zustands und der Anfrage auf Eingabeband sonst bedingt Kodierung des Zustandes, dass keine Komplexität unter ``linear'' möglich ist.
+
+\paragraph{Beispiel für Kodierung $code_E$}
+Nimm alle Elemente $U \subseteq DOM$ als durch Aufzählung E gegeben an: $E = \{c_1, c_2, \cdots \} $\\
+$code_E | c_i \rightarrow \text{Binärdarstellung von i} \leadsto |code_E(c_i)| \le \lceil log(i) \rceil $ für jedes i
+
+\paragraph{Kodierung}
+\begin{itemize}
+	\item Tupel: $t = (a_1, \cdots a_k) \leadsto^{code_e(t)} [code_E(a_1)\#code_E(a_2)\#\cdots\# code_E(a_k)$
+	\item Relation: $R_i \leadsto^{code_e(R_i)} R_i code_E(t_1) \cdots code_E(t_n) \text{in durch } code_E$ gegebener lexikographischer Ordnung
+	\item Zustand $z \leadsto^{code_E(z)} code_E(z(R_1))) \cdots code_E(z(R_m)))$
+\end{itemize}
+
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img24}
+\caption{}
+\label{fig:img24}
+\end{figure}
+
+
+\subsection*{Satz 2.9}
+Kalkülanfragen (RA-Anfragen) sind in QLOGSPACE
+
+\paragraph{Beweis} Sei q eine DRC-Anfrage an ein DB-Schema $\sigma$ mit Antworttyp $\beta$ konstruierte TM $T_q$, die das Erkennungsproblem für q löst, wobei die Länge des Arbeitsbandes logarithmisch durch die Länge des Eingabebandes beschränkt ist.
+
+\paragraph{Annahme:} $T_q$ startet mit $code_E(z)\#code_E(t)$ auf Eingabeband, $z \in \phi\sigma, t \in DOM^\beta_z$ (mit Konstanten aus z bildbare Tupel über $\beta$). E Aufzählungsfunktion für $DOM_Z$, q in Pränexnormalform mit Typ $\beta$. Zeige durch Induktion über die Anzahl der Quantoren von q. Berechnung kann mit $K \cdot  |code_E(z)\#code_E(t)|$, K Konstatne, Felder des Arbeitsbandes erfolge.
+
+\paragraph*{Beispiel}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img25}
+\caption{}
+\label{fig:img25}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img26}
+\caption{}
+\label{fig:img26}
+\end{figure}
+
+\paragraph{Induktionsannahme}
+Jede Anfrage in PNF mit weniger als n Quantoren kann in LOGSPACE ahsgewertet werden.
+
+\paragraph{Induktionsschluss}
+$n-1 \rightarrow n$: $\phi$ habe n Quantoren und sei in der Form $(\exists x)(\Phi(x))((\forall x)(\Phi'(x))$
+
+\paragraph{Idee}
+Belege x mit den Konstanten auf dem Eingabeband in der Reihenfolge ihres Vorkommens (beschränkte Interpretatoin) für Merken einer solchen Konstante notwendig: $log(DOM_z)$ Felder:
+\begin{align*}
+&log(|DOM_z|) \le log(|code_E(z)\# code_E(z) \# code_E(t)|)
+\end{align*}
+%TODO: Extract definitions here
+
+Nach Induktionsannahme: $\Phi'$ kann mit $K \cdot log(|code_E(z)\#code_E(t)|)$ Feldern ausgewertet werden $\leadsto$ vollständige Berechnung kann mit $(K + 1) \cdot log(|code_E(z) \# code_E(t)|)$ Feldern durch geführt werden. \\
+
+Even in QLOGSPACE, aber nicht in DRC ausdrückbar $\Rightarrow$ Welche Anfragesprache entsrpicht genau QLOGSPACE? \\
+
+\paragraph{Problem} Ohne gegebene Ordnung auf Wertebereich (bzgl. eine Nachfolgerelation) ist bis jetzt keine solche Sprache bekannt. Dies gilt für alle Klassen innerhalb von P, P eingeschlossen. In Klassen oberhalb von NP: Ordnung kein Problem, da in Sprache selbst ausdrückbar $\leadsto$ Annahme: Ordnung auf $DOM_z$, z Zustand. \\
+
+Ordnung gegeben durch Relation NF(Vor, Nach), Nachfolgerrelation. DB-Schema entsprechend ergänzt $\Rightarrow DOM_Z \subseteq \mathbb{N}$ annehmbar mit 0 als minimales Element und m als maximales Element. Betrachte Operator trans (transitive Hülle):
+Sei $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y}) $ ein DRC-Ausdruck, der eine Binärrelation auf K-Tupeln repräsentiert. $\Phi[Trans]$ bezeichne die reflexive, transitive Hülle von $\Phi$. Sei $DRC^{pos\_trans}$ die Anfragesprache die aus DRC entsteht, indem der Operator ``trans'' in nicht negierten Teilausdrücken erlaubt wird.
+
+\subsection*{Satz 2.10}
+
+QNLOGSPACE = $DRC^{pos\_trans}$
+
+\paragraph{Beweisidee}
+
+``$\supseteq$'' einfach: Falls $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$ in QNLOGSPACE, dann auch  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})[trans]$. Rate ein  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$-Pfad.
+
 \end{document}
