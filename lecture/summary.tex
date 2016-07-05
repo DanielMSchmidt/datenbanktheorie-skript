@@ -1872,6 +1872,82 @@ QNLOGSPACE = $DRC^{pos\_trans}$
 
 \paragraph{Beweisidee}
 
-``$\supseteq$'' einfach: Falls $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$ in QNLOGSPACE, dann auch  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})[trans]$. Rate ein  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$-Pfad.
+``$\supseteq$'' einfach: Falls $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$ in QNLOGSPACE, dann auch  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})[trans]$. Rate ein  $\Phi(\overset{\rightarrow}{x}, \overset{\rightarrow}{y})$-Pfad.\\
+
+``$\subseteq'$' Ausdruck in $DRC^{pos\_trans}$ gesucht, der NLOGSPACE-TM M enstpricht. \\
+2 wesentliche Ideen: 
+\begin{itemize}
+	\item Zustand von M kann mit logarithmischen Aufwand kodiert werden (mit endl. vielen Variablen)
+	\item Mit trans-Operator können ausgedrückt werden:
+	\begin{itemize}
+		\item Addition ``x+y=z''
+		\item Test eines bestimmten Bits in einem Wort auf ``1'' (on(w,j))
+	\end{itemize}
+\end{itemize}
+
+$\leadsto$ Feststellbar was Kopf von M sieht \\
+$\leadsto$ Durch DRC-Ausdruck darstellbar: NEXT($z_1, z_2$) $z_n$ Zustandsbeschreibungen von M, $z_2$ folgt aus $z_1$ mit einem Übergang\\
+$\leadsto$ PATH($z_1, z_2$ ) darstellbar mit einer oder mehreren Anwendungen von trans \\
+$\leadsto$ PATH($z_0, z_j$), $z_0$ Anfangs- \& $z_j$ Endzustand \\
+
+Für QLOGSPACE: deterministischer trans-Operator genügt. \\
+$dtrans: \Phi_d(\overrightarrow{x}, \overrightarrow{y}) =_{def.} \Phi(\overrightarrow{x}, \overrightarrow{y}) \wedge (\forall \overrightarrow{z})(\lnot \Phi(\overrightarrow{x}, \overrightarrow{z} \vee \overrightarrow{y} = \overrightarrow{z})$
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img27}
+\caption{}
+\label{fig:img27}
+\end{figure}
+
+
+\paragraph{Bemerkung}
+
+Pos kann entfallen, da $DRC^{pos\_trans}$ unter Negation abgeschlossen ist (gilt nur bei Vorhandensein einer Ordnung!)
+
+\subsubsection*{Zusammenhang von Sprachklassen innerhalb von DRC}
+Betrachte Anfragen der Form
+
+\begin{align*}
+&(x_1, \cdots, x_l) | (\exists y_1)\cdots(\exists y_k)(\Phi(x_1, \cdots, x_l, y_1, \cdots, y_k)), \Phi \text{ quantorenfrei} \\
+& Q_\exists \text{ umfasst speziell die konjunktiven Anfragen:} \\
+&(x_1, \cdots, x_l) | (\exists y_1)\cdots(\exists y_k)(\bigwedge_j R_j(u_{j1}, u_{jn_j}))\footnotemark
+\end{align*}
+\footnotetext{$u_{jn}$ Konstante oder Variable aus $\{ x_1, \cdots, y_k \}$}
+Klasse der konjunktiven Anfragen ist Äquivalent zur Klasse der
+
+\begin{itemize}
+\item Datalog-Regeln ohne Rekursion: $R(x_1, \cdots, x_l) :- R_1(u_{11}, \cdots, u_{1n_1}), \cdots R_m(u_{m1}, \cdots, u_{mn_m})$
+\item (einfache) Tableau-Anfrage (vgl. QbE mit Einschränkung)
+\item RA-Anfragen mit positiver Selektion, Projektion (ohne Wiederholung), Join und Umbenennung
+\item RA-Anfragen mit positiver Selektion, Projektion, Kreuzprodukt
+\end{itemize}
+
+Für Äquivalenz mit RA-Anfrage gefordert: ``Erfüllbarkeit, d.h. Anfragen dürfen nicht äquivalent sein zu''
+
+\begin{align*}
+q^\emptyset | \phi_\rho \rightarrow R_\beta \text{ mit } q^\emptyset(z) = \emptyset \text{ für alle } z \in \phi_\rho
+\end{align*}
+
+\subsection*{Erweiterung von Kalkülsprachen und Relationenalgebra}
+
+\paragraph{a) DRC} Füge Fixpunktoperator hinzu (s.o.) \\ 
+Fixpunktoperator partiell, d.h. nicht immer definiert, z.B. : $\Phi(R) = (x = 0 \wedge \lnot R(0) \wedge \lnot R(1)) \vee (x = 0 \wedge R(1)) \vee (x = 1 \wedge R(0))$
+
+\begin{itemize}
+	\item Inflationäre Semanktik $\leadsto DRC^{lfp+}$ 
+	\paragraph{Definition: } Sei $\sigma' = \sigma \cup \{(S, \alpha_S), (S, \alpha_S) \not \in \sigma \}.$ \\ 
+	$q(S) = (x_1, \cdots, x_{||\alpha_s}) | \Phi(x_1, \cdots x_{|\alpha_s|}) \text{ Anfrage zu } \sigma' \text { und } z \in \delta_\rho$ \\
+	$lfp+(q(S))$ bezeichnet den Grenzwert der Folge $A_0, A_1, \cdots$ mit $A_0 = \emptyset_{\alpha_S}, A_i = A_{i-1} \cup \mu(q(S))(Z'), Z'(RT_i) = z(RT_i), (RT_i, \alpha_i) \in \sigma, Z'(S) = A_{i-1}$
+	Offensichtlich: In PTIME, da monoton und jeden Zwischenergebnis Beschränkt durch $\sum^m_{i=1} |Dom|^{|\alpha_i|}$ beschränkt, m Anzahl der Relationstypen in $\sigma$.
+	\item Nicht-inflationäre Semantik $\leadsto DRC^{lfp}$
+	\paragraph{Definition} Wie oben bei lfp+ mit Unterschied $A_0 = \emptyset_{\alpha_j}, A_i = \mu(q(s))(z')$ \\
+	Offensichtlich In PSPACE, in PTIME kann nicht gefolgert werden.
+\end{itemize}
+
+\paragraph{b) RA} Füge while-Anweisung hinzu (Schachtelungen erlaubt) vgl. QL. \\ Auch hier
+\begin{itemize}
+	\item Inflationär: Erzeuge Monotonie durch While Anweisungen der Form
+\end{itemize}
 
 \end{document}
