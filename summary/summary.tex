@@ -401,4 +401,84 @@ Offensichtlich:
 \item Die RA ist nicht abgeschlossen (s. Satz 2.3)
 \end{itemize}
 
+% New - 1
+
+\section*{Definition: QL-Terme}
+Die Menge der \textbf{QL-Terme} ist induktiv definiert:
+\begin{enumerate}
+\item E (Gleichheit) ist ein Term, $r_i, x_i$ sind Terme
+\item Falls e, e' Terme sind, dann $(e \cap e'), (\lnot e), (e \downarrow), (e \uparrow) \text{ und } e\circlearrowright$
+\end{enumerate}
+
+
+\section*{Definition: QL-Programme}
+Die Menge der \textbf{QL-Programme} ist induktiv definiert durch
+
+\begin{enumerate}
+\item $x_i := e$ ist ein Programm für einen Term $e$ und $i \ge 1$
+\item Für Programme $P,P'$ sind $(P; P')$ und \texttt{while } $x_i$ \texttt{do P} Programme. Es gelten die üblichen Klammereinsparungsregeln
+\end{enumerate}
+
+\section*{Definition: QL-Semantik}
+
+Seien $\sigma = \{ (RT_1, s_1), \cdots, (RT_m, s_m) \},\quad s_i \in \mathbb{N}, \quad z \in \xi_\sigma$.
+\begin{itemize}
+\item $R^\emptyset_S:$ leere Relation der Stelligkeit s
+\item $R_S:$ Menge der Relationen mit Stelligkeit
+\item $R_{-1} = \{ R^\emptyset_0 \}$
+\end{itemize}
+
+$\leadsto E \in R_2$  mit $E = \{ (d,d) | d \in Dom \}$ \\
+
+\begin{itemize}
+\item $r_i = \begin{cases} z(RT_i) \text{falls } i \le m \\ R^\emptyset_0, \text{sonst} \end{cases}$
+\item ``$\cap$'' entspricht Durchschnitt, falls beide Argumente gleiche Stelligkeit haben, sonst $R^\emptyset_0$
+\item ``$\lnot$'': $R_S \rightarrow R_S$: $\lnot e =_{def} Dom^s - e$
+\item ``$\downarrow$'' $R_S \rightarrow R_{s-1}$: $e\downarrow =_{def} \{ (d_2, \cdots, d_s) | (d_1, \cdots, d_s) \in e \}$
+\item ``$\uparrow$' $R_S \rightarrow R_{s+1}$: $e\uparrow =_{def} \{ (d_2, \cdots, d_s, d) | (d_1, \cdots, d_s) \in e, d \in Dom \}$
+\item ``$\circlearrowright$'' $R_S \rightarrow R_S$: $e\circlearrowright =_{def} \{ (d_1, \cdots, d_{s-2}, d_s, d_{s-1}) | (d_1, \cdots, d_s) \in e \}$
+\end{itemize}
+
+\section*{Satz 2.4} 
+QL ist abgeschlossen
+
+
+\section*{Inklusionssatz}
+
+\begin{align*}
+LOGSPACE \subseteq^? NLOGSPACE \subseteq^? P &\subseteq^? NP  \\
+\subseteq^? PSPACE \subseteq NPSPACE \subseteq EXPTIME &\subseteq REK
+\end{align*}
+
+\begin{itemize}
+\item P $\leadsto$ explizite Anfrage
+\item PSPACE $\leadsto$ while Anfrage
+\end{itemize}
+
+\section*{Definition: Datenkomplexität einer Anfrage}
+Die Datenkomplexität\footnote{kurz: Komplexität} einer Anfrage q ist die Komplexität ihres Erkennungsproblems. Größe des Ergebnisses (der Antwort) ist nicht erfasst. Falls gewünscht \textbf{|Antwortkomplexität}: $\{ code_E(z) + code_e(q(z))  | \cdots \}$ Komplexität der Konstruktion des Ergebnisses erfasst. \\
+Unterschied nicht wesentlich bei Komplexitätsklassen, die bzgl. Polynomialfaktor unempfindlich sind (ab ''P`` aufwärts) \\
+
+\textbf{Aber} Mit Antwortkomplexität keine Unterscheidung zwischen leichten und schwierigen Anfragen, die große Ergebnisse haben möglich
+
+\section*{Definition: Vollständiges Problem:} schweres Problem (Problem lösen entspricht Menge entscheiden).
+
+\section*{Definition: hartes Problem} Ein Problem heißt hart für eine Komplexitätsklasse K unter einem Reduktionstyp, falls jedes Problem in K mit einer Reduktion des Typs auf p reduziert werden kann. Falls p in K: p ist K-vollständig
+
+\section*{Definition: Vollständigkeit bezüglich einer Komplexitätsklasse K} Eine Anfragesprache $L_\sigma$ zu einem DBSchema $\sigma$ ist vollständig bezüglich einer Komplexitätsklasse, falls gilt: 
+Sei $Q_\sigma K$ die Menge aller Anfragen an $\sigma$ mit Komplexität K:
+\begin{enumerate}
+	\item $\{ \mu(e) | e \in L_\sigma \} \subseteq Q_\sigma K$
+	\item $(\exists e \in L_\sigma)$(das Erkennungsproblem für e ist vollständig bezüglich K)
+\end{enumerate}
+
+L heißt vollständig bezüglich K, falls $L_\sigma$ für jedes $\sigma$ vollständig ist bezüglich K.
+
+\section*{Satz 2.9}
+Kalkülanfragen (RA-Anfragen) sind in QLOGSPACE
+
+\section*{Satz 2.10}
+
+QNLOGSPACE = $DRC^{pos\_trans}$
+
 \end{document}
