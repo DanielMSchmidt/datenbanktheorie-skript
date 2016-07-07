@@ -1948,4 +1948,70 @@ Fixpunktoperator partiell, d.h. nicht immer definiert, z.B. : $\Phi(R) = (x = 0 
 	\item Inflationär: Erzeuge Monotonie durch While Anweisungen der Form
 \end{itemize}
 
+\section*{Partielle Relationen}
+
+\subsection*{Problemstellung}
+Tupel im rDM bisher: $t: \alpha_i - U_j D_j$, d.h. t ist total definiert, Annahme ist für die reale Welt häufig nicht passend.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img28}
+\caption{}
+\label{fig:img28}
+\end{figure}
+
+\paragraph{Zu ``$\backslash$'':}
+Betrachte andere Schema: \texttt{GAST(Name, Alter, Beitrag), BEGLEITER(Name, B.Name, B.Alter, Geschickt Begl.)} + B.Name ist Schlüssel. \\
+Gast ohne Begleitung: Entsprechendes Tupel fehlt in Relation Begleitung \\
+
+\paragraph{Beachte:}
+FEST in BCNF, da Gast und Begleitung zwei sich bedingende Schlüssel sind da restlichen Attribute sind alle durch die Schlüssel bestimmt.
+$\leadsto$ Entwurfsproblematik ist bei verweis und partieller Information verschieden \\
+
+Zeige Probleme bleiben bei geänderten Schema
+\begin{itemize}
+\item Gäste mit Begleitung, aber Angaben zur Begleitung aber teilweise oder völlig unbekannt oder nicht eindeutig
+\end{itemize}
+
+\paragraph{Betrachte TRC-Anfragen:} 
+$(x) / GAST x \wedge \lnot (\exists y: BEGLEITER Y)(Y.Name = x.Name)$
+
+\paragraph{Annahme:}
+Alle Tupel sind total definiert
+\begin{itemize}
+\item clwa\footnote{Closed World Assumption}: ``Gib die Daten aller Gäste, die ohne Begleitung kommen''
+\item mit owa\footnote{Open World Assumption}: ``Gib die Daten aller Gäste, zu denen in der Datenbank keine Begleitung angegeben ist''
+\end{itemize}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img29}
+\caption{}
+\label{fig:img29}
+\end{figure}
+
+\paragraph{Problem:}
+Eine Bedeutung von ``-'' ist ``Kein Wert vorhanden''
+\begin{itemize}
+\item Information zu Sabine und Peter gleich, aber unterschiedlich Repräsentiert
+\item Anfrageauswertung
+\end{itemize}
+
+
+\paragraph{mögliche Auswege}: Kodierung von Information über Werte, z.B.: neues Attribut ``allein'' mit DOMAIN(allein) = $\{ $ ja, nein,unbekannt $ \}$. Beachte Integritätsbedingungen $\Rightarrow$ kein Eintrag mit gleichen Namen in Bedeutung erlaubt nur bei ja und unbekannt, bei nein gibt es keine Einschränkungen \\ 
+
+$\Rightarrow$ Semantik kann nicht in der DB liegen!
+
+\paragraph{Anfrage} (x) / GAST x $\wedge$ x.ALLEIN = ja (ist nicht mehr generisch!)
+\paragraph{Problem} Kodierung von Information in / über Werte in den Werten selbst $\rightarrow$ Programmierung wird aufwendiger, verletzung der Generaly Property.
+
+\paragraph{Datenbank} Entwurf an Annahme zu Weiten anpassen, fehlende Attributwerte vermeiden
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\linewidth]{img/img30}
+\caption{}
+\label{fig:img30}
+\end{figure}
+
 \end{document}
