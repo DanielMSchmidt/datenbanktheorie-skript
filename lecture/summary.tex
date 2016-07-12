@@ -2014,4 +2014,149 @@ $\Rightarrow$ Semantik kann nicht in der DB liegen!
 \label{fig:img30}
 \end{figure}
 
+\subsection*{Nullwerte in XMl (XML-Schema, XQuery)}
+
+``blame the user''- Prinzip (wie in COBOL) \\
+
+\paragraph{Annahme:} Elemente in XML-Schema enhält Elemente Marke, Herstellungsjahr, Gefahrene Kilometer (optional). $\leadsto$ Folgende XML Darstellungen sind gültig:
+
+\begin{verbatim}
+<PKW><Marke>VW</Marke><HerstJahr>2016</HerstJahr><Gef-Km>25</Gef-Km></PKW>
+\end{verbatim}
+\begin{verbatim}
+<PKW><Marke>VW</Marke><HerstJahr>2016</HerstJahr><Gef-Km /></PKW>
+\end{verbatim}
+\begin{verbatim}
+<PKW><Marke>VW</Marke><HerstJahr>2016</HerstJahr></PKW>
+\end{verbatim}
+
+Anwendung legt Interpretation fest.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{img/img31}
+\caption{}
+\label{fig:img31}
+\end{figure}
+
+
+\paragraph{Fragen:}
+\begin{itemize}
+\item Darstellung?
+\item Auswertung?
+\item Ergebnisrepräsentation?
+\end{itemize}
+
+\subsection*{Modellierung unvollständiger Information}
+\paragraph{Annahme:} Ein Symbol (``w'') zum Repräsentieren eines indifferenten Attributwerts. \\
+w-Tupel: $t | \alpha_i \rightarrow \bigcup_{A \in \alpha_i} dom(A), \text{t(A) definiert oder undefiniert}$
+w-Relation: Menge von w-Tupeln
+
+\paragraph{Definition: Überdeckt (Tupel)}
+Seien t,t' w-Tupel über $\alpha$: t' überdeckt t (t' ist eine Überdeckung von t), in Zeichen: $t' \ge t$, genau dann wenn 
+\begin{align*}
+(\forall A \in \alpha_i)(t(A) definiert \Rightarrow t'(A) definiert und t(A) = t'(A))
+\end{align*}
+
+Bsp: $(1,a,w) \ge (w,a,w)$
+
+\paragraph{Definition: Überdeckt (Relation)}
+Seien S,R w-Relationen über $\alpha$: R überdeckt S (R ist eine Überdeckung von S), in Zeichen: $R \ge S$, genau dann wenn
+\begin{align*}
+(\forall t \in S)(\exists t' \in R)(t' \ge t)
+\end{align*} 
+
+\paragraph{Vervollständigung eines Tupels}
+\paragraph{1)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img32}
+\caption{}
+\label{fig:img32}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img33}
+\caption{}
+\label{fig:img33}
+\end{figure}
+
+Ersetze jedes Vorkommen von w durch genau einen Wert: Vervollständigung (completion)
+
+\paragraph{2)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img34}
+\caption{}
+\label{fig:img34}
+\end{figure}
+
+Ersetze w durch einen oder mehrere Werte: enge Auswertung (close extension)
+
+
+\paragraph{3)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img35}
+\caption{}
+\label{fig:img35}
+\end{figure}
+
+Ersetze w durch \textbf{einen} Wert oder durch ``undefiniert'' (entspricht ``nicht existent''): Erweiterung (augmentation)
+
+\paragraph{4)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img36}
+\caption{}
+\label{fig:img36}
+\end{figure}
+
+enge Überdeckung (close subsumption) \\
+
+OWA: beliebige Tupel können hinzukommen
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img37}
+\caption{}
+\label{fig:img37}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img38}
+\caption{}
+\label{fig:img38}
+\end{figure}
+
+\paragraph{Anfragesprachen:} Annahme, Wert unbekannt, aber existiert
+
+\paragraph{1)} Modellierung: w-Relation mit $|w| = 1$
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{img/img39}
+\caption{}
+\label{fig:img39}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img40}
+\caption{}
+\label{fig:img40}
+\end{figure}
+
+Bei Verwendung von Variablen für Vorkommen unbekannter Werte $(w_i, w_j, \cdots$ eindeutig im DB-Zustand)
+
+Annahme $|w_i| = 1$
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{img/img41}
+\caption{}
+\label{fig:img41}
+\end{figure}
 \end{document}
