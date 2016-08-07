@@ -481,48 +481,4 @@ Kalkülanfragen (RA-Anfragen) sind in QLOGSPACE
 
 QNLOGSPACE = $DRC^{pos\_trans}$
 
-
-\newpage
-
-\section*{Gleichheitsprädikat-Axiom}
-Gleichheit ist Äquivalenzrelation
-
-\section*{Leibnitz-Prinzip}
-\begin{align*}
-(\forall X_1)\cdots(\forall X_n)(\forall Y_1)\cdots(\forall Y_n)((p(X_1, \cdots, X_n) \wedge \bigwedge^n_{i=1} =(X_i, Y_i)) \Rightarrow p(Y_1,  \cdots, Y_n)
-\end{align*}
-
-\section*{Abschlussaxiom für Wertebereiche}
-$Konst_A = \{c_1, \cdots, c_m\}, (\forall X)(\bigvee^n_{i=1} =(X, c_i))$
-
-\section*{Eindeutigkeitsaxiom für Namen}
-$\lnot = (c,c')$ für jedes Paar verschiedener Werte (c,c') aus $Konst_A$
-
-\section*{Vollständigkeitsaxiom}
-Für jedes Prädikat p anzugeben \\
-\begin{itemize}
-\item $E_p \subseteq \chi_0$ Menge aller Grundatome aus $\chi_0$
-\item $K_p = \{(c_1, \cdots, c_n) | p(c_1, \cdots, c_n) \in E_p \} = \{(c_{i1}, \cdots, c_{in}) | i \in [m]$ \\
-$(\forall X_1)\cdots(\forall X_n)(p(X_1, \cdots, X_n) \Rightarrow \bigvee_{j \in [m]}(\bigwedge_{i \in [n]} =(X_i, c_{ij})) $ \\
-$K_p = \emptyset \Rightarrow (\forall X_1)\cdots(\forall X_n)(\lnot p(X_1, \cdots, X-n)$ \\
-Entspricht: Alles in DB wahr, alles andere falsch
-\end{itemize}
-
-\section*{Axiome für rel. Sprache}
-\begin{itemize}
-\item Menge der Grundatome mit Prädikatensymbolen, nicht =
-\item Vollständigkeitsaxiom für alles außer =
-\item Abschlussaxiom für $Konst_A$
-\item Eindeutigkeitsaxiom für $Konst_A$
-\item Gleichheitsaxiom (Reflexiv, Symmetrisch, Transitiv)
-\item nichts außer dem, was angegeben ist
-\end{itemize}
-
-\section*{Eigenschaften der GCWA}
-\paragraph{Konsistenz:} Negative Infos, die auf Grund der gcwa hinzugefügt werden führen nicht zu Wiedersprüchen in der Theorie\\
-\paragraph{Stabilität:} verringert und vergrößert positive Infos nicht \\
-\paragraph*{Reduktion:} für definite Programme entspricht gcwa der cwa
-\paragraph{Keine Monotonie}: im Gegensatz zu cwa
-
-
 \end{document}
